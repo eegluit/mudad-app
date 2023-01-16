@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'select_id_type_page.dart';
 
 class VerifyIdentityPage extends StatelessWidget {
-  static const route = '/verifyIdentityPage';
+  // static const route = '/verifyIdentityPage';
   const VerifyIdentityPage({Key? key}) : super(key: key);
 
   @override

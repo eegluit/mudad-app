@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:mudad/widget/base_view/base_view.dart';
+
+import '../utils/utils/resource/color_resource.dart';
+import '../utils/utils/resource/dimensions_resource.dart';
+import '../utils/utils/resource/image_resource.dart';
+import '../utils/utils/resource/style_resource.dart';
 
 class Transactionpage extends StatelessWidget {
   static const route = '/TransactionPage';
@@ -8,156 +15,107 @@ class Transactionpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorResource.mainColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: ColorResource.mainColor,
         automaticallyImplyLeading: false,
-        title: const Text(
-          'All Transactions',
-          style: TextStyle(
-            color: Color(0xFF1F276B),
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
+        elevation: 0,
+        leading: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: SvgPicture.asset(
+            ImageResource.instance.transactionIcon,
+            color: ColorResource.white,
           ),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF1F276B),
+        title: const Text(
+          "All Transactions",
+          style: TextStyle(
+            color: ColorResource.white,
+            fontSize: 28,
+            fontWeight: FontWeight.w900,
           ),
         ),
       ),
       body: Container(
-        margin: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 20,
+        padding: const EdgeInsets.only(
+          top: 16,
         ),
-        decoration: const BoxDecoration(
+        height: Get.height-165,
+        margin: const EdgeInsets.only(top: DimensionResource.marginSizeLarge),
+        decoration: BoxDecoration(
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              offset: Offset(0, -2.0),
+              blurRadius: 8,
+            )
+          ],
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          boxShadow: [
-            BoxShadow(color: Color(0x3B000000), offset: Offset(0, 4))
-          ],
         ),
         child: ListView.builder(
-          itemCount: 4,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      offset: const Offset(0, -2.0),
-                      blurRadius: 13.0,
-                    ),
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      offset: const Offset(0, 2.0),
-                      blurRadius: 13.0,
-                    ),
-                  ],
+            itemCount: 12,
+            itemBuilder: (context,index){
+              return Padding(
+                padding:  EdgeInsets.only(left: DimensionResource.marginSizeLarge,right: DimensionResource.marginSizeLarge,top: index == 0? DimensionResource.marginSizeLarge:0,bottom: index == 11? DimensionResource.marginSizeLarge:0),
+                child: _buildTransactionRowUi(
+                    backGroundColor: index.isOdd?ColorResource.transactionColor:ColorResource.white,
+                    transactionDateAndTime: "March 12, 06:30 pm",
+                    amount: "+RO 100",
+                    transactionTitle: "Recived from Customer "
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8,
-                    top: 13,
-                    bottom: 7,
-                    right: 40,
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.8),
-                              offset: const Offset(-6.0, -6.0),
-                              blurRadius: 16.0,
-                            ),
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              offset: const Offset(6.0, 6.0),
-                              blurRadius: 16.0,
-                            ),
-                          ],
-                          color: const Color(0xFFF6F6F6),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Text(
-                                  "Nando`s",
-                                  style: TextStyle(
-                                    color: Color(0xFF1F276B),
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 120,
-                                ),
-                                Text(
-                                  "-RO300",
-                                  style: TextStyle(
-                                    color: Color(0xFFF24E30),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: const [
-                                Text(
-                                  "20 Sep 2022",
-                                  style: TextStyle(
-                                    color: Color(0xFF651F6B),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 120,
-                                ),
-                                Text(
-                                  "9:41 am",
-                                  style: TextStyle(
-                                    color: Color(0xFF949494),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
+              );
+            }),
       ),
     );
+
   }
+  Widget _buildTransactionRowUi({required Color backGroundColor,required String transactionTitle,required  String transactionDateAndTime,required String amount}){
+    return Container(
+      margin:const EdgeInsets.only(bottom: 10),
+      padding:const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: backGroundColor,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: ColorResource.secondColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Image.asset(ImageResource.instance.walletIcon,color: ColorResource.white,),
+            ),
+          ),
+          const SizedBox(width: 15,),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(transactionTitle,style: StyleResource.instance.styleMedium(DimensionResource.fontSizeExtraLarge, ColorResource.black),),
+                const SizedBox(height: 5,),
+                Text(transactionDateAndTime,style: StyleResource.instance.styleRegular(DimensionResource.fontSizeDefault, ColorResource.textColor),),
+
+              ],
+            ),
+          ),
+          const SizedBox(width: 10,),
+          Text(amount,style: StyleResource.instance.styleMedium(DimensionResource.fontSizeLarge, ColorResource.darkGreenColor),),
+
+
+        ],
+      ),
+
+    );
+  }
+
 }

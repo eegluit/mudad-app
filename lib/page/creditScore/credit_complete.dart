@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../controller/home_controller.dart';
+import '../../widget/toast_view/showtoast.dart';
 import '../home/home_page.dart';
 
 class CreditCompleteScorePage extends StatelessWidget {
@@ -14,15 +15,17 @@ class CreditCompleteScorePage extends StatelessWidget {
         .getCreditScore(homeController.getToken)
         .then((response) {
       if (response.code != null) {
-        Get.snackbar('Error', '${response.message}',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white);
+        toastShow(error: true,massage: response.message);
+        // Get.snackbar('Error', '${response.message}',
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     backgroundColor: Colors.red,
+        //     colorText: Colors.white);
       } else {
-        Get.snackbar('Success', '${response.message}',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green.shade600,
-            colorText: Colors.white);
+        toastShow(error: false,massage: response.message);
+        // Get.snackbar('Success', '${response.message}',
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     backgroundColor: Colors.green.shade600,
+        //     colorText: Colors.white);
       }
     });
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:mudad/widget/log_print/log_print_condition.dart';
 import '../models/auth_response_model.dart';
 import '../models/sign_up_request_model.dart';
 import '../models/user_model.dart';
@@ -70,10 +71,14 @@ class AuthService {
         options: Options(contentType: Headers.formUrlEncodedContentType),
       );
       AuthResponseModel model = AuthResponseModel.fromJson(response.data);
+      model.code = response.statusCode;
+      print("email asa ${response.statusCode}");
       return model;
     } on DioError catch (e) {
+      print("login error ${e.response!} ada");
       if (e.type == DioErrorType.response) {
         AuthResponseModel model = AuthResponseModel.fromJson(e.response!.data);
+        model.code = e.response!.statusCode;
         return model;
       } else if (e.type == DioErrorType.connectTimeout ||
           e.type == DioErrorType.receiveTimeout ||
@@ -117,9 +122,12 @@ class AuthService {
             contentType: Headers.formUrlEncodedContentType,
             headers: {'authentication': 'Bearer $token'}),
       );
+      logPrint(response.data);
       UserModel model = UserModel.fromJson(response.data);
       return model;
     } on DioError catch (e) {
+      logPrint(e.response!.statusCode);
+      logPrint(e.response!.data);
       if (e.type == DioErrorType.response) {
         UserModel model = UserModel.fromJson(e.response!.data);
         return model;

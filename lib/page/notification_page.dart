@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mudad/utils/utils/resource/dimensions_resource.dart';
 import '../models/notification_model.dart';
+import '../widget/base_view/base_view.dart';
 
 class NotificationPage extends StatelessWidget {
   static const route = '/notificationPage';
@@ -26,56 +28,21 @@ class NotificationPage extends StatelessWidget {
           desciption: 'Verify Your Account',
           type: 'account verification required '),
     ];
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        title: const Text(
-          'Notifications',
-          style: TextStyle(
-            color: Color(0xFF1F276B),
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF1F276B),
-          ),
-        ),
-      ),
-      body: Container(
-        width: Get.width,
-        height: Get.height,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x3B000000),
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return InkWell(
+    return BaseView(
+      title: "Notifications",
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(top: DimensionResource.marginSizeSmall),
+            child: InkWell(
               onTap: () {},
               child: Card(
-                margin: const EdgeInsets.only(
-                  left: 13,
-                  right: 13,
-                  top: 20,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)
                 ),
+                elevation: 3,
+                margin: const EdgeInsets.symmetric(horizontal: DimensionResource.marginSizeLarge,vertical: DimensionResource.marginSizeSmall),
                 child: Container(
                   width: Get.width,
                   padding: const EdgeInsets.all(16.0),
@@ -94,11 +61,15 @@ class NotificationPage extends StatelessWidget {
                           children: [
                             Text(
                               ' ${list.elementAt(index).name!}  .  ${list.elementAt(index).time!}',
-                              style: const TextStyle(
-                                color: Color(0x8F000000),
+                              style:  TextStyle(
+                                color: Colors.black.withOpacity(0.4),
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
+                                letterSpacing: .6
                               ),
+                            ),
+                            const SizedBox(
+                              height: DimensionResource.marginSizeExtraSmall,
                             ),
                             Text(
                               ' ${list.elementAt(index).desciption!}',
@@ -107,6 +78,9 @@ class NotificationPage extends StatelessWidget {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),
+                            ),
+                            const SizedBox(
+                              height: DimensionResource.marginSizeSmall,
                             ),
                             Text(
                               ' ${list.elementAt(index).type!}',
@@ -119,15 +93,14 @@ class NotificationPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Expanded(child: Container()),
-                      SvgPicture.asset('images/close.svg'),
+                      // SvgPicture.asset('images/close.svg'),
                     ],
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

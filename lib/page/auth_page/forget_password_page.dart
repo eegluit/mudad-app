@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/auth_controller.dart';
 import '../../widget/text_form_field_widget.dart';
+import '../../widget/toast_view/showtoast.dart';
 import 'otp_page.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
@@ -78,15 +79,17 @@ class ForgetPasswordPage extends StatelessWidget {
                           .then((response) {
                         authController.isLoading(false);
                         if (response.code != null) {
-                          Get.snackbar('Error', '${response.message}',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white);
+                          toastShow(error: true,massage: response.message);
+                          // Get.snackbar('Error', '${response.message}',
+                          //     snackPosition: SnackPosition.BOTTOM,
+                          //     backgroundColor: Colors.red,
+                          //     colorText: Colors.white);
                         } else {
-                          Get.snackbar('Success', '${response.message}',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.green.shade600,
-                              colorText: Colors.white);
+                          toastShow(error: false,massage: response.message);
+                          // Get.snackbar('Success', '${response.message}',
+                          //     snackPosition: SnackPosition.BOTTOM,
+                          //     backgroundColor: Colors.green.shade600,
+                          //     colorText: Colors.white);
                           Get.toNamed(OtpPage.route,
                               arguments: [response.token, 'forget']);
                         }

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controller/auth_controller.dart';
+import '../../widget/text_field_view/common_textfield.dart';
 import '../../widget/text_form_field_widget.dart';
 import '../../widget/text_form_password_field.dart';
+import '../../widget/toast_view/showtoast.dart';
 import 'forget_password_page.dart';
 import 'otp_page.dart';
 import 'sign_up_page.dart';
@@ -40,44 +42,7 @@ class SignInPage extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.07,
               ),
-              const Text(
-                'Email',
-                style: TextStyle(
-                  color: Color(0xFF1F306B),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              TextFormFieldWidget(
-                controller: authController.emailController,
-                hint: 'Enter your email',
-                text: 'Enter your email',
-                isEmail: true,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(
-                height: Get.height * 0.04,
-              ),
-              const Text(
-                'Password',
-                style: TextStyle(
-                  color: Color(0xFF1F306B),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Obx(
-                () => TextFormPasswordFieldWidget(
-                  controller: authController.passwordController,
-                  hint: 'Enter your password',
-                  isPassword: !showPassword.value,
-                  keyboardType: TextInputType.text,
-                  text: 'Enter your password',
-                  onSuffix: () {
-                    showPassword.value = !showPassword.value;
-                  },
-                ),
-              ),
+             _buildEmailPasswordRow(context, authController),
               SizedBox(
                 height: Get.height * 0.015,
               ),
@@ -109,10 +74,7 @@ class SignInPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    if (validate(
-                      authController.emailController.text,
-                      authController.passwordController.text,
-                    )) {
+                    if (authController.formKey.currentState?.validate()??false) {
                       authController.isLoading(true);
                       authController.authService
                           .login(
@@ -121,16 +83,19 @@ class SignInPage extends StatelessWidget {
                       )
                           .then((response) {
                         authController.isLoading(false);
-                        if (response.code != null) {
-                          Get.snackbar('Error', '${response.message}',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white);
+                        if (response.code != 200) {
+                          toastShow(error: true,massage: response.message);
+                          // Get.snackbar('Error', '${response.message}',
+                          //     snackPosition: SnackPosition.BOTTOM,
+                          //     backgroundColor: Colors.red,
+                          //     colorText: Colors.white);
                         } else {
-                          Get.snackbar('Success', '${response.message}',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.green.shade600,
-                              colorText: Colors.white);
+                          print(response.toJson());
+                          toastShow(error: false,massage: response.message);
+                          // Get.snackbar('Success', '${response.message}',
+                          //     snackPosition: SnackPosition.BOTTOM,
+                          //     backgroundColor: Colors.green.shade600,
+                          //     colorText: Colors.white);
                           Get.toNamed(OtpPage.route,
                               arguments: [response.tokens, 'login']);
                         }
@@ -210,6 +175,56 @@ class SignInPage extends StatelessWidget {
       ),
     );
   }
+  Widget _buildEmailPasswordRow(BuildContext context,AuthController controller){
+    return Form(
+      key: controller.formKey,
+      child: Obx(()=>Column(
+        children: [
+          CommonTextField(
+            label: "Email",
+            controller: controller.emailController,
+            keyboardType: TextInputType.emailAddress,
+            hintText: "Enter your email address.".tr,
+            validator: (value) {
+              if (value!.isEmpty) {
+                controller.emailError.value = "Please enter your email.".tr;
+                return "";
+              } else if (value.removeAllWhitespace == "") {
+                controller.emailError.value = "Please enter valid email.".tr;
+                return null;
+              } else {
+                controller.emailError.value = "";
+                return null;
+              }
+            },
+            errorText: controller.emailError.value,
+          ),
+          const SizedBox(height: 30,),
+          CommonTextField(
+            label: "Password",
+            suffixIcon: true,
+            controller: controller.passwordController,
+            keyboardType: TextInputType.text,
+            hintText: "Enter your password.".tr,
+            validator: (value) {
+              if (value!.isEmpty) {
+                controller.passwordError.value = "Please enter your password.".tr;
+                return "";
+              } else if (value.removeAllWhitespace == "") {
+                controller.passwordError.value = "Please enter valid password.".tr;
+                return "";
+              } else {
+                controller.passwordError.value = "";
+                return null;
+              }
+            },
+            errorText: controller.passwordError.value,
+          ),
+        ],
+      )),
+    );
+  }
+
 
   bool validate(String email, String password) {
     if (email.isEmpty) {

@@ -73,6 +73,7 @@ class User {
     this.name,
     this.email,
     this.id,
+    this.profileUrl
   });
 
   String? role;
@@ -80,6 +81,7 @@ class User {
   String? name;
   String? email;
   String? id;
+  String? profileUrl;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         role: json["role"],
@@ -87,6 +89,7 @@ class User {
         name: json["name"],
         email: json["email"],
         id: json["id"],
+    profileUrl: json["profile_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -95,5 +98,6 @@ class User {
         "name": name,
         "email": email,
         "id": id,
+        "profile_url": profileUrl,
       };
 }

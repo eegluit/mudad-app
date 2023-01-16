@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controller/auth_controller.dart';
+import '../../widget/text_field_view/common_textfield.dart';
 import '../../widget/text_form_field_widget.dart';
 import '../../widget/text_form_password_field.dart';
+import '../../widget/toast_view/showtoast.dart';
 import 'otp_page.dart';
 import 'sign_in_page.dart';
 
@@ -25,212 +27,223 @@ class SignUpPage extends StatelessWidget {
         child: Container(
           color: Colors.white,
           padding: const EdgeInsets.only(left: 28, right: 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: Get.height * 0.12,
-              ),
-              SizedBox(
-                width: Get.width,
-                child: Center(
-                  child: Image.asset('images/mudad.png', height: 50),
-                ),
-              ),
-              SizedBox(
-                height: Get.height * 0.07,
-              ),
-              const Text(
-                'Full Name',
-                style: TextStyle(
-                  color: Color(0xFF1F306B),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              TextFormFieldWidget(
-                controller: authController.fullNameController,
-                hint: 'Your Name, e.g: John Doe',
-                text: 'Your Name, e.g: John Doe',
-                isEmail: true,
-                keyboardType: TextInputType.name,
-              ),
-              SizedBox(
-                height: Get.height * 0.04,
-              ),
-              const Text(
-                'Email',
-                style: TextStyle(
-                  color: Color(0xFF1F306B),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              TextFormFieldWidget(
-                controller: authController.emailController,
-                hint: 'Your email, e.g: johndoe@gmail.com',
-                text: 'Your email, e.g: johndoe@gmail.com',
-                isEmail: true,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(
-                height: Get.height * 0.04,
-              ),
-              const Text(
-                'Password',
-                style: TextStyle(
-                  color: Color(0xFF1F306B),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Obx(
-                () => TextFormPasswordFieldWidget(
-                  controller: authController.passwordController,
-                  hint: 'Enter your password',
-                  isPassword: !showPassword.value,
-                  keyboardType: TextInputType.text,
-                  text: 'Enter your password',
-                  onSuffix: () {
-                    showPassword.value = !showPassword.value;
-                  },
-                ),
-              ),
-              SizedBox(
-                height: Get.height * 0.04,
-              ),
-              const Text(
-                'Confirm Password',
-                style: TextStyle(
-                  color: Color(0xFF1F306B),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Obx(
-                () => TextFormPasswordFieldWidget(
-                  controller: authController.confirmPasswordController,
-                  hint: 'Re-type your password',
-                  isPassword: !showPassword.value,
-                  keyboardType: TextInputType.text,
-                  text: 'Re-type your password',
-                  onSuffix: () {
-                    showPassword.value = !showPassword.value;
-                  },
-                ),
-              ),
-              SizedBox(
-                height: Get.height * 0.05,
-              ),
-              SizedBox(
-                width: Get.width,
-                height: 50,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13)),
+          child: Form(
+            key: authController.formSignKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: Obx(
+               () {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: Get.height * 0.12,
                     ),
-                  ),
-                  onPressed: () {
-                    if (validate(
-                      authController.fullNameController.text,
-                      authController.emailController.text,
-                      authController.passwordController.text,
-                      authController.confirmPasswordController.text,
-                    )) {
-                      authController.isLoading(true);
-                      authController.authService
-                          .signUp(
-                        authController.fullNameController.text,
-                        authController.emailController.text,
-                        authController.passwordController.text,
-                      )
-                          .then((response) {
-                        authController.isLoading(false);
-                        if (response.code != null) {
-                          Get.snackbar('Error', '${response.message}',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white);
+                    SizedBox(
+                      width: Get.width,
+                      child: Center(
+                        child: Image.asset('images/mudad.png', height: 50),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.07,
+                    ),
+                    CommonTextField(
+                      label: "Full Name",
+                      controller: authController.fullNameController,
+                      keyboardType: TextInputType.name,
+                      hintText: "Your Name, e.g: John Doe".tr,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          authController.nameError.value = "Please enter your full name.".tr;
+                          return "";
+                        } else if (value.removeAllWhitespace == "") {
+                          authController.nameError.value = "Please enter valid name.".tr;
+                          return null;
                         } else {
-                          Get.snackbar('Success', '${response.message}',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.green.shade600,
-                              colorText: Colors.white);
-                          Get.toNamed(OtpPage.route,
-                              arguments: [response.tokens, 'signUp']);
+                          authController.nameError.value = "";
+                          return null;
                         }
-                      });
-                    }
-                  },
-                  child: Obx(
-                    () => authController.isLoading.value
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                'Loading...',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ],
-                          )
-                        : const Text(
-                            'Register',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
+                      },
+                      errorText: authController.nameError.value,
+                    ),
+                     SizedBox(height: Get.height * 0.025,),
+                    CommonTextField(
+                      label: "Email",
+                      controller: authController.emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: 'Your email, e.g: johndoe@gmail.com'.tr,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          authController.emailError.value = "Please enter your email.".tr;
+                          return "";
+                        } else if (value.removeAllWhitespace == "") {
+                          authController.emailError.value = "Please enter valid email.".tr;
+                          return null;
+                        } else {
+                          authController.emailError.value = "";
+                          return null;
+                        }
+                      },
+                      errorText: authController.emailError.value,
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.025,
+                    ),
+                    CommonTextField(
+                      label: "Password",
+                      suffixIcon: true,
+                      controller: authController.passwordController,
+                      keyboardType: TextInputType.text,
+                      hintText: "Enter your password.".tr,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          authController.passwordError.value = "Please enter your password.".tr;
+                          return "";
+                        } else if (value.removeAllWhitespace == "") {
+                          authController.passwordError.value = "Please enter valid password.".tr;
+                          return "";
+                        } else {
+                          authController.passwordError.value = "";
+                          return null;
+                        }
+                      },
+                      errorText: authController.passwordError.value,
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.025,
+                    ),
+                    CommonTextField(
+                      label: "Confirm Password",
+                      suffixIcon: true,
+                      controller: authController.confirmPasswordController,
+                      keyboardType: TextInputType.text,
+                      hintText: 'Re-type your password'.tr,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          authController.rePasswordError.value = "Please enter your password.".tr;
+                          return "";
+                        } else if (value != authController.passwordController.text) {
+                          authController.rePasswordError.value = "Password is not same.".tr;
+                          return "";
+                        } else {
+                          authController.rePasswordError.value = "";
+                          return null;
+                        }
+                      },
+                      errorText: authController.rePasswordError.value,
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.05,
+                    ),
+                    SizedBox(
+                      width: Get.width,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13)),
                           ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: Get.height * 0.02,
-              ),
-              SizedBox(
-                width: Get.width,
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Already have an account? Sign In ",
-                      style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                        ),
+                        onPressed: () {
+                          if (authController.formSignKey.currentState?.validate()??false) {
+                            authController.isLoading(true);
+                            authController.authService
+                                .signUp(
+                              authController.fullNameController.text,
+                              authController.emailController.text,
+                              authController.passwordController.text,
+                            )
+                                .then((response) {
+                              authController.isLoading(false);
+                              if (response.code != null) {
+                                toastShow(error: true,massage: response.message);
+                                // Get.snackbar('Error', '${response.message}',
+                                //     snackPosition: SnackPosition.BOTTOM,
+                                //     backgroundColor: Colors.red,
+                                //     colorText: Colors.white);
+                              } else {
+                                toastShow(error: false,massage: response.message);
+                                // Get.snackbar('Success', '${response.message}',
+                                //     snackPosition: SnackPosition.BOTTOM,
+                                //     backgroundColor: Colors.green.shade600,
+                                //     colorText: Colors.white);
+                                Get.toNamed(OtpPage.route,
+                                    arguments: [response.tokens, 'signUp']);
+                              }
+                            });
+                          }
+                        },
+                        child: Obx(
+                          () => authController.isLoading.value
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      'Loading...',
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                )
+                              : const Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                         ),
                       ),
-                      children: [
-                        TextSpan(
-                          text: 'here',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Get.offNamed(SignInPage.route);
-                            },
-                          style: GoogleFonts.lato(
-                            textStyle: const TextStyle(
-                              color: Color(0xFF651F6B),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        )
-                      ],
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                    SizedBox(
+                      height: Get.height * 0.02,
+                    ),
+                    SizedBox(
+                      width: Get.width,
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            text: "Already have an account? Sign In ",
+                            style: GoogleFonts.lato(
+                              textStyle: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'here',
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.offNamed(SignInPage.route);
+                                  },
+                                style: GoogleFonts.lato(
+                                  textStyle: const TextStyle(
+                                    color: Color(0xFF651F6B),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                );
+              }
+            ),
           ),
         ),
       ),

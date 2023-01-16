@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controller/home_controller.dart';
 import '../../controller/quiz_controller.dart';
 import '../../models/question_request_model.dart';
+import '../../widget/toast_view/showtoast.dart';
 import 'credit_complete.dart';
 
 class QuizPage extends StatelessWidget {
@@ -349,21 +350,23 @@ class QuizPage extends StatelessWidget {
                               .then((response) {
                             quizController.isLoading(false);
                             if (response.code != null) {
-                              Get.snackbar('Error', '${response.message}',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white);
+                              toastShow(error: true,massage: response.message);
+                              // Get.snackbar('Error', '${response.message}',
+                              //     snackPosition: SnackPosition.BOTTOM,
+                              //     backgroundColor: Colors.red,
+                              //     colorText: Colors.white);
                             } else {
-                              Get.snackbar('Success', '${response.message}',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.green.shade600,
-                                  colorText: Colors.white);
+                              toastShow(error: false,massage: response.message);
+                              // Get.snackbar('Success', '${response.message}',
+                              //     snackPosition: SnackPosition.BOTTOM,
+                              //     backgroundColor: Colors.green.shade600,
+                              //     colorText: Colors.white);
                               quizController.questionId1(0);
                               quizController.questionId2(0);
                               quizController.questionId3(0);
                               quizController.questionId4(0);
                               quizController.questionId5(0);
-                              Get.toNamed(CreditCompleteScorePage.route);
+                              Get.offNamed(CreditCompleteScorePage.route);
                             }
                           });
                         }

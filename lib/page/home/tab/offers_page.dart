@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
+
+import '../../../utils/utils/resource/dimensions_resource.dart';
 
 class OffersPage extends StatelessWidget {
   const OffersPage({Key? key}) : super(key: key);
@@ -7,37 +10,39 @@ class OffersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorResource.mainColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: ColorResource.mainColor,
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(14.0),
           child: SvgPicture.asset(
             'images/offers.svg',
+            color: ColorResource.white,
           ),
         ),
         title: const Text(
           'Offers',
           style: TextStyle(
-            color: Color(0xFF1F276B),
-            fontSize: 32,
+            color: ColorResource.white,
+            fontSize: 30,
             fontWeight: FontWeight.w900,
           ),
         ),
       ),
       body: Container(
-        margin: const EdgeInsets.only(top: 5),
-        decoration: const BoxDecoration(
+        margin: const EdgeInsets.only(top: DimensionResource.marginSizeLarge),
+        decoration:  BoxDecoration(
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF1F276B),
-              offset: Offset(0, -5.0),
-              blurRadius: 13,
+              color: Colors.black.withOpacity(0.3),
+              offset: Offset(0, -2.0),
+              blurRadius: 8,
             )
           ],
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),

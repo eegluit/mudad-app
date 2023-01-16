@@ -50,7 +50,7 @@ class MalaCreditReportPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Get.toNamed(QuizPage.route);
+                Get.offNamed(QuizPage.route);
               },
               child: const Text(
                 'Calculate',
