@@ -27,6 +27,13 @@ class QrViewScreen extends GetView<QrCodeController> {
                     child: QRView(
                       key: controller.qrKey.value,
                       onQRViewCreated: controller.onQRViewCreated,
+                         overlay: QrScannerOverlayShape(
+                         borderRadius: 10,
+                          borderColor: Color.fromARGB(255, 237, 195, 15),
+                          borderLength: 30,
+                          borderWidth: 10,
+                          cutOutSize: MediaQuery.of(context).size.width * 0.8,
+                        ),
                     ),
                   );
                 }

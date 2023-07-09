@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 import 'package:mudad/binding/last_transaction_binding/last_transaction_binding.dart';
 import 'package:mudad/controller/add_a_card_controller/add_a_card_controller.dart';
+import 'package:mudad/page/home/qr_code_scanner_view/otp_validation_page.dart';
+import 'package:mudad/page/home/qr_code_scanner_view/pay_merchant.dart';
 import 'package:mudad/page/add_card/add_a_card.dart';
 import 'package:mudad/page/home/change_password_view/change_password_screen.dart';
 import 'package:mudad/page/home/edit_profile_view/edit_profile_screen.dart';
 import 'package:mudad/page/home/info_page/info_page_view.dart';
+import 'package:mudad/page/home/qr_code_scanner_view/payment_success_page.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/qr_code_scanner.dart';
 import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
 import 'package:mudad/page/top_offers_view/refer_a_friend_view.dart';
@@ -62,6 +65,11 @@ class AppRoutes {
       name: OtpPage.route,
       page: () => const OtpPage(),
       bindings: [OtpBinding(), HomeBinding()],
+    ),
+    GetPage(
+      name: OtpValidationPage.route,
+      page: () => const OtpValidationPage(),
+      binding: OtpBinding()
     ),
     GetPage(
       name: SignUpPage.route,
@@ -174,6 +182,16 @@ class AppRoutes {
     GetPage(
       name: AddCardScreen.route,
       page: () => const AddCardScreen(),
+      binding: HomeBinding()
+    ),
+    GetPage(
+      name: PayMerchantScreen.route,
+      page: () => const PayMerchantScreen(),
+      binding: HomeBinding()
+    ),
+    GetPage(
+      name: PaymentSuccessPage.route,
+      page: () => const PaymentSuccessPage(),
       binding: HomeBinding()
     ),
     GetPage(
