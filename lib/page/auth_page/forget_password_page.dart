@@ -32,7 +32,7 @@ class ForgetPasswordPage extends StatelessWidget {
               SizedBox(
                 width: Get.width,
                 child: Center(
-                  child: Image.asset('images/mudad.png', height: 50),
+                  child: Image.asset('images/mudad.png', height: 100),
                 ),
               ),
               SizedBox(
@@ -41,7 +41,7 @@ class ForgetPasswordPage extends StatelessWidget {
               const Text(
                 'Email',
                 style: TextStyle(
-                  color: Color(0xFF1F306B),
+                  color: Color(0xff000000),
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),

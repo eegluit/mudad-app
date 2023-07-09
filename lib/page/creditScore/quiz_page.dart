@@ -6,6 +6,7 @@ import '../../controller/quiz_controller.dart';
 import '../../models/question_request_model.dart';
 import '../../widget/toast_view/showtoast.dart';
 import 'credit_complete.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
 
 class QuizPage extends StatelessWidget {
   static const route = '/quizPage';
@@ -32,7 +33,7 @@ class QuizPage extends StatelessWidget {
             const Text(
               'QUIZ',
               style: TextStyle(
-                color: Color(0xFF651F6B),
+                color: ColorResource.mainColor,
                 fontSize: 32,
                 fontWeight: FontWeight.w900,
               ),
@@ -51,7 +52,7 @@ class QuizPage extends StatelessWidget {
                   const Text(
                     '1. Have you paid your all yours bills on time?',
                     style: TextStyle(
-                      color: Color(0xFF1F306B),
+                      color: Color(0xff000000),
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -82,7 +83,7 @@ class QuizPage extends StatelessWidget {
                             title: Text(
                               "${data.name}",
                               style: const TextStyle(
-                                color: Color(0xFf651F6B),
+                                color: ColorResource.mainColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -103,7 +104,7 @@ class QuizPage extends StatelessWidget {
                   const Text(
                     '2. How often do you neglect others needs and spend more on yourself?',
                     style: TextStyle(
-                      color: Color(0xFF1F306B),
+                      color: Color(0xff000000),
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -134,7 +135,7 @@ class QuizPage extends StatelessWidget {
                             title: Text(
                               "${data.name}",
                               style: const TextStyle(
-                                color: Color(0xFf651F6B),
+                                color: ColorResource.mainColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -155,7 +156,7 @@ class QuizPage extends StatelessWidget {
                   const Text(
                     '3. Do you shop or buy so much that it negatively effects your daily obligations (like loan repayments)?',
                     style: TextStyle(
-                      color: Color(0xFF1F306B),
+                      color: Color(0xff000000),
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -186,7 +187,7 @@ class QuizPage extends StatelessWidget {
                             title: Text(
                               "${data.name}",
                               style: const TextStyle(
-                                color: Color(0xFf651F6B),
+                                color: ColorResource.mainColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -207,7 +208,7 @@ class QuizPage extends StatelessWidget {
                   const Text(
                     '4. How often do you get anxious about your repayments?',
                     style: TextStyle(
-                      color: Color(0xFF1F306B),
+                      color: Color(0xff000000),
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -238,7 +239,7 @@ class QuizPage extends StatelessWidget {
                             title: Text(
                               "${data.name}",
                               style: const TextStyle(
-                                color: Color(0xFf651F6B),
+                                color: ColorResource.mainColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -259,7 +260,7 @@ class QuizPage extends StatelessWidget {
                   const Text(
                     '5. Most of the time, I avoid taking responsibilities?',
                     style: TextStyle(
-                      color: Color(0xFF1F306B),
+                      color: Color(0xff000000),
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -290,7 +291,7 @@ class QuizPage extends StatelessWidget {
                             title: Text(
                               "${data.name}",
                               style: const TextStyle(
-                                color: Color(0xFf651F6B),
+                                color: ColorResource.mainColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import '../../controller/home_controller.dart';
 import '../../widget/toast_view/showtoast.dart';
 import '../home/home_page.dart';
+import '../../model/utils/resource/color_resource.dart';
+
 
 class CreditCompleteScorePage extends StatelessWidget {
   static const route = '/creditCompletePage';
@@ -50,7 +52,7 @@ class CreditCompleteScorePage extends StatelessWidget {
           const Text(
             'Credit Score Calculation Complete',
             style: TextStyle(
-              color: Color(0xFF651F6B),
+              color: ColorResource.mainColor,
               fontSize: 32,
               fontWeight: FontWeight.w900,
             ),

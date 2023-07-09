@@ -7,6 +7,7 @@ import 'model/services/auth_service.dart';
 import 'model/services/globleService.dart';
 import 'routes/app_routes.dart';
 import 'package:flutter/services.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 
 void main() async {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mudad',
       theme: ThemeData(
-        primarySwatch: generateMaterialColor(color: const Color(0xFF651F6B)),
+        primarySwatch: generateMaterialColor(color: ColorResource.mainColor,),
         textTheme: GoogleFonts.latoTextTheme(textTheme),
         // appBarTheme: Get.theme.appBarTheme.copyWith(
         //   elevation: 0.0,

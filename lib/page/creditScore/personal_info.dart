@@ -37,7 +37,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
                 const Text(
                   'Personal Info',
                   style: TextStyle(
-                    color: Color(0xFF651F6B),
+                    color: ColorResource.mainColor,
                     fontSize: 32,
                     fontWeight: FontWeight.w900,
                   ),
@@ -103,7 +103,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
                               const Text(
                                 'Gender',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -144,7 +144,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                           child: const Text(
                                             'Male',
                                             style: TextStyle(
-                                              color: Color(0xFF1F306B),
+                                              color: Color(0xff000000),
                                               fontSize: 14,
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -179,7 +179,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                           child: const Text(
                                             'Female',
                                             style: TextStyle(
-                                              color: Color(0xFF1F306B),
+                                              color: Color(0xff000000),
                                               fontSize: 14,
                                               fontWeight: FontWeight.w700,
                                             ),

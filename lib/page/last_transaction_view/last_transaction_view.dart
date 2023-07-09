@@ -379,7 +379,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
                 "RO10,000",
                 style: StyleResource.instance.styleSemiBold(
                     DimensionResource.fontSizeLarge - 1,
-                    ColorResource.blueColor),
+                    ColorResource.secondColor),
               )
             ],
           ),

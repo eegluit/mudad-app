@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudad/controller/home_controller.dart';
+import 'package:mudad/model/utils/resource/color_resource.dart';
 import 'package:mudad/widget/base_view/base_view.dart';
 
 import '../../utils/utils/resource/dimensions_resource.dart';
@@ -39,7 +40,7 @@ class AvailableMerchantScreen extends GetView<HomeController> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(
-                      color: const Color(0xFF1E2668),
+                      color: ColorResource.mainColor,
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(10.0),

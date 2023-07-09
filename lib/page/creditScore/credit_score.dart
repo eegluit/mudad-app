@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'personal_info.dart';
+import '../../model/utils/resource/color_resource.dart';
+
 
 class CreditScorePage extends StatelessWidget {
   static const route = '/creditScorePage';
@@ -38,7 +40,7 @@ class CreditScorePage extends StatelessWidget {
               const Text(
                 'Credit Score',
                 style: TextStyle(
-                  color: Color(0xFF651F6B),
+                  color: ColorResource.mainColor,
                   fontSize: 32,
                   fontWeight: FontWeight.w900,
                 ),
@@ -54,7 +56,7 @@ class CreditScorePage extends StatelessWidget {
                 child: Text(
                   'Simply provide the following to calculate your credit score',
                   style: TextStyle(
-                    color: Color(0xFF651F6B),
+                    color: ColorResource.mainColor,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
@@ -82,7 +84,7 @@ class CreditScorePage extends StatelessWidget {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: const Color(0xFF651F6B),
+                                  color: ColorResource.mainColor,
                                   width: 2,
                                 ),
                               ),
@@ -91,7 +93,7 @@ class CreditScorePage extends StatelessWidget {
                                 child: Text(
                                   '$pos',
                                   style: const TextStyle(
-                                    color: Color(0xFF651F6B),
+                                    color: ColorResource.mainColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -105,7 +107,7 @@ class CreditScorePage extends StatelessWidget {
                             Text(
                               creditInfoList.elementAt(index),
                               style: const TextStyle(
-                                color: Color(0xFF651F6B),
+                                color: ColorResource.mainColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),

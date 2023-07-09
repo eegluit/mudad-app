@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;
@@ -50,7 +51,7 @@ class TextFormFieldWidget extends StatelessWidget {
             floatingLabelBehavior: FloatingLabelBehavior.never,
             focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
-                color: Color(0xFF651F6B),
+                color: ColorResource.mainColor,
               ),
             ),
             enabledBorder: const UnderlineInputBorder(

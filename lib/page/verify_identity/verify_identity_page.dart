@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
 
 import 'select_id_type_page.dart';
 
@@ -37,7 +38,7 @@ class VerifyIdentityPage extends StatelessWidget {
               const Text(
                 'Verify Your Identity',
                 style: TextStyle(
-                  color: Color(0xFF651F6B),
+                  color: ColorResource.mainColor,
                   fontSize: 32,
                   fontWeight: FontWeight.w900,
                 ),
@@ -53,7 +54,7 @@ class VerifyIdentityPage extends StatelessWidget {
                 child: Text(
                   'Simply use your phone camera to capture the following:',
                   style: TextStyle(
-                    color: Color(0xFF651F6B),
+                    color: ColorResource.mainColor,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
@@ -80,7 +81,7 @@ class VerifyIdentityPage extends StatelessWidget {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: const Color(0xFF651F6B),
+                                  color: ColorResource.mainColor,
                                   width: 2,
                                 ),
                               ),
@@ -89,7 +90,7 @@ class VerifyIdentityPage extends StatelessWidget {
                                 child: Text(
                                   '$pos',
                                   style: const TextStyle(
-                                    color: Color(0xFF651F6B),
+                                    color: ColorResource.mainColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -103,7 +104,7 @@ class VerifyIdentityPage extends StatelessWidget {
                             Text(
                               verifyIdentityList.elementAt(index),
                               style: const TextStyle(
-                                color: Color(0xFF651F6B),
+                                color: ColorResource.mainColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),

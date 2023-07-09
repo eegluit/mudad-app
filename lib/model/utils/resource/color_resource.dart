@@ -10,8 +10,8 @@ class ColorResource {
   ColorResource._init();
 
   static const Color transparent = Color(0x00ffffff);
-  static const Color secondColor = Color(0xff1F306B);
-  static const Color mainColor = Color(0xff651F6B);
+  static const Color secondColor = Color(0xff000000);
+  static const Color mainColor = Color.fromARGB(255, 237, 195, 15);
   static const Color lightMainColor = Color(0xffD009E1);
   static const Color transactionColor = Color(0xffF8D7FB);
   static const Color orangeColor = Color(0xffFE8226);

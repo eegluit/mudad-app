@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mudad/model/utils/resource/color_resource.dart';
 import '../../controller/take_selfie_controller.dart';
 import '../../models/select_type_model.dart';
 import 'take_selfie.dart';
@@ -44,7 +45,7 @@ class SelectIdTypePage extends StatelessWidget {
           const Text(
             'Select ID Type',
             style: TextStyle(
-              color: Color(0xFF651F6B),
+              color: ColorResource.mainColor,
               fontSize: 32,
               fontWeight: FontWeight.w900,
             ),

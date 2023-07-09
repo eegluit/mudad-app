@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
+
 
 class VerificationCancelPage extends StatelessWidget {
   static const route = '/verificationCancelPage';
@@ -30,7 +32,7 @@ class VerificationCancelPage extends StatelessWidget {
             child: Text(
               'Verification Process Failed',
               style: TextStyle(
-                color: Color(0xFF651F6B),
+                color: ColorResource.mainColor,
                 fontSize: 32,
                 fontWeight: FontWeight.w900,
               ),

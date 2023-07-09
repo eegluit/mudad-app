@@ -25,6 +25,7 @@ import '../../pending_payment_page.dart';
 import '../../transaction_page.dart';
 import '../vendor_map_location/vendor_map_location.dart';
 
+
 class MainPage extends GetView<HomeController> {
   const MainPage({Key? key}) : super(key: key);
 
@@ -91,7 +92,7 @@ class MainPage extends GetView<HomeController> {
             onPressed: () {
               Get.toNamed(NotificationPage.route);
             },
-            icon: SvgPicture.asset('images/notification.svg'),
+            icon: Image.asset('images/notification.png'),
           ),
           const SizedBox(
             width: DimensionResource.marginSizeSmall,
@@ -255,7 +256,7 @@ class MainPage extends GetView<HomeController> {
                           child: Row(
                             children: [
                               quickActionWidget(
-                                  image: 'images/scan_icon.svg',
+                                  image: 'images/scan_icon.png',
                                   title: "Scan to pay",
                                   onTap: () {
                                     try {
@@ -268,7 +269,7 @@ class MainPage extends GetView<HomeController> {
                                 width: 20,
                               ),
                               quickActionWidget(
-                                  image: 'images/refer_friend.svg',
+                                  image: 'images/refer_friend.png',
                                   title: "Refer a Friend",
                                   onTap: () {
                                     Get.toNamed(ReferViewScreen.route);
@@ -277,7 +278,7 @@ class MainPage extends GetView<HomeController> {
                                 width: 20,
                               ),
                               quickActionWidget(
-                                  image: 'images/card.svg',
+                                  image: 'images/add_card.png',
                                   title: "Add a card",
                                   onTap: () {
                                     Get.toNamed(AddCardScreen.route);
@@ -348,7 +349,7 @@ class MainPage extends GetView<HomeController> {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(4),
                                       border: Border.all(
-                                        color: const Color(0xFF1E2668),
+                                        color: ColorResource.mainColor,
                                         width: 2,
                                       ),
                                     ),
@@ -747,7 +748,7 @@ class MainPage extends GetView<HomeController> {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: const Color(0xFF641F6B),
+              color: ColorResource.mainColor,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(10.0),
@@ -756,14 +757,14 @@ class MainPage extends GetView<HomeController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(image),
+              Image.asset(image),
               const SizedBox(
                 height: 5,
               ),
               Text(
                 title,
                 style: const TextStyle(
-                  color: Color(0xFF651F6B),
+                  color: ColorResource.secondColor,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),

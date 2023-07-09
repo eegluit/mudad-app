@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../controller/take_selfie_controller.dart';
 import 'verification_complete_page.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
+
 
 class TakeSelfiePage extends StatelessWidget {
   static const route = '/takeSelfiePage';
@@ -31,7 +33,7 @@ class TakeSelfiePage extends StatelessWidget {
           const Text(
             'Take a Selfie',
             style: TextStyle(
-              color: Color(0xFF651F6B),
+              color: ColorResource.mainColor,
               fontSize: 32,
               fontWeight: FontWeight.w900,
             ),
@@ -45,7 +47,7 @@ class TakeSelfiePage extends StatelessWidget {
             child: Text(
               'Place your face inside the oval and press start when you are ready',
               style: TextStyle(
-                color: Color(0xFF651F6B),
+                color: ColorResource.mainColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),

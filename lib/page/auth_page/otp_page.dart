@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mudad/model/services/auth_service.dart';
 import 'package:pinput/pinput.dart';
 import '../../controller/home_controller.dart';
+import '../../model/utils/resource/color_resource.dart';
 import '../../controller/otp_controller.dart';
 import '../../widget/toast_view/showtoast.dart';
 import '../home/home_page.dart';
@@ -25,13 +26,13 @@ class OtpPage extends GetView<OtpController> {
       height: 58,
       textStyle: const TextStyle(
         fontSize: 18,
-        color: Color(0xFF1F306B),
+        color: Color(0xff000000),
         fontWeight: FontWeight.w500,
       ),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: const Color(0xFF651F6B),
+          color: ColorResource.mainColor,
           width: 3,
         ),
       ),
@@ -58,7 +59,7 @@ class OtpPage extends GetView<OtpController> {
             const Text(
               'OTP Verification',
               style: TextStyle(
-                color: Color(0xFF1F306B),
+                color: Color(0xff000000),
                 fontSize: 32,
                 fontWeight: FontWeight.w900,
               ),
@@ -70,7 +71,7 @@ class OtpPage extends GetView<OtpController> {
             const Text(
               'Please enter the OTP sent to XXX@gmail.com',
               style: TextStyle(
-                color: Color(0xFF651F6B),
+                color: ColorResource.mainColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
@@ -127,7 +128,7 @@ class OtpPage extends GetView<OtpController> {
                         recognizer: TapGestureRecognizer()..onTap = () {},
                         style: GoogleFonts.lato(
                           textStyle: const TextStyle(
-                            color: Color(0xFF651F6B),
+                            color: ColorResource.mainColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                           ),

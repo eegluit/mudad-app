@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import '../../controller/home_controller.dart';
 import '../../widget/toast_view/showtoast.dart';
 import 'mala_credit_report_page.dart';
+import '../../model/utils/resource/color_resource.dart';
+
 
 class BankStatementPage extends StatelessWidget {
   static const route = '/bankStatementPage';
@@ -38,7 +40,7 @@ class BankStatementPage extends StatelessWidget {
             const Text(
               'Upload your Bank Statement',
               style: TextStyle(
-                color: Color(0xFF651F6B),
+                color: ColorResource.mainColor,
                 fontSize: 32,
                 fontWeight: FontWeight.w900,
               ),
@@ -174,7 +176,7 @@ class BankStatementPage extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           height: 44,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF651F6B),
+                            color: ColorResource.mainColor,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Center(

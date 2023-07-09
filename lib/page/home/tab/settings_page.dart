@@ -100,7 +100,7 @@ class SettingsPage extends StatelessWidget {
                           Get.find<AuthService>().user.value.user?.name.toString().capitalize??"",
                           style: GoogleFonts.rubik(
                             textStyle: const TextStyle(
-                              color: Color(0xFF1F306B),
+                              color: Color(0xff000000),
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                             ),
@@ -113,12 +113,12 @@ class SettingsPage extends StatelessWidget {
                           },
                           child: Row(
                             children: [
-                              SvgPicture.asset('images/cong_check.svg'),
+                              Image.asset('images/cong_check.png'),
                               Text(
                                 ' Verified',
                                 style: GoogleFonts.rubik(
                                   textStyle: const TextStyle(
-                                    color: Color(0xFF641F6B),
+                                    color: ColorResource.black,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -172,7 +172,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'Edit profile',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -200,7 +200,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'Change password',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -228,7 +228,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'Refer a friend',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -256,7 +256,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'Add a payment method',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -312,7 +312,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'About us',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -340,7 +340,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'Privacy policy',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -368,7 +368,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'Terms and conditions',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -399,7 +399,7 @@ class SettingsPage extends StatelessWidget {
                               const Text(
                                 'Logout',
                                 style: TextStyle(
-                                  color: Color(0xFF1F306B),
+                                  color: Color(0xff000000),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),

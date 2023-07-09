@@ -6,6 +6,7 @@ import '../../controller/auth_controller.dart';
 import '../../widget/text_field_view/common_textfield.dart';
 import '../../widget/text_form_field_widget.dart';
 import '../../widget/text_form_password_field.dart';
+import '../../model/utils/resource/color_resource.dart';
 import '../../widget/toast_view/showtoast.dart';
 import 'otp_page.dart';
 import 'sign_in_page.dart';
@@ -41,7 +42,7 @@ class SignUpPage extends StatelessWidget {
                     SizedBox(
                       width: Get.width,
                       child: Center(
-                        child: Image.asset('images/mudad.png', height: 50),
+                        child: Image.asset('images/mudad.png', height: 100),
                       ),
                     ),
                     SizedBox(
@@ -226,7 +227,7 @@ class SignUpPage extends StatelessWidget {
                                   },
                                 style: GoogleFonts.lato(
                                   textStyle: const TextStyle(
-                                    color: Color(0xFF651F6B),
+                                    color: ColorResource.mainColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                   ),

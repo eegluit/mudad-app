@@ -54,7 +54,7 @@ class ResetPasswordPage extends StatelessWidget {
               const Text(
                 'Password',
                 style: TextStyle(
-                  color: Color(0xFF1F306B),
+                  color: Color(0xff000000),
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
@@ -77,7 +77,7 @@ class ResetPasswordPage extends StatelessWidget {
               const Text(
                 'Confirm Password',
                 style: TextStyle(
-                  color: Color(0xFF1F306B),
+                  color: Color(0xff000000),
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),

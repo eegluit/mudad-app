@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudad/widget/cachednetworkimagewidget/cachednetworkimagewidget.dart';
+import 'package:mudad/utils/utils/resource/color_resource.dart';
 
 import '../../../controller/verification_controller/verification_conroller.dart';
 import '../../../models/select_type_model.dart';
@@ -143,7 +144,7 @@ class IdentityWidget extends GetView<VerificationController> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: const Color(0xFF651F6B),
+                          color: ColorResource.mainColor,
                           width: 2,
                         ),
                       ),

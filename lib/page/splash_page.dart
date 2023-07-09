@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/splash_controller.dart';
 import '../utils/utils.dart';
+import '../utils/utils/resource/color_resource.dart';
+
 
 class SplashPage extends GetView<SplashController> {
   static const route = '/splashPage';
@@ -12,16 +14,7 @@ class SplashPage extends GetView<SplashController> {
     Get.put(SplashController());
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              hexStringToColor('#FFFFFF'),
-              hexStringToColor('#621F6B'),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+          color: ColorResource.white,
         child: Center(
           child: Image.asset('images/mudad.png'),
         ),
