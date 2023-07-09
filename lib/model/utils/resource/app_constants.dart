@@ -10,6 +10,6 @@ class AppConstants {
   String get defaultTheme => "light";
 
   /// base url
-  String get baseUrl => 'https://admin.mudad.space/v1/';
+  String get baseUrl => 'http://34.230.39.129:3000/v1/';
 
 }
