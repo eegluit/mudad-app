@@ -26,7 +26,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
         return false;
       },
       child: BaseView(
-          title: "Last Transaction",
+          title: "Generated Bill",
           topChild: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: DimensionResource.marginSizeLarge),

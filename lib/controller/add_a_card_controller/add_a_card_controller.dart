@@ -13,8 +13,11 @@ final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 TextEditingController nameController  = TextEditingController();
 TextEditingController cardNumberController  = TextEditingController();
 TextEditingController expController  = TextEditingController();
+TextEditingController cvvController = TextEditingController();
+
 RxString nameError = "".obs;
 RxString expError = "".obs;
 RxString cardNumberError = "".obs;
+RxString cvvError = "".obs;
 
 }

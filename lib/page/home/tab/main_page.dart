@@ -268,15 +268,15 @@ class MainPage extends GetView<HomeController> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              quickActionWidget(
-                                  image: 'images/refer_friend.png',
-                                  title: "Refer a Friend",
-                                  onTap: () {
-                                    Get.toNamed(ReferViewScreen.route);
-                                  }),
-                              const SizedBox(
-                                width: 20,
-                              ),
+                              // quickActionWidget(
+                              //     image: 'images/refer_friend.png',
+                              //     title: "Refer a Friend",
+                              //     onTap: () {
+                              //       Get.toNamed(ReferViewScreen.route);
+                              //     }),
+                              // const SizedBox(
+                              //   width: 20,
+                              // ),
                               quickActionWidget(
                                   image: 'images/add_card.png',
                                   title: "Add a card",
@@ -311,7 +311,7 @@ class MainPage extends GetView<HomeController> {
                                 Get.toNamed(LastTransactionScreen.route);
                               },
                               child: Text(
-                                'Last Transaction',
+                                'Generated Bill',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,

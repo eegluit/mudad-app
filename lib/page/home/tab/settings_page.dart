@@ -108,9 +108,9 @@ class SettingsPage extends StatelessWidget {
                         ),
                         Expanded(child: Container()),
                         InkWell(
-                          onTap: () {
-                            Get.toNamed(VerificationScreen.route);
-                          },
+                          // onTap: () {
+                          //   Get.toNamed(VerificationScreen.route);
+                          // },
                           child: Row(
                             children: [
                               Image.asset('images/cong_check.png'),
@@ -191,6 +191,34 @@ class SettingsPage extends StatelessWidget {
                         const SizedBox(
                           height: 24,
                         ),
+                         GestureDetector(
+                          onTap: (){
+                            Get.toNamed(VerificationScreen.route);
+                          },
+                          child: Row(
+                            children: [
+                              const Text(
+                                'KYC Information',
+                                style: TextStyle(
+                                  color: Color(0xff000000),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Expanded(child: Container()),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFF4B4B4B),
+                              ),
+                              const SizedBox(
+                                width: 36,
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
                         GestureDetector(
                           onTap: (){
                             Get.toNamed(ChangePasswordScreen.route);
@@ -219,34 +247,34 @@ class SettingsPage extends StatelessWidget {
                         const SizedBox(
                           height: 24,
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(ReferViewScreen.route);
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Refer a friend',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
+                        // GestureDetector(
+                        //   onTap: (){
+                        //     Get.toNamed(ReferViewScreen.route);
+                        //   },
+                        //   child: Row(
+                        //     children: [
+                        //       const Text(
+                        //         'Refer a friend',
+                        //         style: TextStyle(
+                        //           color: Color(0xff000000),
+                        //           fontSize: 18,
+                        //           fontWeight: FontWeight.w400,
+                        //         ),
+                        //       ),
+                        //       Expanded(child: Container()),
+                        //       const Icon(
+                        //         Icons.arrow_forward_ios,
+                        //         color: Color(0xFF4B4B4B),
+                        //       ),
+                        //       const SizedBox(
+                        //         width: 36,
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 24,
+                        // ),
                         GestureDetector(
                           onTap: (){
                             Get.toNamed(AddCardScreen.route);

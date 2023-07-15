@@ -126,6 +126,28 @@ class AddCardScreen extends GetView<AddCardController> {
                           },
                           errorText: controller.expError.value,
                         ),
+                          const SizedBox(
+                          height: DimensionResource.marginSizeLarge,
+                        ),
+                        CommonTextField(
+                          label: "CVV",
+                          controller: controller.cvvController,
+                          keyboardType: TextInputType.number,
+                          hintText: "000".tr,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              controller.cvvError.value = "Please enter the cvv.".tr;
+                              return "";
+                            } else if (value.removeAllWhitespace == "") {
+                              controller.cvvError.value = "Please enter valid cvv.".tr;
+                              return null;
+                            } else {
+                              controller.cvvError.value = "";
+                              return null;
+                            }
+                          },
+                          errorText: controller.cvvError.value,
+                        ),
                         const SizedBox(
                           height: DimensionResource.marginSizeOverExtraLarge+40,
                         ),
