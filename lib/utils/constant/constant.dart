@@ -22,4 +22,8 @@ class Constant {
   static const String getCreditProfile = 'credit_score/get-profile';
   static const String getProfile = 'users/get-user-personal-info';
   static const String updateProfileUrl = 'users/update-user-personal-info';
+
+  static const String kycAddIdType = 'kyc/add-id-type';
+  static const String kycUploadDoc = 'kyc/upload-document';
+  static const String kycUploadSelfie = 'kyc/upload-selfie';
 }
