@@ -12,7 +12,7 @@ class SplashController extends GetxController {
     super.onInit();
     Future.delayed(const Duration(seconds: 3)).then((value) {
 
-      if (Get.find<AuthService>().getUserToken() != "") {
+      if (Get.find<AuthServices>().getUserToken() != "") {
         Get.offNamed(HomePage.route);
       } else {
         Get.offNamed(SignInPage.route);

@@ -199,8 +199,8 @@ class OtpPage extends GetView<OtpController> {
                           //     backgroundColor: Colors.red,
                           //     colorText: Colors.white);
                         } else {
-                          await Get.find<AuthService>().saveUserToken(response.token?.access?.token??"");
-                          await Get.find<AuthService>().saveUser(response.toJson());
+                          await Get.find<AuthServices>().saveUserToken(response.token?.access?.token??"");
+                          await Get.find<AuthServices>().saveUser(response.toJson());
                           Get.offAllNamed(HomePage.route,arguments: [response,response.token!.access!.token!]);
                           // Get.snackbar('Success', 'Successfully $screenName',
                           //     snackPosition: SnackPosition.BOTTOM,

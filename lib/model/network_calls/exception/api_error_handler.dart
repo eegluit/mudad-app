@@ -37,7 +37,7 @@ class ApiErrorHandler {
                   }
                   if (error.response!.data['message'] == "SESSION_EXPIRED" || error.response!.data['message'] == "LOGGED_OUT") {
                     Get.offAllNamed(SignInPage.route);
-                    Get.find<AuthService>().logOut();
+                    Get.find<AuthServices>().logOut();
                   }
                   break;
                 case 422:

@@ -11,16 +11,13 @@ import '../../utils/utils/resource/dimensions_resource.dart';
 import '../../utils/utils/resource/style_resource.dart';
 import '../toast_view/showtoast.dart';
 
-
-
-
 class ImageSelectionUtil {
   final Function(String base64Image, File imageFile) _onImageGet;
 
-   ImageSelectionUtil(this._onImageGet);
+  ImageSelectionUtil(this._onImageGet);
 
-   void pickImage(BuildContext context){
-     showModalBottomSheet(
+  void pickImage(BuildContext context) {
+    showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) {
@@ -42,7 +39,9 @@ class ImageSelectionUtil {
                         ),
                         title: Text(
                           "Gallery",
-                          style: StyleResource.instance.styleMedium(DimensionResource.fontSizeDefault, ColorResource.white),
+                          style: StyleResource.instance.styleMedium(
+                              DimensionResource.fontSizeDefault,
+                              ColorResource.white),
                         ),
                         onTap: () {
                           _openGallery();
@@ -58,7 +57,9 @@ class ImageSelectionUtil {
                       ),
                       title: Text(
                         "Camera",
-                        style: StyleResource.instance.styleMedium(DimensionResource.fontSizeDefault, ColorResource.white),
+                        style: StyleResource.instance.styleMedium(
+                            DimensionResource.fontSizeDefault,
+                            ColorResource.white),
                       ),
                       onTap: () {
                         _openCamera();
@@ -73,43 +74,44 @@ class ImageSelectionUtil {
         });
   }
 
-    void pickImageViaGallery(){
-      _openGallery();
+  void pickImageViaGallery() {
+    _openGallery();
+  }
+
+  void pickImageViaCamera() {
+    _openCamera();
+  }
+
+  void _openGallery() async {
+    ImagePicker imagePicker = ImagePicker();
+
+    try {
+      XFile? imageFile = await imagePicker.pickImage(
+          source: ImageSource.gallery, imageQuality: 10);
+
+      final bytes = await Io.File(imageFile!.path).readAsBytes();
+
+      _onImageGet(base64Encode(bytes), File(imageFile.path));
+    } catch (e) {
+      print(e);
     }
-    void pickImageViaCamera(){
-      _openCamera();
+  }
+
+  void _openCamera() async {
+    ImagePicker imagePicker = ImagePicker();
+    try {
+      await imagePicker
+          .pickImage(source: ImageSource.camera, imageQuality: 10)
+          .then((imageFile) async {
+        if (imageFile != null) {
+          final bytes = await Io.File(imageFile.path).readAsBytes();
+          _onImageGet(base64Encode(bytes), File(imageFile.path));
+        } else {
+          toastShow(massage: "Image not selected");
+        }
+      });
+    } catch (e) {
+      print(e);
     }
-    void _openGallery() async {
-      ImagePicker imagePicker = ImagePicker();
-
-      try {
-        XFile? imageFile = await imagePicker.pickImage(
-            source: ImageSource.gallery, imageQuality: 10);
-
-        final bytes = await Io.File(imageFile!.path).readAsBytes();
-
-        _onImageGet(base64Encode(bytes), File(imageFile.path));
-      } catch (e) {
-        print(e);
-      }
-    }
-
-    void _openCamera() async {
-      ImagePicker imagePicker = ImagePicker();
-      try {
-       await imagePicker.pickImage(
-            source: ImageSource.camera, imageQuality: 10).then((imageFile) async {
-             if(imageFile != null){
-               final bytes = await Io.File(imageFile.path).readAsBytes();
-               _onImageGet(base64Encode(bytes), File(imageFile.path));
-               print(imageFile.mimeType.toString());
-             } else{
-               toastShow(massage: "Image not selected");
-             }
-        });
-
-      } catch (e) {
-          print(e);
-      }
-    }
+  }
 }

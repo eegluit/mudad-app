@@ -97,7 +97,7 @@ class SettingsPage extends StatelessWidget {
                           width: 20,
                         ),
                         Text(
-                          Get.find<AuthService>().user.value.user?.name.toString().capitalize??"",
+                          Get.find<AuthServices>().user.value.user?.name.toString().capitalize??"",
                           style: GoogleFonts.rubik(
                             textStyle: const TextStyle(
                               color: Color(0xff000000),
@@ -418,8 +418,8 @@ class SettingsPage extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             homeController.storage.erase();
-                            Get.find<AuthService>().removeToken();
-                            Get.find<AuthService>().removeUserData();
+                            Get.find<AuthServices>().removeToken();
+                            Get.find<AuthServices>().removeUserData();
                             Get.offAndToNamed(SignInPage.route);
                           },
                           child: Row(

@@ -90,8 +90,8 @@ class EditProfileController extends GetxController{
     }, onSuccess: (status,message,map){
       if(map != null){
         profileData.value = GetProfileModel.fromJson(map);
-        nameController.value.text = "${profileData.value.name??Get.find<AuthService>().user.value.user?.name ?? ""}";
-        emailController.value.text = "${profileData.value.email??Get.find<AuthService>().user.value.user?.email??""}";
+        nameController.value.text = "${profileData.value.name??Get.find<AuthServices>().user.value.user?.name ?? ""}";
+        emailController.value.text = "${profileData.value.email??Get.find<AuthServices>().user.value.user?.email??""}";
         phoneNumberController.value.text = profileData.value.mobile??"";
       }
       isProfileLoading(false);

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../service/auth_service.dart';
+import '../service/kyc_service.dart';
 
 class AuthController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -16,4 +17,5 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
 
   var authService = AuthService();
+  var kycService = KycService();
 }

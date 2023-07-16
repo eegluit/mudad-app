@@ -15,6 +15,7 @@ import '../../base_view/base_view_screen.dart';
 import '../../../widget/toast_view/showtoast.dart';
 // import '../../../service/auth_service.dart';
 import 'package:mudad/model/services/auth_service.dart';
+import '../../../controller/auth_controller.dart';
 
 import 'package:get/get.dart' as get_pack;
 
@@ -238,7 +239,7 @@ class SelectIdWidget extends GetView<VerificationController> {
     ),
   ];
   var typeId = 0.obs;
-  var token = Get.find<AuthService>().getUserToken();
+  var token = Get.find<AuthServices>().getUserToken();
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -266,17 +267,14 @@ class SelectIdWidget extends GetView<VerificationController> {
               var data = typeList.elementAt(index);
               return GestureDetector(
                 onTap: () {
-                  // controller.selectedId.value = index;
-                  // controller.openSelfieCamera();
-                  print('ABC,${data.name} , ${token}');
+                  controller.selectedId.value = index;
                   selfieController.kycService
                       .submitKycIdType(data.name!, token)
                       .then((response) {
                     if (response.code != 200) {
                       toastShow(error: true, massage: response.message);
                     } else {
-                      print(response.toJson());
-                      toastShow(error: false, massage: response.message);
+                      controller.openSelfieCamera();
                     }
                   });
                 },

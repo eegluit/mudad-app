@@ -9,23 +9,20 @@ import '../models/kyc_id_type_response_model.dart';
 class KycService {
   Future<KycIdTypeResponseModel> submitKycIdType(
       String kycIdType, String token) async {
-    print("ABC123");
-    KycIdTypeRequestModel requestModel =
-        KycIdTypeRequestModel(kycIdType: kycIdType);
     try {
-      print("ABC124");
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycAddIdType}',
-        data: requestModel,
+        data: {
+          'kycIdType': kycIdType,
+        },
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {'authentication': 'Bearer $token'},
         ),
       );
-      print("ABC124,${response}");
       KycIdTypeResponseModel model =
           KycIdTypeResponseModel.fromJson(response.data);
-      print('KYC submitIdType: ${model}');
+      model.code = 200;
       return model;
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
@@ -108,7 +105,7 @@ class KycService {
     }
   }
 
-Future<KycUploadSelfieResponseModel> submitKycSelfie(
+  Future<KycUploadSelfieResponseModel> submitKycSelfie(
       String selfiePath, String token) async {
     print("ABC123");
     try {
@@ -158,5 +155,4 @@ Future<KycUploadSelfieResponseModel> submitKycSelfie(
       return model;
     }
   }
-
 }

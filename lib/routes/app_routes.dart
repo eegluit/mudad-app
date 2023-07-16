@@ -122,6 +122,7 @@ class AppRoutes {
     GetPage(
       name: VerificationScreen.route,
       page: () =>  VerificationScreen(),
+      binding: TakeSelfieBinding(),
     ),
     GetPage(
       name: SelectIdTypePage.route,

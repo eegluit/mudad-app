@@ -6,12 +6,12 @@ import '../network_calls/dio_client/dio_client.dart';
 import '../network_calls/dio_client/get_it_instance.dart';
 import '../utils/resource/string_resource.dart';
 
-class AuthService extends GetxService {
+class AuthServices extends GetxService {
   Rx<UserModel> user = UserModel().obs;
   GetStorage? box;
   RxString firebaseToken = "".obs;
 
-  Future<AuthService> init() async {
+  Future<AuthServices> init() async {
     box = GetStorage();
     getCurrentUserData();
     getFirebaseToken();

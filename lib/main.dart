@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mudad/service/kyc_service.dart';
 import 'model/network_calls/dio_client/get_it_instance.dart';
 import 'model/services/auth_service.dart';
 import 'model/services/globleService.dart';
@@ -19,14 +20,14 @@ initServices() async {
   Get.log('starting services ...');
   await GetStorage.init();
   await getInit();
-  await Get.putAsync(() => AuthService().init());
+  await Get.putAsync(() => AuthServices().init());
   await Get.putAsync(() => GlobalService().init());
   Get.log('All services started...');
   return;
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
   final textTheme = Get.textTheme;
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mudad',
       theme: ThemeData(
-        primarySwatch: generateMaterialColor(color: ColorResource.mainColor,),
+        primarySwatch: generateMaterialColor(
+          color: ColorResource.mainColor,
+        ),
         textTheme: GoogleFonts.latoTextTheme(textTheme),
         // appBarTheme: Get.theme.appBarTheme.copyWith(
         //   elevation: 0.0,

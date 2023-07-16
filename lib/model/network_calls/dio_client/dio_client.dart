@@ -19,8 +19,8 @@ class DioClient {
 
   DioClient(this.baseUrl, Dio? dioC, {this.loggingInterceptor,}) {
     token = "";
-    //token = get_pack.Get.find<AuthService>().getUserToken();
-    token = get_pack.Get.find<AuthService>().getUserToken();
+    //token = get_pack.Get.find<AuthServices>().getUserToken();
+    token = get_pack.Get.find<AuthServices>().getUserToken();
     logPrint("Token : $token");
     dio = dioC ?? Dio();
     dio
