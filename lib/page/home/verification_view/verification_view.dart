@@ -21,6 +21,10 @@ import 'package:get/get.dart' as get_pack;
 
 class VerificationScreen extends StatelessWidget {
   static const route = '/verifyIdentityPage';
+  static TakeSelfieController selfieController =
+      Get.find<TakeSelfieController>();
+  var token = Get.find<AuthServices>().getUserToken();
+
   VerificationScreen({Key? key}) : super(key: key);
 
   List<Widget> verifyWidgetList = <Widget>[
@@ -111,9 +115,33 @@ class VerificationScreen extends StatelessWidget {
                           onPressed: controller.currentStep.value == 1
                               ? controller.onVerifyIdentity
                               : controller.currentStep.value == 2
-                                  ? controller.onSelectId
+                                  ? () => selfieController.kycService
+                                          .submitKycDoc(
+                                              controller.selectedIdPic.value,
+                                              token)
+                                          .then((response) {
+                                        if (response.code != 200) {
+                                          toastShow(
+                                              error: true,
+                                              massage: response.message);
+                                        } else {
+                                          controller.onSelectId();
+                                        }
+                                      })
                                   : controller.currentStep.value == 3
-                                      ? controller.onTakeSelfie
+                                      ? () => selfieController.kycService
+                                              .submitKycSelfie(
+                                                  controller.selectSelfie.value,
+                                                  token)
+                                              .then((response) {
+                                            if (response.code != 200) {
+                                              toastShow(
+                                                  error: true,
+                                                  massage: response.message);
+                                            } else {
+                                              controller.onTakeSelfie();
+                                            }
+                                          })
                                       : controller.onVerificationComplete,
                           color: ColorResource.mainColor)),
                   Visibility(
@@ -264,69 +292,70 @@ class SelectIdWidget extends GetView<VerificationController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(typeList.length, (index) {
-              var data = typeList.elementAt(index);
-              return GestureDetector(
-                onTap: () {
-                  controller.selectedId.value = index;
-                  selfieController.kycService
-                      .submitKycIdType(data.name!, token)
-                      .then((response) {
-                    if (response.code != 200) {
-                      toastShow(error: true, massage: response.message);
-                    } else {
-                      controller.openSelfieCamera();
-                    }
-                  });
-                },
-                child: Card(
-                    margin: const EdgeInsets.only(
-                        bottom: DimensionResource.marginSizeExtraLarge),
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: DimensionResource.marginSizeLarge,
-                          vertical: DimensionResource.marginSizeDefault),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 33,
-                            width: 33,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                    color: ColorResource.mainColor, width: 2.5),
-                                color: controller.selectedId.value == index
-                                    ? ColorResource.mainColor
-                                    : ColorResource.white),
-                            child: Center(
-                                child: controller.selectedId.value == index
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Image.asset(
-                                            ImageResource.instance.checkIcon),
-                                      )
-                                    : Container()),
-                          ),
-                          const SizedBox(
-                            width: DimensionResource.marginSizeDefault,
-                          ),
-                          Text(
-                            data.name ?? "",
-                            style: StyleResource.instance
-                                .styleMedium(
-                                    DimensionResource.fontSizeExtraLarge,
-                                    ColorResource.mainColor)
-                                .copyWith(
-                                  letterSpacing: .6,
-                                ),
-                          )
-                        ],
-                      ),
-                    )),
-              );
-            }),
+                var data = typeList.elementAt(index);
+                return GestureDetector(
+                  onTap: () {
+                    controller.selectedId.value = index;
+                    selfieController.kycService
+                        .submitKycIdType(data.name!, token)
+                        .then((response) {
+                      if (response.code != 200) {
+                        toastShow(error: true, massage: response.message);
+                      } else {
+                        controller.openSelfieCamera();
+                      }
+                    });
+                  },
+                  child: Card(
+                      margin: const EdgeInsets.only(
+                          bottom: DimensionResource.marginSizeExtraLarge),
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: DimensionResource.marginSizeLarge,
+                            vertical: DimensionResource.marginSizeDefault),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 33,
+                              width: 33,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                      color: ColorResource.mainColor,
+                                      width: 2.5),
+                                  color: controller.selectedId.value == index
+                                      ? ColorResource.mainColor
+                                      : ColorResource.white),
+                              child: Center(
+                                  child: controller.selectedId.value == index
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Image.asset(
+                                              ImageResource.instance.checkIcon),
+                                        )
+                                      : Container()),
+                            ),
+                            const SizedBox(
+                              width: DimensionResource.marginSizeDefault,
+                            ),
+                            Text(
+                              data.name ?? "",
+                              style: StyleResource.instance
+                                  .styleMedium(
+                                      DimensionResource.fontSizeExtraLarge,
+                                      ColorResource.mainColor)
+                                  .copyWith(
+                                    letterSpacing: .6,
+                                  ),
+                            )
+                          ],
+                        ),
+                      )),
+                );
+              }),
           ),
         ],
       );
@@ -366,7 +395,7 @@ class SelfieWidget extends GetView<VerificationController> {
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.elliptical(170, 220)),
             ),
-            child: controller.selectSelfie.value.path == ""
+            child: controller.selectedIdPic.value.path == ""
                 ? ClipRRect(
                     borderRadius: BorderRadius.all(Radius.elliptical(170, 220)),
                     child:

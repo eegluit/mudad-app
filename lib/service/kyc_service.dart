@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:mudad/models/kyc_upload_doc_response_model.dart';
 import 'package:mudad/models/kyc_upload_selfie_response_model.dart';
 import '../utils/constant/constant.dart';
@@ -55,25 +56,31 @@ class KycService {
   }
 
   Future<KycUploadDocResponseModel> submitKycDoc(
-      String kycIdPath, String token) async {
+      File kycIdFile, String token) async {
     print("ABC123");
     try {
-      final formData = FormData.fromMap({
-        'document': await MultipartFile.fromFile(kycIdPath),
+      String fileName = kycIdFile.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        'document': await MultipartFile.fromFile(
+          kycIdFile.path,
+          filename: fileName,
+          contentType: MediaType('image', 'jpg'),
+        ),
       });
-      print("ABC124");
+      print("ABC124 ${kycIdFile.path} ${formData}");
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycUploadDoc}',
         data: formData,
         options: Options(
-          contentType: Headers.formUrlEncodedContentType,
+          contentType: Headers.formDataType,
           headers: {'authentication': 'Bearer $token'},
         ),
       );
-      print("ABC124,${response}");
+      print("ABC125,${response}");
       KycUploadDocResponseModel model =
           KycUploadDocResponseModel.fromJson(response.data);
       print('KYC DOC uploaded: ${model}');
+      model.code = 200;
       return model;
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
@@ -106,18 +113,23 @@ class KycService {
   }
 
   Future<KycUploadSelfieResponseModel> submitKycSelfie(
-      String selfiePath, String token) async {
+      File selfieFile, String token) async {
     print("ABC123");
     try {
-      final formData = FormData.fromMap({
-        'document': await MultipartFile.fromFile(selfiePath),
+      String fileName = selfieFile.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        'document': await MultipartFile.fromFile(
+          selfieFile.path,
+          filename: fileName,
+          contentType: MediaType('image', 'jpg'),
+        ),
       });
       print("ABC124");
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycUploadSelfie}',
         data: formData,
         options: Options(
-          contentType: Headers.formUrlEncodedContentType,
+          contentType: Headers.formDataType,
           headers: {'authentication': 'Bearer $token'},
         ),
       );
@@ -125,6 +137,7 @@ class KycService {
       KycUploadSelfieResponseModel model =
           KycUploadSelfieResponseModel.fromJson(response.data);
       print('KYC DOC uploaded: ${model}');
+      model.code = 200;
       return model;
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
