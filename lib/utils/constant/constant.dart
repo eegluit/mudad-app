@@ -26,4 +26,5 @@ class Constant {
   static const String kycAddIdType = 'kyc/add-id-type';
   static const String kycUploadDoc = 'kyc/upload-document';
   static const String kycUploadSelfie = 'kyc/upload-selfie';
+  static const String kycGetDetails = 'kyc/get-kyc-details';
 }

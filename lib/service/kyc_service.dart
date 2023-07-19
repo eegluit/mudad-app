@@ -6,6 +6,7 @@ import 'package:mudad/models/kyc_upload_selfie_response_model.dart';
 import '../utils/constant/constant.dart';
 import '../models/kyc_id_type_request_model.dart';
 import '../models/kyc_id_type_response_model.dart';
+import '../models/get_kyc_details_response_model.dart';
 
 class KycService {
   Future<KycIdTypeResponseModel> submitKycIdType(
@@ -57,7 +58,6 @@ class KycService {
 
   Future<KycUploadDocResponseModel> submitKycDoc(
       File kycIdFile, String token) async {
-    print("ABC123");
     try {
       String fileName = kycIdFile.path.split('/').last;
       FormData formData = FormData.fromMap({
@@ -67,7 +67,6 @@ class KycService {
           contentType: MediaType('image', 'jpg'),
         ),
       });
-      print("ABC124 ${kycIdFile.path} ${formData}");
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycUploadDoc}',
         data: formData,
@@ -76,10 +75,8 @@ class KycService {
           headers: {'authentication': 'Bearer $token'},
         ),
       );
-      print("ABC125,${response}");
       KycUploadDocResponseModel model =
           KycUploadDocResponseModel.fromJson(response.data);
-      print('KYC DOC uploaded: ${model}');
       model.code = 200;
       return model;
     } on DioError catch (e) {
@@ -114,7 +111,6 @@ class KycService {
 
   Future<KycUploadSelfieResponseModel> submitKycSelfie(
       File selfieFile, String token) async {
-    print("ABC123");
     try {
       String fileName = selfieFile.path.split('/').last;
       FormData formData = FormData.fromMap({
@@ -124,7 +120,6 @@ class KycService {
           contentType: MediaType('image', 'jpg'),
         ),
       });
-      print("ABC124");
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycUploadSelfie}',
         data: formData,
@@ -133,10 +128,8 @@ class KycService {
           headers: {'authentication': 'Bearer $token'},
         ),
       );
-      print("ABC124,${response}");
       KycUploadSelfieResponseModel model =
           KycUploadSelfieResponseModel.fromJson(response.data);
-      print('KYC DOC uploaded: ${model}');
       model.code = 200;
       return model;
     } on DioError catch (e) {
@@ -162,6 +155,53 @@ class KycService {
       }
     } on SocketException catch (e) {
       KycUploadSelfieResponseModel model = KycUploadSelfieResponseModel(
+        message: e.message,
+        code: 400,
+      );
+      return model;
+    }
+  }
+
+  Future<GetKycDetailsResponseModel> getKycDetails(
+      String userID, String token) async {
+    try {
+      var response = await Dio().post(
+        '${Constant.baseUrl}${Constant.kycGetDetails}',
+        data: {
+          'userId': userID,
+        },
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {'authentication': 'Bearer $token'},
+        ),
+      );
+      GetKycDetailsResponseModel model =
+          GetKycDetailsResponseModel.fromJson(response.data);
+      model.code = 200;
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        GetKycDetailsResponseModel model =
+            GetKycDetailsResponseModel.fromJson(e.response!.data);
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
+          //message: e.message,
+          message: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
+          message: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
         message: e.message,
         code: 400,
       );
