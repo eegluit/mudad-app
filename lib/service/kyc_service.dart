@@ -6,6 +6,7 @@ import 'package:mudad/models/kyc_upload_selfie_response_model.dart';
 import '../utils/constant/constant.dart';
 import '../models/kyc_id_type_request_model.dart';
 import '../models/kyc_id_type_response_model.dart';
+import '../models/get_kyc_details_response_model.dart';
 
 class KycService {
   Future<KycIdTypeResponseModel> submitKycIdType(
@@ -154,6 +155,53 @@ class KycService {
       }
     } on SocketException catch (e) {
       KycUploadSelfieResponseModel model = KycUploadSelfieResponseModel(
+        message: e.message,
+        code: 400,
+      );
+      return model;
+    }
+  }
+
+  Future<GetKycDetailsResponseModel> getKycDetails(
+      String userID, String token) async {
+    try {
+      var response = await Dio().post(
+        '${Constant.baseUrl}${Constant.kycGetDetails}',
+        data: {
+          'userId': userID,
+        },
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {'authentication': 'Bearer $token'},
+        ),
+      );
+      GetKycDetailsResponseModel model =
+          GetKycDetailsResponseModel.fromJson(response.data);
+      model.code = 200;
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        GetKycDetailsResponseModel model =
+            GetKycDetailsResponseModel.fromJson(e.response!.data);
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
+          //message: e.message,
+          message: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
+          message: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
         message: e.message,
         code: 400,
       );

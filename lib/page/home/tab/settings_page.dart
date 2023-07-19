@@ -51,7 +51,7 @@ class SettingsPage extends StatelessWidget {
           padding: const EdgeInsets.only(
             top: 16,
           ),
-          height: Get.height-167,
+          height: Get.height - 167,
           margin: const EdgeInsets.only(top: DimensionResource.marginSizeLarge),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -67,392 +67,402 @@ class SettingsPage extends StatelessWidget {
               topRight: Radius.circular(20),
             ),
           ),
-          child: Obx(
-             () {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: const Color(0xFF111850),
-                              width: 1,
+          child: Obx(() {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFF111850),
+                            width: 1,
+                          ),
+                        ),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: cachedNetworkImage(
+                                homeController.profileData.value.profile ??
+                                    ImageResource.instance.defaultUser)),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        Get.find<AuthServices>()
+                                .user
+                                .value
+                                .user
+                                ?.name
+                                .toString()
+                                .capitalize ??
+                            "",
+                        style: GoogleFonts.rubik(
+                          textStyle: const TextStyle(
+                            color: Color(0xff000000),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Expanded(child: Container()),
+                      InkWell(
+                        // onTap: () {
+                        //   Get.toNamed(VerificationScreen.route);
+                        // },
+                        child: Row(
+                          children: [
+                            Image.asset('images/cong_check.png'),
+                            Text(
+                              ' Verified',
+                              style: GoogleFonts.rubik(
+                                textStyle: const TextStyle(
+                                  color: ColorResource.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                const Divider(
+                  color: Color(0xFFCACACA),
+                  height: 0.5,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Account Settings',
+                        style: GoogleFonts.rubik(
+                          textStyle: const TextStyle(
+                            color: Color(0xFFADADAD),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
                           ),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: cachedNetworkImage(homeController.profileData.value.profile??ImageResource.instance.defaultUser)),
                         ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          Get.find<AuthServices>().user.value.user?.name.toString().capitalize??"",
-                          style: GoogleFonts.rubik(
-                            textStyle: const TextStyle(
-                              color: Color(0xff000000),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(EditProfileScreen.route);
+                        },
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Edit profile',
+                              style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                        ),
-                        Expanded(child: Container()),
-                        InkWell(
-                          // onTap: () {
-                          //   Get.toNamed(VerificationScreen.route);
-                          // },
-                          child: Row(
-                            children: [
-                              Image.asset('images/cong_check.png'),
-                              Text(
-                                ' Verified',
-                                style: GoogleFonts.rubik(
-                                  textStyle: const TextStyle(
-                                    color: ColorResource.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  const Divider(
-                    color: Color(0xFFCACACA),
-                    height: 0.5,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Account Settings',
-                          style: GoogleFonts.rubik(
-                            textStyle: const TextStyle(
-                              color: Color(0xFFADADAD),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
+                            Expanded(child: Container()),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(0xFF4B4B4B),
                             ),
-                          ),
+                            const SizedBox(
+                              width: 36,
+                            )
+                          ],
                         ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(EditProfileScreen.route);
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Edit profile',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                      ),
+                      // const SizedBox(
+                      //   height: 24,
+                      // ),
+                      //  GestureDetector(
+                      //   onTap: (){
+                      //     Get.toNamed(VerificationScreen.route);
+                      //   },
+                      //   child: Row(
+                      //     children: [
+                      //       const Text(
+                      //         'KYC Information',
+                      //         style: TextStyle(
+                      //           color: Color(0xff000000),
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.w400,
+                      //         ),
+                      //       ),
+                      //       Expanded(child: Container()),
+                      //       const Icon(
+                      //         Icons.arrow_forward_ios,
+                      //         color: Color(0xFF4B4B4B),
+                      //       ),
+                      //       const SizedBox(
+                      //         width: 36,
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(ChangePasswordScreen.route);
+                        },
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Change password',
+                              style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
                               ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
+                            ),
+                            Expanded(child: Container()),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(0xFF4B4B4B),
+                            ),
+                            const SizedBox(
+                              width: 36,
+                            )
+                          ],
                         ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                         GestureDetector(
-                          onTap: (){
-                            Get.toNamed(VerificationScreen.route);
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'KYC Information',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      // GestureDetector(
+                      //   onTap: (){
+                      //     Get.toNamed(ReferViewScreen.route);
+                      //   },
+                      //   child: Row(
+                      //     children: [
+                      //       const Text(
+                      //         'Refer a friend',
+                      //         style: TextStyle(
+                      //           color: Color(0xff000000),
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.w400,
+                      //         ),
+                      //       ),
+                      //       Expanded(child: Container()),
+                      //       const Icon(
+                      //         Icons.arrow_forward_ios,
+                      //         color: Color(0xFF4B4B4B),
+                      //       ),
+                      //       const SizedBox(
+                      //         width: 36,
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 24,
+                      // ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(AddCardScreen.route);
+                        },
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Add a payment method',
+                              style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
                               ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
+                            ),
+                            Expanded(child: Container()),
+                            const Icon(
+                              Icons.add,
+                              color: Color(0xFF4B4B4B),
+                            ),
+                            const SizedBox(
+                              width: 36,
+                            )
+                          ],
                         ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(ChangePasswordScreen.route);
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Change password',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        // GestureDetector(
-                        //   onTap: (){
-                        //     Get.toNamed(ReferViewScreen.route);
-                        //   },
-                        //   child: Row(
-                        //     children: [
-                        //       const Text(
-                        //         'Refer a friend',
-                        //         style: TextStyle(
-                        //           color: Color(0xff000000),
-                        //           fontSize: 18,
-                        //           fontWeight: FontWeight.w400,
-                        //         ),
-                        //       ),
-                        //       Expanded(child: Container()),
-                        //       const Icon(
-                        //         Icons.arrow_forward_ios,
-                        //         color: Color(0xFF4B4B4B),
-                        //       ),
-                        //       const SizedBox(
-                        //         width: 36,
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
-                        // const SizedBox(
-                        //   height: 24,
-                        // ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(AddCardScreen.route);
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Add a payment method',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.add,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 25,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                // const Divider(
+                //   color: Color(0xFFCACACA),
+                //   height: 0.5,
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // const SizedBox(
+                      //   height: 8,
+                      // ),
+                      // Text(
+                      //   'More',
+                      //   style: GoogleFonts.rubik(
+                      //     textStyle: const TextStyle(
+                      //       color: Color(0xFFADADAD),
+                      //       fontSize: 18,
+                      //       fontWeight: FontWeight.w400,
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 30,
+                      // ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(InfoPageViewScreen.route,
+                              arguments: "About us ");
+                        },
+                        child: Row(
+                          children: [
+                            const Text(
+                              'About us',
+                              style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Expanded(child: Container()),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(0xFF4B4B4B),
+                            ),
+                            const SizedBox(
+                              width: 36,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(InfoPageViewScreen.route,
+                              arguments: "Privacy policy");
+                        },
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Privacy policy',
+                              style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Expanded(child: Container()),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(0xFF4B4B4B),
+                            ),
+                            const SizedBox(
+                              width: 36,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(InfoPageViewScreen.route,
+                              arguments: "Terms and conditions");
+                        },
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Terms and conditions',
+                              style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Expanded(child: Container()),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(0xFF4B4B4B),
+                            ),
+                            const SizedBox(
+                              width: 36,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          homeController.storage.erase();
+                          Get.find<AuthServices>().removeToken();
+                          Get.find<AuthServices>().removeUserData();
+                          Get.offAndToNamed(SignInPage.route);
+                        },
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Logout',
+                              style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Expanded(child: Container()),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(0xFF4B4B4B),
+                            ),
+                            const SizedBox(
+                              width: 36,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
-                  // const Divider(
-                  //   color: Color(0xFFCACACA),
-                  //   height: 0.5,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // const SizedBox(
-                        //   height: 8,
-                        // ),
-                        // Text(
-                        //   'More',
-                        //   style: GoogleFonts.rubik(
-                        //     textStyle: const TextStyle(
-                        //       color: Color(0xFFADADAD),
-                        //       fontSize: 18,
-                        //       fontWeight: FontWeight.w400,
-                        //     ),
-                        //   ),
-                        // ),
-                        // const SizedBox(
-                        //   height: 30,
-                        // ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(InfoPageViewScreen.route,arguments: "About us ");
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'About us',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(InfoPageViewScreen.route,arguments: "Privacy policy");
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Privacy policy',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(InfoPageViewScreen.route,arguments: "Terms and conditions");
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Terms and conditions',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            homeController.storage.erase();
-                            Get.find<AuthServices>().removeToken();
-                            Get.find<AuthServices>().removeUserData();
-                            Get.offAndToNamed(SignInPage.route);
-                          },
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Logout',
-                                style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF4B4B4B),
-                              ),
-                              const SizedBox(
-                                width: 36,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            }
-          ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
