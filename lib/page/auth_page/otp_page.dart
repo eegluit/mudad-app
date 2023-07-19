@@ -9,6 +9,7 @@ import '../../model/utils/resource/color_resource.dart';
 import '../../controller/otp_controller.dart';
 import '../../widget/toast_view/showtoast.dart';
 import '../home/home_page.dart';
+import '../home/verification_view/verification_view.dart';
 import 'reset_password_page.dart';
 
 class OtpPage extends GetView<OtpController> {
@@ -201,7 +202,11 @@ class OtpPage extends GetView<OtpController> {
                         } else {
                           await Get.find<AuthServices>().saveUserToken(response.token?.access?.token??"");
                           await Get.find<AuthServices>().saveUser(response.toJson());
-                          Get.offAllNamed(HomePage.route,arguments: [response,response.token!.access!.token!]);
+                          if(response.user?.isKyc == false){
+                           Get.offAllNamed(HomePage.route,arguments: [response,response.token!.access!.token!]);
+                           } else{
+                             Get.toNamed(VerificationScreen.route);
+                           }
                           // Get.snackbar('Success', 'Successfully $screenName',
                           //     snackPosition: SnackPosition.BOTTOM,
                           //     backgroundColor: Colors.green.shade600,

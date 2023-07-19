@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../../page/home/verification_view/verification_view.dart';
 import '../../widget/image_picker/image_selection_util.dart';
-
+import '../../page/home/home_page.dart';
 
 class VerificationController extends GetxController{
   RxInt currentStep = 1.obs;
@@ -63,7 +63,7 @@ class VerificationController extends GetxController{
 
   }
   onVerificationComplete(){
-Get.back();
+ Get.offAllNamed(HomePage.route);
   }
   onSkipNowButton(){
 

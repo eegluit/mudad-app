@@ -72,12 +72,14 @@ class User {
     this.isEmailVerified,
     this.name,
     this.email,
+    this.isKyc,
     this.id,
     this.profileUrl
   });
 
   String? role;
   bool? isEmailVerified;
+  bool? isKyc;
   String? name;
   String? email;
   String? id;
@@ -89,12 +91,14 @@ class User {
         name: json["name"],
         email: json["email"],
         id: json["id"],
+        isKyc: json["isKyc"],
     profileUrl: json["profile_url"],
       );
 
   Map<String, dynamic> toJson() => {
         "role": role,
         "isEmailVerified": isEmailVerified,
+        "isKyc": isKyc,
         "name": name,
         "email": email,
         "id": id,
