@@ -57,7 +57,6 @@ class KycService {
 
   Future<KycUploadDocResponseModel> submitKycDoc(
       File kycIdFile, String token) async {
-    print("ABC123");
     try {
       String fileName = kycIdFile.path.split('/').last;
       FormData formData = FormData.fromMap({
@@ -67,7 +66,6 @@ class KycService {
           contentType: MediaType('image', 'jpg'),
         ),
       });
-      print("ABC124 ${kycIdFile.path} ${formData}");
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycUploadDoc}',
         data: formData,
@@ -76,10 +74,8 @@ class KycService {
           headers: {'authentication': 'Bearer $token'},
         ),
       );
-      print("ABC125,${response}");
       KycUploadDocResponseModel model =
           KycUploadDocResponseModel.fromJson(response.data);
-      print('KYC DOC uploaded: ${model}');
       model.code = 200;
       return model;
     } on DioError catch (e) {
@@ -114,7 +110,6 @@ class KycService {
 
   Future<KycUploadSelfieResponseModel> submitKycSelfie(
       File selfieFile, String token) async {
-    print("ABC123");
     try {
       String fileName = selfieFile.path.split('/').last;
       FormData formData = FormData.fromMap({
@@ -124,7 +119,6 @@ class KycService {
           contentType: MediaType('image', 'jpg'),
         ),
       });
-      print("ABC124");
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycUploadSelfie}',
         data: formData,
@@ -133,10 +127,8 @@ class KycService {
           headers: {'authentication': 'Bearer $token'},
         ),
       );
-      print("ABC124,${response}");
       KycUploadSelfieResponseModel model =
           KycUploadSelfieResponseModel.fromJson(response.data);
-      print('KYC DOC uploaded: ${model}');
       model.code = 200;
       return model;
     } on DioError catch (e) {
