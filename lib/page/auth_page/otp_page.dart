@@ -202,7 +202,7 @@ class OtpPage extends GetView<OtpController> {
                         } else {
                           await Get.find<AuthServices>().saveUserToken(response.token?.access?.token??"");
                           await Get.find<AuthServices>().saveUser(response.toJson());
-                          if(response.user?.isKyc == false){
+                          if(response.user?.isKyc == true){
                            Get.offAllNamed(HomePage.route,arguments: [response,response.token!.access!.token!]);
                            } else{
                              Get.toNamed(VerificationScreen.route);
