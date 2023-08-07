@@ -3,9 +3,12 @@ import 'package:mudad/model/services/auth_service.dart';
 import '../page/auth_page/sign_in_page.dart';
 import '../page/home/home_page.dart';
 import '../page/home/verification_view/verification_view.dart';
+import '../../model/models/profile_model/get_user_profile.dart';
+
 import 'home_controller.dart';
 
 class SplashController extends GetxController {
+  Rx<GetProfileModel> profileData = GetProfileModel().obs;
   //HomeController controller = Get.put(HomeController());
 
   @override

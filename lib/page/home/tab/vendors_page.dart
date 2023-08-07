@@ -7,48 +7,19 @@ import '../../../controller/home_controller.dart';
 import '../../../model/models/get_vendor_model/get_vendor_model.dart';
 import '../../../models/vendor_category_model.dart';
 import '../../../widget/cachednetworkimagewidget/cachednetworkimagewidget.dart';
+import './../../../models/get_vendors_response_model.dart';
+import '../../../utils/constant/constant.dart';
 import '../vendor_map_location/vendor_map_location.dart';
 import 'main_page.dart';
 
 class VendorsPage extends GetView<HomeController> {
   const VendorsPage({Key? key}) : super(key: key);
+  static HomeController homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
-    var category = <VendorCategoryModel>[
-      VendorCategoryModel(
-        name: 'Food',
-        image: 'images/food.svg',
-      ),
-      VendorCategoryModel(
-        name: 'Apperal',
-        image: 'images/apperal.svg',
-      ),
-      VendorCategoryModel(
-        name: 'Beauty',
-        image: 'images/beauty.svg',
-      ),
-      VendorCategoryModel(
-        name: 'Home',
-        image: 'images/home_solid.svg',
-      ),
-      VendorCategoryModel(
-        name: 'Sports',
-        image: 'images/sports.svg',
-      ),
-      VendorCategoryModel(
-        name: 'Health',
-        image: 'images/health.svg',
-      ),
-      VendorCategoryModel(
-        name: 'Grocery',
-        image: 'images/grocery.svg',
-      ),
-      VendorCategoryModel(
-        name: 'Technology',
-        image: 'images/technology.svg',
-      ),
-    ];
+    var category = <VendorsResponseModel>[];
+    print("ABCD ${controller.vendorList}");
     return Scaffold(
       backgroundColor: ColorResource.mainColor,
       appBar: AppBar(
@@ -74,12 +45,12 @@ class VendorsPage extends GetView<HomeController> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          height: Get.height-170,
+          height: Get.height - 170,
           padding: const EdgeInsets.only(
             top: 16,
           ),
           margin: const EdgeInsets.only(top: DimensionResource.marginSizeLarge),
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
               BoxShadow(
@@ -88,7 +59,7 @@ class VendorsPage extends GetView<HomeController> {
                 blurRadius: 8,
               )
             ],
-            borderRadius:const BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
             ),
@@ -105,9 +76,9 @@ class VendorsPage extends GetView<HomeController> {
                     width: 34,
                   ),
                   Center(
-                    child: SizedBox(
-                      height: 45,
-                      width: Get.width*0.8,
+                      child: SizedBox(
+                    height: 45,
+                    width: Get.width * 0.8,
                     child: TextFormField(
                       controller: controller.searchController,
                       decoration: InputDecoration(
@@ -363,100 +334,109 @@ class VendorsPage extends GetView<HomeController> {
               const SizedBox(
                 height: DimensionResource.marginSizeSmall,
               ),
-           Obx(() =>  controller.isMerchantLoading.value?
-           GridView.builder(
-             gridDelegate:
-             const SliverGridDelegateWithFixedCrossAxisCount(
-               crossAxisCount: 3,
-               crossAxisSpacing: 5,
-               mainAxisSpacing: 5,
-               childAspectRatio: 1.15,
-             ),
-             padding: const EdgeInsets.symmetric(
-                 horizontal: DimensionResource.marginSizeLarge),
-             shrinkWrap: true,
-             scrollDirection: Axis.vertical,
-             physics: const NeverScrollableScrollPhysics(),
-             itemCount: 3,
-             itemBuilder: (BuildContext context, int index) {
-               return Card(
-                 elevation: 5,
-                 shape: RoundedRectangleBorder(
-                   borderRadius: BorderRadius.circular(10.0),
-                 ),
-                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                 child: ServicesShimmer(),
-               );
-             },
-           ): GridView.builder(
-             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-               crossAxisCount: 3,
-               crossAxisSpacing: 5,
-               mainAxisSpacing: 5,
-               childAspectRatio: 1.15,
-             ),
-             padding: const EdgeInsets.all(10),
-             shrinkWrap: true,
-             scrollDirection: Axis.vertical,
-             physics: const NeverScrollableScrollPhysics(),
-             itemCount: controller.vendorsList.length,
-             itemBuilder: (BuildContext context, int index) {
-               StoreDatum? storeData = controller.vendorData.value.storeData!.elementAt(index);
-               return GestureDetector(
-                 onTap: (){
-                   Get.toNamed(VendorMapLocation.route,arguments: storeData?.name);
-                 },
-                 child: Card(
-                   elevation: 5,
-                   shape: RoundedRectangleBorder(
-                     borderRadius: BorderRadius.circular(10.0),
-                   ),
-                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                   child: Container(
-                     height: 80,
-                     decoration: BoxDecoration(
-                       color: Colors.white,
-                       border: Border.all(
-                         color: const Color(0xFF1E2668),
-                         width: 2,
-                       ),
-                       borderRadius: BorderRadius.circular(10.0),
-                     ),
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Expanded(
-                           child: Padding(
-                             padding: EdgeInsets.all(10),
-                             child: cachedNetworkImage(
-                               storeData?.logo??"",
-                             ),
-                           ),
-                         ),
-                         Container(
-                           width: Get.width,
-                           padding: const EdgeInsets.only(
-                             top: 10,
-                             bottom: 10,
-                           ),
-                           color: const Color(0xFF1E2668),
-                           child: const Text(
-                             'View Location',
-                             style: TextStyle(
-                               color: Colors.white,
-                               fontSize: 12,
-                               fontWeight: FontWeight.w500,
-                             ),
-                             textAlign: TextAlign.center,
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
-                 ),
-               );
-             },
-           ),)
+              Obx(
+                () => controller.isMerchantLoading.value
+                    ? GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                          childAspectRatio: 1.15,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: DimensionResource.marginSizeLarge),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: ServicesShimmer(),
+                          );
+                        },
+                      )
+                    : GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                          childAspectRatio: 1.15,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.vendorList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          VendorsResponseModel? storeData =
+                              controller.vendorList.elementAt(index);
+                          return GestureDetector(
+                            onTap: () {
+                              Get.toNamed(VendorMapLocation.route, arguments: {
+                                "name": storeData.name,
+                                "lat": storeData.lat,
+                                "long": storeData.long
+                              });
+                            },
+                            child: Card(
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: Container(
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: const Color(0xFF1E2668),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: cachedNetworkImage(
+                                          '${Constant.imageUrl}store/${storeData.logo?.document}',
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: Get.width,
+                                      padding: const EdgeInsets.only(
+                                        top: 10,
+                                        bottom: 10,
+                                      ),
+                                      color: const Color(0xFF1E2668),
+                                      child: const Text(
+                                        'View Location',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+              )
             ],
           ),
         ),

@@ -1,14 +1,16 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapViewController extends GetxController{
+class MapViewController extends GetxController {
   GoogleMapController? mapController;
   Rx<LatLng> target = const LatLng(23.592087, 58.425701).obs;
   RxString title = "".obs;
   @override
   void onInit() {
     // TODO: implement onInit
-    title.value = Get.arguments;
+    final Map<String, dynamic> args = Get.arguments;
+    title.value = args['name'];
+    target = LatLng(double.parse(args['lat']), double.parse(args['long'])).obs;
     super.onInit();
   }
 
@@ -21,8 +23,8 @@ class MapViewController extends GetxController{
       Marker(
         markerId: const MarkerId("UncleLau"),
         position: target.value,
-         icon: BitmapDescriptor.defaultMarker,
-       // icon: BitmapDescriptor.fromBytes(val.value),
+        icon: BitmapDescriptor.defaultMarker,
+        // icon: BitmapDescriptor.fromBytes(val.value),
       ),
     };
 

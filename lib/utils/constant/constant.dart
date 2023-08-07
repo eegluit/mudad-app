@@ -3,8 +3,9 @@ import '../../model/utils/resource/app_constants.dart';
 class Constant {
   Constant._();
   static String baseUrl = AppConstants.instance.baseUrl;
+  static String imageUrl = AppConstants.instance.imageUrl;
 
- // static const String baseUrl = 'http://13.232.39.141:8080/v1/';
+  // static const String baseUrl = 'http://13.232.39.141:8080/v1/';
   static const String signUp = 'auth/register';
   static const String login = 'auth/login';
   static const String verifyOtp = 'auth/verify-otp';
@@ -18,7 +19,7 @@ class Constant {
   static const String getCreditScore = 'credit_score/get-credit-score';
 
   static const String dashBoard = 'dashboard/get-dashboard';
-  static const String vendorsList = 'store/get-merchant';
+  static const String vendorsList = 'stores';
   static const String getCreditProfile = 'credit_score/get-profile';
   static const String getProfile = 'users/get-user-personal-info';
   static const String updateProfileUrl = 'users/update-user-personal-info';

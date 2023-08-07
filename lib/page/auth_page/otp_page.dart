@@ -15,7 +15,7 @@ import 'reset_password_page.dart';
 class OtpPage extends GetView<OtpController> {
   static const route = '/otpPage';
   static OtpController otpController = Get.find<OtpController>();
- // static HomeController homeController = Get.find<HomeController>();
+  // static HomeController homeController = Get.find<HomeController>();
   const OtpPage({Key? key}) : super(key: key);
 
   @override
@@ -169,20 +169,20 @@ class OtpPage extends GetView<OtpController> {
                           .then((response) {
                         otpController.isLoading(false);
                         if (response.code != null) {
-                          toastShow(error: true,massage: response.message);
+                          toastShow(error: true, massage: response.message);
                           // Get.snackbar('Error', '${response.message}',
                           //     snackPosition: SnackPosition.BOTTOM,
                           //     backgroundColor: Colors.red,
                           //     colorText: Colors.white);
                         } else {
-                          toastShow(error: false,massage: response.message);
+                          toastShow(error: false, massage: response.message);
                           // Get.snackbar('Success', '${response.message}',
                           //     snackPosition: SnackPosition.BOTTOM,
                           //     backgroundColor: Colors.green.shade600,
                           //     colorText: Colors.white);
                           Get.offAllNamed(ResetPasswordPage.route,
                               arguments: [response.token]);
-                         // Get.delete<OtpController>();
+                          // Get.delete<OtpController>();
                         }
                       });
                     } else {
@@ -190,11 +190,12 @@ class OtpPage extends GetView<OtpController> {
                           .otpVerify(
                         otpController.otpController.text,
                         token,
-                      ).then((response) async {
+                      )
+                          .then((response) async {
                         otpController.isLoading(false);
                         if (response.code != null) {
                           print("error : ${response.message}");
-                          toastShow(error: true,massage: response.message);
+                          toastShow(error: true, massage: response.message);
                           // Get.snackbar('Error', '${response.message}',
                           //     snackPosition: SnackPosition.BOTTOM,
                           //     backgroundColor: Colors.red,
