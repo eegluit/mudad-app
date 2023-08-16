@@ -12,6 +12,7 @@ class PersonalController extends GetxController {
   RxBool isProfileLoading = false.obs;
   Rx<TextEditingController> fNameController = TextEditingController().obs;
   Rx<TextEditingController> lNameController = TextEditingController().obs;
+  Rx<TextEditingController> dobController = TextEditingController().obs;
   Rx<TextEditingController> professionController = TextEditingController().obs;
   Rx<TextEditingController> empolyerController = TextEditingController().obs;
   Rx<TextEditingController> addressController = TextEditingController().obs;
@@ -21,6 +22,7 @@ class PersonalController extends GetxController {
   RxString lNameError = "".obs;
   RxString incomeError = "".obs;
   RxString profError = "".obs;
+  RxString dobError = "".obs;
   RxString empNameError = "".obs;
   RxString empAddError = "".obs;
 
@@ -47,6 +49,7 @@ class PersonalController extends GetxController {
         if(profileData.value.result?.firstName != null){
           fNameController.value.text =  profileData.value.result?.firstName??"";
           lNameController.value.text =  profileData.value.result?.lastName??"";
+          dobController.value.text =  profileData.value.result?.dob??"";
           professionController.value.text =  profileData.value.result?.profession??"";
           empolyerController.value.text =  profileData.value.result?.employer??"";
           addressController.value.text =  profileData.value.result?.employerAddress??"";

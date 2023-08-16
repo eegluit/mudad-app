@@ -9,7 +9,6 @@ import '../../widget/toast_view/showtoast.dart';
 import 'mala_credit_report_page.dart';
 import '../../model/utils/resource/color_resource.dart';
 
-
 class BankStatementPage extends StatelessWidget {
   static const route = '/bankStatementPage';
   static HomeController homeController = Get.find<HomeController>();
@@ -167,8 +166,9 @@ class BankStatementPage extends StatelessWidget {
                       InkWell(
                         onTap: () async {
                           await homeController.pdfPicker().then((value) {
-                            if(value.path != ""){
-                              homeController.selectedBankStatement.value = value;
+                            if (value.path != "") {
+                              homeController.selectedBankStatement.value =
+                                  value;
                             }
                           });
                         },
@@ -190,48 +190,53 @@ class BankStatementPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Obx(() => homeController.selectedBankStatement.value.path != ""
-                      ? Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                left: 15,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF9F9BC0),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      homeController.selectedBankStatement.value.absolute.path.split('/').last,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
+                  Obx(() =>
+                      homeController.selectedBankStatement.value.path != ""
+                          ? Column(
+                              children: [
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                    left: 15,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF9F9BC0),
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          homeController.selectedBankStatement
+                                              .value.absolute.path
+                                              .split('/')
+                                              .last,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          homeController.selectedBankStatement
+                                              .value = File("");
+                                        },
+                                        icon: const Icon(Icons.close),
+                                        color: Colors.white,
+                                      )
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      homeController.selectedBankStatement.value = File("");
-                                    },
-                                    icon: const Icon(Icons.close),
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : Container()),
+                                ),
+                              ],
+                            )
+                          : Container()),
                   const SizedBox(
                     height: 20,
                   ),
@@ -247,21 +252,25 @@ class BankStatementPage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        if (homeController.selectedBankStatement.value.path != "") {
+                        if (homeController.selectedBankStatement.value.path !=
+                            "") {
                           homeController.isLoading(true);
                           homeController.creditService
-                              .creditUploadStatement(
-                                  homeController.getToken, homeController.selectedBankStatement.value)
+                              .submitSpendingBehavior(
+                                  homeController.selectedBankStatement.value,
+                                  'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==',
+                                  '64ce25ffc869c8ac05823456')
                               .then((response) {
                             homeController.isLoading(false);
-                            if (response.code != null) {
-                              toastShow(error: true,massage: response.message);
+                            if (response.code != 200) {
+                              toastShow(error: true, massage: response.errorMessage);
                               // Get.snackbar('Error', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.red,
                               //     colorText: Colors.white);
                             } else {
-                              toastShow(error: false,massage: response.message);
+                              toastShow(
+                                  error: false, massage: 'Bank statement uploaded successfully!');
                               // Get.snackbar('Success', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.green.shade600,

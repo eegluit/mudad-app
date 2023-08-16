@@ -117,7 +117,6 @@ class HomeController extends GetxController {
   Future getVendors() async {
     homeProvider.homeRepo.getVendors(token).then((response) {
       vendorList = response.response!;
-      print("ABC ${response.response}");
     });
   }
 

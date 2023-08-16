@@ -4,6 +4,7 @@ class Constant {
   Constant._();
   static String baseUrl = AppConstants.instance.baseUrl;
   static String imageUrl = AppConstants.instance.imageUrl;
+  static String baseURLCreditModule = AppConstants.instance.baseURLCreditModule;
 
   // static const String baseUrl = 'http://13.232.39.141:8080/v1/';
   static const String signUp = 'auth/register';
@@ -28,4 +29,8 @@ class Constant {
   static const String kycUploadDoc = 'kyc/upload-document';
   static const String kycUploadSelfie = 'kyc/upload-selfie';
   static const String kycGetDetails = 'kyc/get-kyc-details';
+
+  static const String personalityTest = 'PersonalityTest';
+  static const String uploadSpendingBehavior = 'SpendingBehaviour';
+  static const String addCredtiScoreUser = 'user';
 }

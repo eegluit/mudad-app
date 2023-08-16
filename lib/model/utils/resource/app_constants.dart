@@ -13,5 +13,9 @@ class AppConstants {
   String get baseUrl =>
       'http://ec2-13-127-138-135.ap-south-1.compute.amazonaws.com:8081/v1/';
 
-  String get imageUrl => 'http://ec2-13-127-138-135.ap-south-1.compute.amazonaws.com:8081/static/docs/';
+  String get imageUrl =>
+      'http://ec2-13-127-138-135.ap-south-1.compute.amazonaws.com:8081/static/docs/';
+
+  String get baseURLCreditModule =>
+      'https://madadcreditscore.azurewebsites.net/api/CreditScore/';
 }
