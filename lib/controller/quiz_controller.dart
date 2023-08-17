@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudad/model/models/profile_model/get_profile_model.dart';
 import 'package:mudad/models/personality_test_questions_response_model.dart';
 import '../models/select_type_model.dart';
@@ -7,7 +8,9 @@ import '../service/credit_service.dart';
 class QuizController extends GetxController {
   var isLoading = false.obs;
   var creditService = CreditService();
-  var quizQuestions = <QuestionResponseModel>[];
+  // var quizQuestions = <QuestionResponseModel>[];
+  RxList<QuestionResponseModel> quizQuestions = <QuestionResponseModel>[].obs;
+  final selectedAnswers = <int, RxInt>{};
 
   var questionId1 = 0.obs;
   var questionId2 = 0.obs;
@@ -39,18 +42,23 @@ class QuizController extends GetxController {
   ];
 
   Future<void> getProfile() async {
-  try {
-    var response = await creditService.getPersonalityTestQuestions('_qcu9y-FVInVVxoG-OoWZJV9aH_3Kk9xnEceb0FzDiOnAzFuXGsgsg==');
-    if (response.code != 200) {
-      print('ABC error');
-    } else {
-      quizQuestions = response.result!;
+    isLoading(true);
+    try {
+      var response = await creditService.getPersonalityTestQuestions(
+          '_qcu9y-FVInVVxoG-OoWZJV9aH_3Kk9xnEceb0FzDiOnAzFuXGsgsg==');
+      if (response.code != 200) {
+        isLoading(false);
+        print('ABC error');
+      } else {
+        isLoading(false);
+        quizQuestions.value = response.result!;
+        update();
+      }
+    } catch (e) {
+      isLoading(false);
+      print('Error fetching profile: $e');
     }
-  } catch (e) {
-    print('Error fetching profile: $e');
   }
-}
-
 
   @override
   void onInit() {

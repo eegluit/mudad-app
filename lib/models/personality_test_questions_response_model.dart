@@ -33,6 +33,7 @@ class QuestionResponseModel {
   String? questionType;
   String? questionText;
   String? id;
+  int? response;
 
   QuestionResponseModel({
     this.category,
@@ -42,6 +43,7 @@ class QuestionResponseModel {
     this.questionText,
     this.questionType,
     this.id,
+    this.response,
   });
 
   QuestionResponseModel.fromJson(Map<String, dynamic> json) {
