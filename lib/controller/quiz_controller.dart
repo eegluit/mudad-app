@@ -7,6 +7,7 @@ import '../service/credit_service.dart';
 
 class QuizController extends GetxController {
   var isLoading = false.obs;
+  var isFetching = false.obs;
   var creditService = CreditService();
   // var quizQuestions = <QuestionResponseModel>[];
   RxList<QuestionResponseModel> quizQuestions = <QuestionResponseModel>[].obs;
@@ -42,17 +43,16 @@ class QuizController extends GetxController {
   ];
 
   Future<void> getProfile() async {
-    isLoading(true);
+    isFetching(true);
     try {
       var response = await creditService.getPersonalityTestQuestions(
           '_qcu9y-FVInVVxoG-OoWZJV9aH_3Kk9xnEceb0FzDiOnAzFuXGsgsg==');
       if (response.code != 200) {
-        isLoading(false);
+        isFetching(false);
         print('ABC error');
       } else {
-        isLoading(false);
+        isFetching(false);
         quizQuestions.value = response.result!;
-        update();
       }
     } catch (e) {
       isLoading(false);

@@ -201,6 +201,31 @@ class PersonalInfoPage extends GetView<PersonalController> {
                           const SizedBox(
                             height: 30,
                           ),
+                          Container(
+                            child: Stack(
+                              alignment: Alignment.centerRight,
+                              children: [
+                                CommonTextField(
+                                  label: 'Date of Birth',
+                                  controller: controller.dobController.value,
+                                  readOnly: true,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      controller.profError.value =
+                                          "Please enter your Date of Birth.".tr;
+                                      return "";
+                                    } else if (value.removeAllWhitespace ==
+                                        "") {
+                                      controller.profError.value =
+                                          "Please enter valid Date of Birth."
+                                              .tr;
+                                      return null;
+                                    } else {
+                                      controller.profError.value = "";
+                                      return null;
+                                    }
+                                  },
+                                ),
                           GestureDetector(
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
@@ -218,24 +243,19 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                     formattedDate;
                               }
                             },
-                            child: CommonTextField(
-                                label: 'Date of Birth',
-                                controller: controller.dobController.value,
-                                readOnly: true,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    controller.profError.value =
-                                        "Please enter your Date of Birth.".tr;
-                                    return "";
-                                  } else if (value.removeAllWhitespace == "") {
-                                    controller.profError.value =
-                                        "Please enter valid Date of Birth.".tr;
-                                    return null;
-                                  } else {
-                                    controller.profError.value = "";
-                                    return null;
-                                  }
-                                } // If CommonTextField has a readOnly property
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Choose',
+                                      style: TextStyle(
+                                        color: ColorResource.mainColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                                 ),
                           ),
                           const SizedBox(

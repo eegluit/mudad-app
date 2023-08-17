@@ -15,197 +15,224 @@ class QuizPage extends StatelessWidget {
   static QuizController quizController = Get.find<QuizController>();
   static HomeController homeController = Get.find<HomeController>();
   const QuizPage({Key? key}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: Get.height * 0.04,
-            ),
-            SvgPicture.asset('images/credit_progress5.svg'),
-            SizedBox(
-              height: Get.height * 0.05,
-            ),
-            const Text(
-              'QUIZ',
-              style: TextStyle(
-                color: ColorResource.mainColor,
-                fontSize: 32,
-                fontWeight: FontWeight.w900,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: Get.height * 0.03,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-              ),
-              child: Obx(
-                () => Column(
-                  children: [
-                    ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: quizController.quizQuestions.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var question =
-                            quizController.quizQuestions[index];
-                        RxInt selectedAnswer =
-                            quizController.selectedAnswers[index] ?? RxInt(-1);
-                        return Column(
-                          children: [
-                            Text(
-                              '${index + 1}.  ${question.questionText!}',
-                              style: const TextStyle(
-                                color: Color(0xff000000),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount:
-                                  quizController.responseOptionList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                var data = quizController.responseOptionList
-                                    .elementAt(index);
-                                return Obx(
-                                  () => Card(
-                                    elevation: 10,
-                                    margin: const EdgeInsets.only(
-                                      left: 36,
-                                      right: 36,
-                                      top: 10,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                    child: RadioListTile<int>(
-                                      contentPadding: const EdgeInsets.all(0),
-                                      visualDensity: const VisualDensity(
-                                        vertical: VisualDensity.minimumDensity,
-                                      ),
-                                      title: Text(
-                                        "${data.name}",
-                                        style: const TextStyle(
-                                          color: ColorResource.mainColor,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 0,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Get.height * 0.04,
+                ),
+                SvgPicture.asset('images/credit_progress5.svg'),
+                SizedBox(
+                  height: Get.height * 0.05,
+                ),
+                const Text(
+                  'QUIZ',
+                  style: TextStyle(
+                    color: ColorResource.mainColor,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: Get.height * 0.03,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: Obx(
+                    () => Column(
+                      children: [
+                        ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: quizController.quizQuestions.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var question =
+                                quizController.quizQuestions[index];
+                            RxInt selectedAnswer =
+                                quizController.selectedAnswers[index] ??
+                                    RxInt(-1);
+                            return Column(
+                              children: [
+                                Text(
+                                  '${index + 1}.  ${question.questionText!}',
+                                  style: const TextStyle(
+                                    color: Color(0xff000000),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  physics:
+                                      const NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      quizController.responseOptionList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    var data = quizController
+                                        .responseOptionList
+                                        .elementAt(index);
+                                    return Obx(
+                                      () => Card(
+                                        elevation: 10,
+                                        margin: const EdgeInsets.only(
+                                          left: 36,
+                                          right: 36,
+                                          top: 10,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: RadioListTile<int>(
+                                          contentPadding:
+                                              const EdgeInsets.all(0),
+                                          visualDensity:
+                                              const VisualDensity(
+                                            vertical:
+                                                VisualDensity.minimumDensity,
+                                          ),
+                                          title: Text(
+                                            "${data.name}",
+                                            style: const TextStyle(
+                                              color: ColorResource.mainColor,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          groupValue: selectedAnswer.value,
+                                          value: data.id!,
+                                          onChanged: (val) {
+                                            selectedAnswer.value = val!;
+                                            quizController
+                                                .quizQuestions[index]
+                                                .response = val;
+                                          },
                                         ),
                                       ),
-                                      groupValue: selectedAnswer.value,
-                                      value: data.id!,
-                                      onChanged: (val) {
-                                        selectedAnswer.value = val!;
-                                        quizController.quizQuestions[index]
-                                            .response = val;
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    SizedBox(
-                      width: Get.width,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(13)),
-                          ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                )
+                              ],
+                            );
+                          },
                         ),
-                        onPressed: () {
-                          if (validate(quizController)) {
-                            quizController.isLoading(true);
-                            quizController.creditService.submitPersonalityQuiz(
-                                createQuizResponseModel(
-                                    quizController.quizQuestions),
-                                'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==')
-                                .then((response) {
-                              quizController.isLoading(false);
-                              if (response.code != 200) {
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        SizedBox(
+                          width: Get.width,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13)),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (validate(quizController)) {
+                                quizController.isLoading(true);
+                                quizController.creditService.submitPersonalityQuiz(
+                                    createQuizResponseModel(
+                                        quizController.quizQuestions),
+                                    'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==')
+                                    .then((response) {
+                                  quizController.isLoading(false);
+                                  if (response.code != 200) {
                                 toastShow(error: true, massage: response.errorMessage);
                               // Get.snackbar('Error', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.red,
                               //     colorText: Colors.white);
-                              } else {
-                                toastShow(
+                                  } else {
+                                    toastShow(
                                     error: false, massage: response.successMessage);
                               // Get.snackbar('Success', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.green.shade600,
                               //     colorText: Colors.white);
-                              quizController.questionId1(0);
-                              quizController.questionId2(0);
-                              quizController.questionId3(0);
-                              quizController.questionId4(0);
-                              quizController.questionId5(0);
-                                Get.offNamed(CreditCompleteScorePage.route);
+                                    quizController.questionId1(0);
+                                    quizController.questionId2(0);
+                                    quizController.questionId3(0);
+                                    quizController.questionId4(0);
+                                    quizController.questionId5(0);
+                                    Get.offNamed(CreditCompleteScorePage.route);
+                                  }
+                                });
                               }
-                            });
-                          }
-                        },
-                        child: Obx(
-                          () => quizController.isLoading.value
-                              ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                'Loading...',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ],
-                          )
-                              : const Text(
-                            'Continue',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
+                            },
+                            child: Obx(
+                              () => quizController.isLoading.value
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Text(
+                                          'Loading...',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      ],
+                                    )
+                                  : const Text(
+                                      'Continue',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                             ),
                           ),
                         ),
-                      ),
+                        const SizedBox(
+                          height: 60,
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                  ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Obx(() {
+          return Visibility(
+            visible: quizController.isFetching.value,
+            child: Container(
+              color: ColorResource.white.withOpacity(1),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: ColorResource.mainColor,
                 ),
               ),
             ),
-          ],
-        ),
-      ),
+          );
+        }),
+      ],
     );
   }
 
