@@ -49,6 +49,23 @@ class QuizPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                 ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: quizController.quizQuestions.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var question = quizController.quizQuestions.elementAt(index);
+                      return Text(
+                        '${index + 1} ${question.questionText!}',
+                        style: TextStyle(
+                          color: Color(0xff000000),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      );
+                      }  
+                      ),
                   const Text(
                     '1. Have you paid your all yours bills on time?',
                     style: TextStyle(
