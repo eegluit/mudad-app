@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mudad/model/models/profile_model/get_profile_model.dart';
 import 'package:mudad/models/personality_test_questions_response_model.dart';
 import '../models/select_type_model.dart';
 import '../service/credit_service.dart';
@@ -37,18 +38,19 @@ class QuizController extends GetxController {
     ),
   ];
 
-  Future getProfile() async {
-    creditService
-        .getPersonalityTestQuestions(
-            'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==')
-        .then((response) {
-      if (response.code != 200) {
-        print('ABC error');
-      } else {
-        quizQuestions = response.result!;
-      }
-    });
+  Future<void> getProfile() async {
+  try {
+    var response = await creditService.getPersonalityTestQuestions('_qcu9y-FVInVVxoG-OoWZJV9aH_3Kk9xnEceb0FzDiOnAzFuXGsgsg==');
+    if (response.code != 200) {
+      print('ABC error');
+    } else {
+      quizQuestions = response.result!;
+    }
+  } catch (e) {
+    print('Error fetching profile: $e');
   }
+}
+
 
   @override
   void onInit() {
