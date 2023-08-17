@@ -15,7 +15,7 @@ class QuizPage extends StatelessWidget {
   static QuizController quizController = Get.find<QuizController>();
   static HomeController homeController = Get.find<HomeController>();
   const QuizPage({Key? key}) : super(key: key);
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,16 +49,17 @@ class QuizPage extends StatelessWidget {
                 left: 20,
                 right: 20,
               ),
-              child: Column(
-                children: [
-                  ListView.builder(
+              child: Obx(
+                () => Column(
+                  children: [
+                    ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: quizController.quizQuestions.length,
                       itemBuilder: (BuildContext context, int index) {
                         var question =
-                            quizController.quizQuestions.elementAt(index);
+                            quizController.quizQuestions[index];
                         RxInt selectedAnswer =
                             quizController.selectedAnswers[index] ?? RxInt(-1);
                         return Column(
@@ -121,35 +122,39 @@ class QuizPage extends StatelessWidget {
                             )
                           ],
                         );
-                      }),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  SizedBox(
-                    width: Get.width,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(13)),
+                      },
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    SizedBox(
+                      width: Get.width,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13)),
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        if (validate(quizController)) {
-                          quizController.isLoading(true);
-                          quizController.creditService.submitPersonalityQuiz(createQuizResponseModel(quizController.quizQuestions), 'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==')
-                              .then((response) {
-                            quizController.isLoading(false);
-                            if (response.code != 200) {
-                              toastShow(error: true, massage: response.errorMessage);
+                        onPressed: () {
+                          if (validate(quizController)) {
+                            quizController.isLoading(true);
+                            quizController.creditService.submitPersonalityQuiz(
+                                createQuizResponseModel(
+                                    quizController.quizQuestions),
+                                'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==')
+                                .then((response) {
+                              quizController.isLoading(false);
+                              if (response.code != 200) {
+                                toastShow(error: true, massage: response.errorMessage);
                               // Get.snackbar('Error', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.red,
                               //     colorText: Colors.white);
-                            } else {
-                              toastShow(
-                                  error: false, massage: response.successMessage);
+                              } else {
+                                toastShow(
+                                    error: false, massage: response.successMessage);
                               // Get.snackbar('Success', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.green.shade600,
@@ -159,42 +164,43 @@ class QuizPage extends StatelessWidget {
                               quizController.questionId3(0);
                               quizController.questionId4(0);
                               quizController.questionId5(0);
-                              Get.offNamed(CreditCompleteScorePage.route);
-                            }
-                          });
-                        }
-                      },
-                      child: Obx(
-                        () => quizController.isLoading.value
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text(
-                                    'Loading...',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              )
-                            : const Text(
-                                'Continue',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                Get.offNamed(CreditCompleteScorePage.route);
+                              }
+                            });
+                          }
+                        },
+                        child: Obx(
+                          () => quizController.isLoading.value
+                              ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'Loading...',
+                                style: TextStyle(fontSize: 20),
                               ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ],
+                          )
+                              : const Text(
+                            'Continue',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 60,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
