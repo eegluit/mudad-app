@@ -17,13 +17,13 @@ class CreditCompleteScorePage extends StatelessWidget {
         .getCreditScore(homeController.getToken)
         .then((response) {
       if (response.code != null) {
-        toastShow(error: true,massage: response.message);
+        // toastShow(error: true,massage: response.message);
         // Get.snackbar('Error', '${response.message}',
         //     snackPosition: SnackPosition.BOTTOM,
         //     backgroundColor: Colors.red,
         //     colorText: Colors.white);
       } else {
-        toastShow(error: false,massage: response.message);
+        // toastShow(error: false,massage: response.message);
         // Get.snackbar('Success', '${response.message}',
         //     snackPosition: SnackPosition.BOTTOM,
         //     backgroundColor: Colors.green.shade600,

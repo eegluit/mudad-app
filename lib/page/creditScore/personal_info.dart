@@ -369,9 +369,18 @@ class PersonalInfoPage extends GetView<PersonalController> {
                               ),
                               onPressed: () {
                                 // Get.offNamed(BankStatementPage.route);
-                                if (controller.formKey.currentState
+                                if (validate(controller
+                                                  .fNameController.value.text, controller
+                                                  .lNameController.value.text, controller.gender.value == 'm'
+                                                      ? 'Male'
+                                                      : 'Female', controller
+                                                  .professionController.value.text, controller
+                                                  .empolyerController.value.text, controller
+                                                  .addressController.value.text, controller
+                                                  .incomeController.value.text, controller
+                                                  .dobController.value.text) && (controller.formKey.currentState
                                         ?.validate() ??
-                                    false) {
+                                    false)) {
                                   controller.isLoading(true);
                                   controller.creditService
                                       .createCreditUser(
@@ -492,72 +501,81 @@ class PersonalInfoPage extends GetView<PersonalController> {
     );
   }
 
-  // bool validate(String fName, String lName, String gender, String profession,
-  //     String employer, String address, String income) {
-  //   if (fName.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       "Please Enter First Name",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return false;
-  //   } else if (lName.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       "Please Enter Last Name",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return false;
-  //   } else if (gender.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       "Please Enter Gender",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return false;
-  //   } else if (profession.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       "Please Enter Profession",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return false;
-  //   } else if (employer.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       "Please Enter Employer",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return false;
-  //   } else if (address.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       "Please Enter Employer Address",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return false;
-  //   } else if (income.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       "Please Enter Monthly Income",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return false;
-  //   }
-  //   return true;
-  // }
+  bool validate(String fName, String lName, String gender, String profession,
+      String employer, String address, String income, String dob) {
+    if (fName.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Please Enter First Name",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    } else if (lName.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Please Enter Last Name",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    } else if (gender.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Please Enter Gender",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    } else if (profession.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Please Enter Profession",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    } else if (employer.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Please Enter Employer",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    } else if (address.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Please Enter Employer Address",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    } else if (income.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Please Enter Monthly Income",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    } else if (dob.isEmpty){
+      Get.snackbar(
+        'Error',
+        "Please Enter Date of Birth",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+    return true;
+  }
 }
