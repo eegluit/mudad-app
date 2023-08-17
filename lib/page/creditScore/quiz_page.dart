@@ -49,38 +49,30 @@ class QuizPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                 ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: quizController.quizQuestions.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var question = quizController.quizQuestions.elementAt(index);
-                      return Text(
-                        '${index + 1} ${question.questionText!}',
-                        style: TextStyle(
-                          color: Color(0xff000000),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      );
-                      }  
-                      ),
-                  const Text(
-                    '1. Have you paid your all yours bills on time?',
-                    style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
                   ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: quizController.quizQuestions.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var question =
+                            quizController.quizQuestions.elementAt(index);
+                        return Column(
+                          children: [Text(
+                          '${index + 1}.  ${question.questionText!}',
+                          style: const TextStyle(
+                            color: Color(0xff000000),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: quizController.questionList1.length,
+                    itemCount: quizController.responseOptionList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      var data = quizController.questionList1.elementAt(index);
+                      var data = quizController.responseOptionList.elementAt(index);
                       return Obx(
                         () => Card(
                           elevation: 10,
@@ -117,212 +109,10 @@ class QuizPage extends StatelessWidget {
                   ),
                   const SizedBox(
                     height: 30,
-                  ),
-                  const Text(
-                    '2. How often do you neglect others needs and spend more on yourself?',
-                    style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: quizController.questionList1.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var data = quizController.questionList1.elementAt(index);
-                      return Obx(
-                        () => Card(
-                          elevation: 10,
-                          margin: const EdgeInsets.only(
-                            left: 36,
-                            right: 36,
-                            top: 10,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: RadioListTile<int>(
-                            contentPadding: const EdgeInsets.all(0),
-                            visualDensity: const VisualDensity(
-                              vertical: VisualDensity.minimumDensity,
-                            ),
-                            title: Text(
-                              "${data.name}",
-                              style: const TextStyle(
-                                color: ColorResource.mainColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            groupValue: quizController.questionId2.value,
-                            value: data.id!,
-                            onChanged: (val) {
-                              quizController.questionId2.value = val!;
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    '3. Do you shop or buy so much that it negatively effects your daily obligations (like loan repayments)?',
-                    style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: quizController.questionList1.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var data = quizController.questionList1.elementAt(index);
-                      return Obx(
-                        () => Card(
-                          elevation: 10,
-                          margin: const EdgeInsets.only(
-                            left: 36,
-                            right: 36,
-                            top: 10,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: RadioListTile<int>(
-                            contentPadding: const EdgeInsets.all(0),
-                            visualDensity: const VisualDensity(
-                              vertical: VisualDensity.minimumDensity,
-                            ),
-                            title: Text(
-                              "${data.name}",
-                              style: const TextStyle(
-                                color: ColorResource.mainColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            groupValue: quizController.questionId3.value,
-                            value: data.id!,
-                            onChanged: (val) {
-                              quizController.questionId3.value = val!;
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    '4. How often do you get anxious about your repayments?',
-                    style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: quizController.questionList1.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var data = quizController.questionList1.elementAt(index);
-                      return Obx(
-                        () => Card(
-                          elevation: 10,
-                          margin: const EdgeInsets.only(
-                            left: 36,
-                            right: 36,
-                            top: 10,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: RadioListTile<int>(
-                            contentPadding: const EdgeInsets.all(0),
-                            visualDensity: const VisualDensity(
-                              vertical: VisualDensity.minimumDensity,
-                            ),
-                            title: Text(
-                              "${data.name}",
-                              style: const TextStyle(
-                                color: ColorResource.mainColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            groupValue: quizController.questionId4.value,
-                            value: data.id!,
-                            onChanged: (val) {
-                              quizController.questionId4.value = val!;
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    '5. Most of the time, I avoid taking responsibilities?',
-                    style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: quizController.questionList1.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var data = quizController.questionList1.elementAt(index);
-                      return Obx(
-                        () => Card(
-                          elevation: 10,
-                          margin: const EdgeInsets.only(
-                            left: 36,
-                            right: 36,
-                            top: 10,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: RadioListTile<int>(
-                            contentPadding: const EdgeInsets.all(0),
-                            visualDensity: const VisualDensity(
-                              vertical: VisualDensity.minimumDensity,
-                            ),
-                            title: Text(
-                              "${data.name}",
-                              style: const TextStyle(
-                                color: ColorResource.mainColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            groupValue: quizController.questionId5.value,
-                            value: data.id!,
-                            onChanged: (val) {
-                              quizController.questionId5.value = val!;
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  )
+                        ],
+                        );
+                      }),
                   const SizedBox(
                     height: 60,
                   ),
@@ -368,13 +158,14 @@ class QuizPage extends StatelessWidget {
                               .then((response) {
                             quizController.isLoading(false);
                             if (response.code != null) {
-                              toastShow(error: true,massage: response.message);
+                              toastShow(error: true, massage: response.message);
                               // Get.snackbar('Error', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.red,
                               //     colorText: Colors.white);
                             } else {
-                              toastShow(error: false,massage: response.message);
+                              toastShow(
+                                  error: false, massage: response.message);
                               // Get.snackbar('Success', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.green.shade600,

@@ -15,7 +15,7 @@ class QuizController extends GetxController {
   var questionId4 = 0.obs;
   var questionId5 = 0.obs;
 
-  List<SelectTypeModel> questionList1 = [
+  List<SelectTypeModel> responseOptionList = [
     SelectTypeModel(
       id: 1,
       name: "Strongrly inaccurate",
