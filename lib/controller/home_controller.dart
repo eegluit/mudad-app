@@ -56,8 +56,10 @@ class HomeController extends GetxController {
   var creditService = CreditService();
   var token = Get.find<AuthServices>().getUserToken();
 
-  String get getToken => storage.read('token') ?? '';
+  String get getCreditToken => storage.read('creditToken') ?? '';
+  void setCreditToken(String value) => storage.write('creditToken', value);
 
+  String get getToken => storage.read('token') ?? ''; 
   void setToken(String value) => storage.write('token', value);
 
   // UserModel get getUser {

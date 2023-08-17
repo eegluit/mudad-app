@@ -226,23 +226,23 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                     }
                                   },
                                 ),
-                          GestureDetector(
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime.now(),
-                              );
+                                GestureDetector(
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime.now(),
+                                    );
 
-                              if (pickedDate != null) {
-                                // Format the picked date as needed
-                                String formattedDate =
-                                    "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-                                controller.dobController.value.text =
-                                    formattedDate;
-                              }
-                            },
+                                    if (pickedDate != null) {
+                                      // Format the picked date as needed
+                                      String formattedDate =
+                                          "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                                      controller.dobController.value.text =
+                                          formattedDate;
+                                    }
+                                  },
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text(
@@ -256,7 +256,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                   ),
                                 ),
                               ],
-                                ),
+                            ),
                           ),
                           const SizedBox(
                             height: 30,
@@ -411,6 +411,8 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                       //     backgroundColor: Colors.red,
                                       //     colorText: Colors.white);
                                     } else {
+                                      homeController
+                                          .setCreditToken(response.result!);
                                       toastShow(
                                           error: false,
                                           massage: "Personal info added!");

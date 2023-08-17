@@ -259,7 +259,7 @@ class BankStatementPage extends StatelessWidget {
                               .submitSpendingBehavior(
                                   homeController.selectedBankStatement.value,
                                   'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==',
-                                  '64ce25ffc869c8ac05823456')
+                                  homeController.getCreditToken)
                               .then((response) {
                             homeController.isLoading(false);
                             if (response.code != 200) {

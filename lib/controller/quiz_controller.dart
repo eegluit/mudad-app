@@ -9,20 +9,21 @@ class QuizController extends GetxController {
   var isLoading = false.obs;
   var isFetching = false.obs;
   var creditService = CreditService();
-  // var quizQuestions = <QuestionResponseModel>[];
   RxList<QuestionResponseModel> quizQuestions = <QuestionResponseModel>[].obs;
   final selectedAnswers = <int, RxInt>{};
 
-  var questionId1 = 0.obs;
-  var questionId2 = 0.obs;
-  var questionId3 = 0.obs;
-  var questionId4 = 0.obs;
-  var questionId5 = 0.obs;
+  
+
+  // var questionId1 = 0.obs;
+  // var questionId2 = 0.obs;
+  // var questionId3 = 0.obs;
+  // var questionId4 = 0.obs;
+  // var questionId5 = 0.obs;
 
   List<SelectTypeModel> responseOptionList = [
     SelectTypeModel(
       id: 1,
-      name: "Strongrly inaccurate",
+      name: "Strongly inaccurate",
     ),
     SelectTypeModel(
       id: 2,
@@ -34,11 +35,11 @@ class QuizController extends GetxController {
     ),
     SelectTypeModel(
       id: 4,
-      name: "Acurate",
+      name: "Accurate",
     ),
     SelectTypeModel(
       id: 5,
-      name: "Strongly Acurate",
+      name: "Strongly Accurate",
     ),
   ];
 
@@ -55,7 +56,7 @@ class QuizController extends GetxController {
         quizQuestions.value = response.result!;
       }
     } catch (e) {
-      isLoading(false);
+      isFetching(false);
       print('Error fetching profile: $e');
     }
   }

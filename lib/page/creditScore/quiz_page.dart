@@ -60,8 +60,7 @@ class QuizPage extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: quizController.quizQuestions.length,
                           itemBuilder: (BuildContext context, int index) {
-                            var question =
-                                quizController.quizQuestions[index];
+                            var question = quizController.quizQuestions[index];
                             RxInt selectedAnswer =
                                 quizController.selectedAnswers[index] ??
                                     RxInt(-1);
@@ -78,15 +77,13 @@ class QuizPage extends StatelessWidget {
                                 ListView.builder(
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
-                                  physics:
-                                      const NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemCount:
                                       quizController.responseOptionList.length,
                                   itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var data = quizController
-                                        .responseOptionList
-                                        .elementAt(index);
+                                      (BuildContext context, int idx) {
+                                    var data = quizController.responseOptionList
+                                        .elementAt(idx);
                                     return Obx(
                                       () => Card(
                                         elevation: 10,
@@ -102,8 +99,7 @@ class QuizPage extends StatelessWidget {
                                         child: RadioListTile<int>(
                                           contentPadding:
                                               const EdgeInsets.all(0),
-                                          visualDensity:
-                                              const VisualDensity(
+                                          visualDensity: const VisualDensity(
                                             vertical:
                                                 VisualDensity.minimumDensity,
                                           ),
@@ -119,8 +115,7 @@ class QuizPage extends StatelessWidget {
                                           value: data.id!,
                                           onChanged: (val) {
                                             selectedAnswer.value = val!;
-                                            quizController
-                                                .quizQuestions[index]
+                                            quizController.quizQuestions[index]
                                                 .response = val;
                                           },
                                         ),
@@ -151,30 +146,34 @@ class QuizPage extends StatelessWidget {
                             onPressed: () {
                               if (validate(quizController)) {
                                 quizController.isLoading(true);
-                                quizController.creditService.submitPersonalityQuiz(
-                                    createQuizResponseModel(
-                                        quizController.quizQuestions),
-                                    'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==')
+                                quizController.creditService
+                                    .submitPersonalityQuiz(
+                                        createQuizResponseModel(
+                                            quizController.quizQuestions),
+                                        'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==')
                                     .then((response) {
                                   quizController.isLoading(false);
                                   if (response.code != 200) {
-                                toastShow(error: true, massage: response.errorMessage);
-                              // Get.snackbar('Error', '${response.message}',
-                              //     snackPosition: SnackPosition.BOTTOM,
-                              //     backgroundColor: Colors.red,
-                              //     colorText: Colors.white);
+                                    toastShow(
+                                        error: true,
+                                        massage: response.errorMessage);
+                                    // Get.snackbar('Error', '${response.message}',
+                                    //     snackPosition: SnackPosition.BOTTOM,
+                                    //     backgroundColor: Colors.red,
+                                    //     colorText: Colors.white);
                                   } else {
                                     toastShow(
-                                    error: false, massage: response.successMessage);
-                              // Get.snackbar('Success', '${response.message}',
-                              //     snackPosition: SnackPosition.BOTTOM,
-                              //     backgroundColor: Colors.green.shade600,
-                              //     colorText: Colors.white);
-                                    quizController.questionId1(0);
-                                    quizController.questionId2(0);
-                                    quizController.questionId3(0);
-                                    quizController.questionId4(0);
-                                    quizController.questionId5(0);
+                                        error: false,
+                                        massage: response.successMessage);
+                                    // Get.snackbar('Success', '${response.message}',
+                                    //     snackPosition: SnackPosition.BOTTOM,
+                                    //     backgroundColor: Colors.green.shade600,
+                                    //     colorText: Colors.white);
+                                    // quizController.questionId1(0);
+                                    // quizController.questionId2(0);
+                                    // quizController.questionId3(0);
+                                    // quizController.questionId4(0);
+                                    // quizController.questionId5(0);
                                     Get.offNamed(CreditCompleteScorePage.route);
                                   }
                                 });
@@ -260,7 +259,7 @@ class QuizPage extends StatelessWidget {
       }
     }
     return PersonalityQuestionsRequestModel(
-        userId: '64c804be20dac0a4e216f896',
+        userId: homeController.getCreditToken,
         conscientiousness: conscientiousness,
         neuroticism: neuroticism,
         financialSelfEfficacy: financialSelfEfficacy,

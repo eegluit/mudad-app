@@ -54,6 +54,7 @@ class QuestionResponseModel {
     questionText = json['questionText'];
     questionType = json['questionType'];
     id = json['id'];
+    response = json['response'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +66,7 @@ class QuestionResponseModel {
     map["questionText"] = questionText;
     map["questionType"] = questionType;
     map["id"] = id;
+    map["response"] = response;
     return map;
   }
 }

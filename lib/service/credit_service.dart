@@ -210,7 +210,7 @@ class CreditService {
       );
       GetPersonalityQuestionsResponseModel model =
           GetPersonalityQuestionsResponseModel.fromJson(response.data);
-        model.code = 200;
+      model.code = 200;
       return model;
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
@@ -250,16 +250,22 @@ class CreditService {
     String token,
   ) async {
     try {
+      print('ABC ${requestModel.toJson()}');
       var response = await Dio().post(
-        '${Constant.baseURLCreditModule}${Constant.personalityTest}',
+        '${Constant.baseURLCreditModule}${Constant.personalityTest}/',
         data: requestModel.toJson(),
         options: Options(
           contentType: Headers.textPlainContentType,
-          headers: {'x-functions-key': token,'Content-Type': 'application/json'},
+          headers: {
+            'x-functions-key': token,
+            'Content-Type': 'application/json'
+          },
         ),
       );
+      print('ABC ${response.toString()}');
       CreditModuleDefaultResponse model =
           CreditModuleDefaultResponse.fromJson(response.data);
+      model.code = 200;
       return model;
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
@@ -349,23 +355,25 @@ class CreditService {
     String token,
   ) async {
     try {
-
       final Map<String, dynamic> rawData = {
-          'firstName': userDetails.firstName,
-          'lastName': userDetails.lastName,
-          'gender': userDetails.gender,
-          'dob': userDetails.dob,
-          'profession': userDetails.profession,
-          'employer': userDetails.employer,
-          'employerAddress': userDetails.employerAddress,
-          'monthlyIncome': userDetails.monthlyIncome
+        'firstName': userDetails.firstName,
+        'lastName': userDetails.lastName,
+        'gender': userDetails.gender,
+        'dob': userDetails.dob,
+        'profession': userDetails.profession,
+        'employer': userDetails.employer,
+        'employerAddress': userDetails.employerAddress,
+        'monthlyIncome': userDetails.monthlyIncome
       };
       var response = await Dio().post(
         '${Constant.baseURLCreditModule}${Constant.addCredtiScoreUser}/',
         data: rawData,
         options: Options(
           contentType: Headers.textPlainContentType,
-          headers: {'x-functions-key': token,'Content-Type': 'application/json'},
+          headers: {
+            'x-functions-key': token,
+            'Content-Type': 'application/json'
+          },
         ),
       );
       CreditModuleDefaultResponse model =
