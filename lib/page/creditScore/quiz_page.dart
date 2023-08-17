@@ -269,10 +269,10 @@ class QuizPage extends StatelessWidget {
 
   bool validate(QuizController controller) {
     for (var ques in controller.quizQuestions) {
-      if (ques.response == null && ques.response == -1) {
+      if (ques.response == null || ques.response == -1) {
         Get.snackbar(
           'Error',
-          "Please Select Question no. ${1}",
+          "Please Select Answer to the remaining Questions",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
