@@ -431,94 +431,94 @@ class MainPage extends GetView<HomeController> {
                       ],
                     ),
                   ),
-                  viewAllRow('Available Merchant', () {
-                    Get.toNamed(AvailableMerchantScreen.route);
-                  }),
-                  Obx(
-                    () {
-                      return  controller.isMerchantLoading.value?
-                      GridView.builder(
-                        gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
-                          childAspectRatio: 1.15,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: DimensionResource.marginSizeLarge),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 3,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: ServicesShimmer(),
-                          );
-                        },
-                      ):(controller.vendorData.value.storeData?.isEmpty??true)? Center(
-                        child: Text("At the moment, there is no merchant available.",style: StyleResource.instance.styleMedium(DimensionResource.fontSizeSmall, ColorResource.secondColor),),
-                      ) : GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
-                          childAspectRatio: 1.15,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: DimensionResource.marginSizeLarge),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: (controller.vendorData.value.storeData?.length??0) >= 6?6:(controller.vendorData.value.storeData?.length??0),
-                        itemBuilder: (BuildContext context, int index) {
-                         StoreDatum? storeData = controller.vendorData.value.storeData!.elementAt(index);
-                          return GestureDetector(
-                            onTap: (){
-                              Get.toNamed(VendorMapLocation.route,arguments: storeData?.name);
-                            },
-                            child: Card(
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: Container(
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    color: const Color(0xFF1E2668),
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: cachedNetworkImage(
-                                          storeData?.logo??"",
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  ),
+                  // viewAllRow('Available Merchant', () {
+                  //   Get.toNamed(AvailableMerchantScreen.route);
+                  // }),
+                  // Obx(
+                  //   () {
+                  //     return  controller.isMerchantLoading.value?
+                  //     GridView.builder(
+                  //       gridDelegate:
+                  //       const SliverGridDelegateWithFixedCrossAxisCount(
+                  //         crossAxisCount: 3,
+                  //         crossAxisSpacing: 5,
+                  //         mainAxisSpacing: 5,
+                  //         childAspectRatio: 1.15,
+                  //       ),
+                  //       padding: const EdgeInsets.symmetric(
+                  //           horizontal: DimensionResource.marginSizeLarge),
+                  //       shrinkWrap: true,
+                  //       scrollDirection: Axis.vertical,
+                  //       physics: const NeverScrollableScrollPhysics(),
+                  //       itemCount: 3,
+                  //       itemBuilder: (BuildContext context, int index) {
+                  //         return Card(
+                  //           elevation: 5,
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(10.0),
+                  //           ),
+                  //           clipBehavior: Clip.antiAliasWithSaveLayer,
+                  //           child: ServicesShimmer(),
+                  //         );
+                  //       },
+                  //     ):(controller.vendorData.value.storeData?.isEmpty??true)? Center(
+                  //       child: Text("At the moment, there is no merchant available.",style: StyleResource.instance.styleMedium(DimensionResource.fontSizeSmall, ColorResource.secondColor),),
+                  //     ) : GridView.builder(
+                  //       gridDelegate:
+                  //           const SliverGridDelegateWithFixedCrossAxisCount(
+                  //         crossAxisCount: 3,
+                  //         crossAxisSpacing: 5,
+                  //         mainAxisSpacing: 5,
+                  //         childAspectRatio: 1.15,
+                  //       ),
+                  //       padding: const EdgeInsets.symmetric(
+                  //           horizontal: DimensionResource.marginSizeLarge),
+                  //       shrinkWrap: true,
+                  //       scrollDirection: Axis.vertical,
+                  //       physics: const NeverScrollableScrollPhysics(),
+                  //       itemCount: (controller.vendorData.value.storeData?.length??0) >= 6?6:(controller.vendorData.value.storeData?.length??0),
+                  //       itemBuilder: (BuildContext context, int index) {
+                  //        StoreDatum? storeData = controller.vendorData.value.storeData!.elementAt(index);
+                  //         return GestureDetector(
+                  //           onTap: (){
+                  //             Get.toNamed(VendorMapLocation.route,arguments: storeData?.name);
+                  //           },
+                  //           child: Card(
+                  //             elevation: 5,
+                  //             shape: RoundedRectangleBorder(
+                  //               borderRadius: BorderRadius.circular(10.0),
+                  //             ),
+                  //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                  //             child: Container(
+                  //               height: 80,
+                  //               decoration: BoxDecoration(
+                  //                 color: Colors.white,
+                  //                 border: Border.all(
+                  //                   color: const Color(0xFF1E2668),
+                  //                   width: 2,
+                  //                 ),
+                  //                 borderRadius: BorderRadius.circular(10.0),
+                  //               ),
+                  //               child: Column(
+                  //                 mainAxisAlignment: MainAxisAlignment.center,
+                  //                 children: [
+                  //                   Expanded(
+                  //                     child: Padding(
+                  //                       padding: EdgeInsets.all(10),
+                  //                       child: cachedNetworkImage(
+                  //                         storeData?.logo??"",
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         );
+                  //       },
+                  //     );
+                  //   }
+                  // ),
                   viewAllRow('Top Offers on Mudad', () {
                     Get.toNamed(TopOffersScreen.route);
                   }),

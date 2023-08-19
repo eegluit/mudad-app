@@ -10,6 +10,7 @@ import '../../../widget/cachednetworkimagewidget/cachednetworkimagewidget.dart';
 import './../../../models/get_vendors_response_model.dart';
 import '../../../utils/constant/constant.dart';
 import '../vendor_map_location/vendor_map_location.dart';
+import '../../home/vendor_details_view/vendors_detail_view.dart';
 import 'main_page.dart';
 
 class VendorsPage extends GetView<HomeController> {
@@ -19,7 +20,6 @@ class VendorsPage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     var category = <VendorsResponseModel>[];
-    print("ABCD ${controller.vendorList}");
     return Scaffold(
       backgroundColor: ColorResource.mainColor,
       appBar: AppBar(
@@ -70,50 +70,50 @@ class VendorsPage extends GetView<HomeController> {
               const SizedBox(
                 height: 18,
               ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 34,
-                  ),
-                  Center(
-                      child: SizedBox(
-                    height: 45,
-                    width: Get.width * 0.8,
-                    child: TextFormField(
-                      controller: controller.searchController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFFACB1C6),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        hintText: 'Search',
-                        suffixIconConstraints: const BoxConstraints(
-                          minHeight: 18,
-                          minWidth: 18,
-                        ),
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: SvgPicture.asset(
-                            'images/search.svg',
-                          ),
-                        ),
-                        hintStyle: const TextStyle(
-                          color: Color(0xFf949494),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  )),
-                  const SizedBox(
-                    width: 18,
-                  ),
-                  SvgPicture.asset('images/filter_icon.svg'),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     const SizedBox(
+              //       width: 34,
+              //     ),
+              //     Center(
+              //         child: SizedBox(
+              //       height: 45,
+              //       width: Get.width * 0.8,
+              //       child: TextFormField(
+              //         controller: controller.searchController,
+              //         decoration: InputDecoration(
+              //           border: OutlineInputBorder(
+              //             borderSide: const BorderSide(
+              //               color: Color(0xFFACB1C6),
+              //               width: 1,
+              //             ),
+              //             borderRadius: BorderRadius.circular(12),
+              //           ),
+              //           hintText: 'Search',
+              //           suffixIconConstraints: const BoxConstraints(
+              //             minHeight: 18,
+              //             minWidth: 18,
+              //           ),
+              //           suffixIcon: Padding(
+              //             padding: const EdgeInsets.only(right: 15),
+              //             child: SvgPicture.asset(
+              //               'images/search.svg',
+              //             ),
+              //           ),
+              //           hintStyle: const TextStyle(
+              //             color: Color(0xFf949494),
+              //             fontSize: 16,
+              //             fontWeight: FontWeight.w500,
+              //           ),
+              //         ),
+              //       ),
+              //     )),
+              //     const SizedBox(
+              //       width: 18,
+              //     ),
+              //     SvgPicture.asset('images/filter_icon.svg'),
+              //   ],
+              // ),
               // const SizedBox(
               //   height: 18,
               // ),
@@ -379,11 +379,8 @@ class VendorsPage extends GetView<HomeController> {
                               controller.vendorList.elementAt(index);
                           return GestureDetector(
                             onTap: () {
-                              Get.toNamed(VendorMapLocation.route, arguments: {
-                                "name": storeData.name,
-                                "lat": storeData.lat,
-                                "long": storeData.long
-                              });
+                              Get.toNamed(VendorsDetailView.route,
+                                  arguments: {'name': storeData.name,'address': storeData.address,'userId': storeData.userId, 'lat': storeData.lat, 'long': storeData.long, 'logo': storeData.logo?.document});
                             },
                             child: Card(
                               elevation: 5,
@@ -419,8 +416,8 @@ class VendorsPage extends GetView<HomeController> {
                                         bottom: 10,
                                       ),
                                       color: const Color(0xFF1E2668),
-                                      child: const Text(
-                                        'View Location',
+                                      child: Text(
+                                        storeData.name ?? '--',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,

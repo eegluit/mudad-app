@@ -43,6 +43,7 @@ import '../page/verify_identity/take_selfie.dart';
 import '../page/verify_identity/verification_cancel_page.dart';
 import '../page/verify_identity/verification_complete_page.dart';
 import '../page/verify_identity/verify_identity_page.dart';
+import '../page/home/vendor_details_view/vendors_detail_view.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -67,10 +68,9 @@ class AppRoutes {
       bindings: [OtpBinding(), HomeBinding()],
     ),
     GetPage(
-      name: OtpValidationPage.route,
-      page: () => const OtpValidationPage(),
-      binding: OtpBinding()
-    ),
+        name: OtpValidationPage.route,
+        page: () => const OtpValidationPage(),
+        binding: OtpBinding()),
     GetPage(
       name: SignUpPage.route,
       page: () => const SignUpPage(),
@@ -88,7 +88,7 @@ class AppRoutes {
     ),
     GetPage(
       name: HomePage.route,
-      page: () =>  HomePage(),
+      page: () => HomePage(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -121,7 +121,7 @@ class AppRoutes {
     ),
     GetPage(
       name: VerificationScreen.route,
-      page: () =>  VerificationScreen(),
+      page: () => VerificationScreen(),
       binding: TakeSelfieBinding(),
     ),
     GetPage(
@@ -151,69 +151,60 @@ class AppRoutes {
       page: () => const Transactionpage(),
     ),
     GetPage(
-      name: PendingPaymentPage.route,
-      page: () => const PendingPaymentPage(),
-      binding: PersonalBinding()
-    ),
+        name: PendingPaymentPage.route,
+        page: () => const PendingPaymentPage(),
+        binding: PersonalBinding()),
     GetPage(
-      name: AvailableMerchantScreen.route,
-      page: () => const AvailableMerchantScreen(),
-      binding: HomeBinding()
-    ),
+        name: AvailableMerchantScreen.route,
+        page: () => const AvailableMerchantScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: TopOffersScreen.route,
-      page: () => const TopOffersScreen(),
-      binding: HomeBinding()
-    ),
+        name: TopOffersScreen.route,
+        page: () => const TopOffersScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: ChangePasswordScreen.route,
-      page: () => const ChangePasswordScreen(),
-      binding: HomeBinding()
-    ),
+        name: ChangePasswordScreen.route,
+        page: () => const ChangePasswordScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: EditProfileScreen.route,
-      page: () => const EditProfileScreen(),
-      binding: HomeBinding()
-    ),
+        name: EditProfileScreen.route,
+        page: () => const EditProfileScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: LastTransactionScreen.route,
-      page: () => const LastTransactionScreen(),
-      binding: LastTransactionBinding()
-    ),
+        name: LastTransactionScreen.route,
+        page: () => const LastTransactionScreen(),
+        binding: LastTransactionBinding()),
     GetPage(
-      name: AddCardScreen.route,
-      page: () => const AddCardScreen(),
-      binding: HomeBinding()
-    ),
+        name: AddCardScreen.route,
+        page: () => const AddCardScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: PayMerchantScreen.route,
-      page: () => const PayMerchantScreen(),
-      binding: HomeBinding()
-    ),
+        name: PayMerchantScreen.route,
+        page: () => const PayMerchantScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: PaymentSuccessPage.route,
-      page: () => const PaymentSuccessPage(),
-      binding: HomeBinding()
-    ),
+        name: PaymentSuccessPage.route,
+        page: () => const PaymentSuccessPage(),
+        binding: HomeBinding()),
     GetPage(
-      name: InfoPageViewScreen.route,
-      page: () => const InfoPageViewScreen(),
-      binding: HomeBinding()
-    ),
+        name: InfoPageViewScreen.route,
+        page: () => const InfoPageViewScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: ReferViewScreen.route,
-      page: () => const ReferViewScreen(),
-      binding: HomeBinding()
-    ),
+        name: ReferViewScreen.route,
+        page: () => const ReferViewScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: QrViewScreen.route,
-      page: () => const QrViewScreen(),
-      binding: HomeBinding()
-    ),
+        name: QrViewScreen.route,
+        page: () => const QrViewScreen(),
+        binding: HomeBinding()),
     GetPage(
-      name: VendorMapLocation.route,
-      page: () => const VendorMapLocation(),
-      binding: HomeBinding()
-    ),
+        name: VendorMapLocation.route,
+        page: () => const VendorMapLocation(),
+        binding: HomeBinding()),
+    GetPage(
+        name: VendorsDetailView.route,
+        page: () => const VendorsDetailView(),
+        binding: HomeBinding())
   ];
 }
