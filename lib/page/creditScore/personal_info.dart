@@ -235,13 +235,23 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                       lastDate: DateTime.now(),
                                     );
 
-                                    if (pickedDate != null) {
-                                      // Format the picked date as needed
-                                      String formattedDate =
-                                          "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-                                      controller.dobController.value.text =
-                                          formattedDate;
-                                    }
+                                   if (pickedDate != null) {
+      if(DateTime.now().difference(pickedDate).inDays / 365 < 18){
+        Get.snackbar(
+          'Error',
+          "You must be at least 18 years old.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        // Format the picked date as needed
+        String formattedDate =
+            "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+        controller.dobController.value.text = formattedDate;
+      }
+    }
+
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),

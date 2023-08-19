@@ -34,6 +34,7 @@ class HomeController extends GetxController {
     {"image": 'images/settings.svg', "title": "Settings"},
   ];
 
+  RxString selectedBankValue = 'Please select a Bank'.obs;
   RxList<String> vendorsList = <String>[
     ImageResource.instance.luluIcon,
     ImageResource.instance.nandoIcon,
@@ -59,7 +60,7 @@ class HomeController extends GetxController {
   String get getCreditToken => storage.read('creditToken') ?? '';
   void setCreditToken(String value) => storage.write('creditToken', value);
 
-  String get getToken => storage.read('token') ?? ''; 
+  String get getToken => storage.read('token') ?? '';
   void setToken(String value) => storage.write('token', value);
 
   // UserModel get getUser {

@@ -12,7 +12,9 @@ import '../../model/utils/resource/color_resource.dart';
 class BankStatementPage extends StatelessWidget {
   static const route = '/bankStatementPage';
   static HomeController homeController = Get.find<HomeController>();
-  const BankStatementPage({Key? key}) : super(key: key);
+  static List<String> bankAccounts = ['Please select a Bank' ,'Bank Dhofar SAOG', 'Bank Muscat SAOG', 'National Bank of Oman SAOG'];
+
+ const BankStatementPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +135,26 @@ class BankStatementPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
+                  ),
+                  Center(child: 
+                  Obx(
+                      () => DropdownButton<String>(
+                        value: homeController.selectedBankValue.value,
+    items: bankAccounts.map((String item) {
+      return DropdownMenuItem<String>(
+        value: item,
+        child: Text(item),
+      );
+    }).toList(),
+    onChanged: (newValue) {
+      homeController.selectedBankValue.value = newValue!;
+    },
+  ),
+),
+),
+            const SizedBox(
+                    height: 25,
                   ),
                   Row(
                     children: [
