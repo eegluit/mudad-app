@@ -201,13 +201,23 @@ class OtpPage extends GetView<OtpController> {
                           //     backgroundColor: Colors.red,
                           //     colorText: Colors.white);
                         } else {
-                          await Get.find<AuthServices>().saveUserToken(response.token?.access?.token??"");
-                          await Get.find<AuthServices>().saveUser(response.toJson());
-                          if(response.user?.isKyc == true){
-                           Get.offAllNamed(HomePage.route,arguments: [response,response.token!.access!.token!]);
-                           } else{
-                             Get.toNamed(VerificationScreen.route);
-                           }
+                          await Get.find<AuthServices>().saveUserToken(
+                              response.token?.access?.token ?? "",
+                              response.user?.id ?? "");
+                          await Get.find<AuthServices>()
+                              .saveUser(response.user!.toJson());
+                          if (response.user?.isKyc == true) {
+                            if (response.user?.status == 'pending') {
+                              Get.toNamed(VerificationScreen.route);
+                            } else {
+                              Get.offAllNamed(HomePage.route, arguments: [
+                                response,
+                                response.token!.access!.token!
+                              ]);
+                            }
+                          } else {
+                            Get.toNamed(VerificationScreen.route);
+                          }
                           // Get.snackbar('Success', 'Successfully $screenName',
                           //     snackPosition: SnackPosition.BOTTOM,
                           //     backgroundColor: Colors.green.shade600,

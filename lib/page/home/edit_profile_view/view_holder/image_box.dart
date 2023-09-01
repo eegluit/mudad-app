@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
 import '../../../../controller/profile_view_controller/edit_profile_controller.dart';
 import '../../../../utils/utils/resource/color_resource.dart';
@@ -9,8 +9,9 @@ import '../../../../widget/cachednetworkimagewidget/cachednetworkimagewidget.dar
 
 
 class ProfileImagePox extends GetView<EditProfileController> {
-  final bool ?updatePartialProfile;
-  const ProfileImagePox({Key? key,this.updatePartialProfile}) : super(key: key);
+  final bool? updatePartialProfile;
+  const ProfileImagePox({Key? key, this.updatePartialProfile})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -25,56 +26,60 @@ class ProfileImagePox extends GetView<EditProfileController> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100), // if you need this
               ),
-              child: Obx(() {
+              child: Obx(() {                        
                 return Container(
-                  width: 125,
-                  height: 125,
+                  width: 175,
+                  height: 175,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
-                      border: Border.all(width: 2, color: ColorResource.mainColor),
+                      border:
+                          Border.all(width: 2, color: ColorResource.mainColor),
                       color: ColorResource.lightGrey),
-                  child: controller.image.value.path != "" || controller.image.value.path.isNotEmpty
+                  child: controller.profileBaseImage.value != "" ||
+                          controller.profileBaseImage.value.isNotEmpty
                       ? Obx(() {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: Image.file(
-                              controller.image.value,
+                            child: Image.memory(
+                              base64.decode(controller.profileBaseImage.value),
                               fit: BoxFit.cover,
                             ),
                           );
                         })
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: cachedNetworkImage(controller.profileData.value.profile??ImageResource.instance.defaultUser)),
+                          child: cachedNetworkImage(
+                              controller.profileData.value.profile ??
+                                  ImageResource.instance.defaultUser)),
                 );
               }),
             ),
           ),
-          Positioned(
-            bottom: 7,
-            right: 7,
-            child: InkWell(
-              onTap: () {
-                showImagePicker(context ,
-                    onCamaraTap: () {controller.imgFromCamera(updatePartialProfile!);Navigator.of(context).pop();},
-                  onGalleryTap: () {controller.imgFromGallery(updatePartialProfile!);Navigator.of(context).pop();},
-                );
-              },
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ColorResource.mainColor,
-                ),
-                child:const Icon(
-                  Icons.edit_outlined,
-                  color: ColorResource.white,
-                  size: 15,
-                ),
-              ),
-            ),
-          )
+          // Positioned(
+          //   bottom: 7,
+          //   right: 7,
+          //   child: InkWell(
+          //     onTap: () {
+          //       showImagePicker(context ,
+          //           onCamaraTap: () {controller.imgFromCamera(updatePartialProfile!);Navigator.of(context).pop();},
+          //         onGalleryTap: () {controller.imgFromGallery(updatePartialProfile!);Navigator.of(context).pop();},
+          //       );
+          //     },
+          //     child: Container(
+          //       height: 30,
+          //       width: 30,
+          //       decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(5),
+          //         color: ColorResource.mainColor,
+          //       ),
+          //       child:const Icon(
+          //         Icons.edit_outlined,
+          //         color: ColorResource.white,
+          //         size: 15,
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

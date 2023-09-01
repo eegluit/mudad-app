@@ -63,7 +63,7 @@ class MainPage extends GetView<HomeController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Get.find<AuthServices>().user.value.user?.name.toString().capitalize ?? "",
+                          Get.find<AuthServices>().user.value.name.toString().capitalize ?? "",
                           style: StyleResource.instance
                               .styleMedium(DimensionResource.fontSizeExtraLarge,
                                   ColorResource.mainColor)
@@ -73,7 +73,7 @@ class MainPage extends GetView<HomeController> {
                           height: DimensionResource.marginSizeExtraSmall,
                         ),
                         Text(
-                          Get.find<AuthServices>().user.value.user?.email.toString().capitalize ?? "",
+                          Get.find<AuthServices>().user.value.email.toString().capitalize ?? "",
                           style: StyleResource.instance
                               .styleMedium(DimensionResource.fontSizeDefault,
                                   ColorResource.black.withOpacity(0.5))

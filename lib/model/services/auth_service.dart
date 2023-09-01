@@ -7,7 +7,7 @@ import '../network_calls/dio_client/get_it_instance.dart';
 import '../utils/resource/string_resource.dart';
 
 class AuthServices extends GetxService {
-  Rx<UserModel> user = UserModel().obs;
+  Rx<User> user = User().obs;
   GetStorage? box;
   RxString firebaseToken = "".obs;
 
@@ -20,33 +20,30 @@ class AuthServices extends GetxService {
 
   saveUser(Map<String, dynamic> map) async {
     await box!.write(StringResource.instance.currentUser, map);
-     user.value = UserModel.fromJson(map);
+    user.value = User.fromJson(map);
     getCurrentUserData();
   }
 
   getCurrentUserData() async {
     if (box!.hasData(StringResource.instance.currentUser)) {
-      logPrint("user data box =>${box!.read(StringResource.instance.currentUser)}");
-      try{
-         user.value = UserModel.fromJson(box!.read(StringResource.instance.currentUser));
+      logPrint(
+          "user data box =>${box!.read(StringResource.instance.currentUser)}");
+      try {
+        user.value =
+            User.fromJson(box!.read(StringResource.instance.currentUser));
         // logPrint(user.value.name);
-      }catch(e){
+      } catch (e) {
         logPrint("User Data Error =>$e");
       }
     } else {
-       user.value = UserModel();
+      user.value = User();
     }
   }
 
-  Future<void> saveUserToken(String token) async {
-    final DioClient dioClient = getIt();
-    dioClient.token = token;
-    dioClient.dio.options.headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'authentication': 'Bearer $token'
-    };
+  Future<void> saveUserToken(String token, String userID) async {
     try {
       await box!.write(StringResource.instance.token, token);
+      await box!.write(StringResource.instance.userID, userID);
     } catch (e) {
       rethrow;
     }
@@ -80,6 +77,10 @@ class AuthServices extends GetxService {
   Future<void> getFirebaseToken() async {
     // AppConstants.firebaseToken.value = (await FirebaseMessaging.instance.getToken())!;
     // logPrint("firebaseToken=>${AppConstants.firebaseToken.value}");
+  }
+
+  String getUserID() {
+    return box!.read(StringResource.instance.userID) ?? "";
   }
 
   String getUserToken() {

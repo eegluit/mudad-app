@@ -5,6 +5,7 @@ import '../models/auth_response_model.dart';
 import '../models/sign_up_request_model.dart';
 import '../models/user_model.dart';
 import '../utils/constant/constant.dart';
+import '../model/models/dashboard_model/get_user_profile_details.dart';
 
 class AuthService {
   Future<AuthResponseModel> signUp(
@@ -122,8 +123,10 @@ class AuthService {
             contentType: Headers.formUrlEncodedContentType,
             headers: {'authentication': 'Bearer $token'}),
       );
+      print("ABC ${response.data.toString()}");
       logPrint(response.data);
       UserModel model = UserModel.fromJson(response.data);
+      print("ABCD ${model.toJson()}");
       return model;
     } on DioError catch (e) {
       logPrint(e.response!.statusCode);
@@ -294,6 +297,49 @@ class AuthService {
       // return model;
     } on SocketException catch (e) {
       AuthResponseModel model = AuthResponseModel(
+        message: e.message,
+        code: 400,
+      );
+      return model;
+    }
+  }
+
+  Future<GetUserProfileDetails> getDashboardUserDetails(
+      String authToken) async {
+    try {
+      var response = await Dio().get(
+        '${Constant.baseUrl}${Constant.baseURLUpdated}',
+        options: Options(
+          headers: {'Authentication': 'Bearer $authToken'},
+        ),
+      );
+      GetUserProfileDetails model =
+          GetUserProfileDetails.fromJson(response.data);
+      model.code = 200;
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        GetUserProfileDetails model =
+            GetUserProfileDetails.fromJson(e.response!.data);
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetUserProfileDetails model = GetUserProfileDetails(
+          //message: e.message,
+          message: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        GetUserProfileDetails model = GetUserProfileDetails(
+          message: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetUserProfileDetails model = GetUserProfileDetails(
         message: e.message,
         code: 400,
       );

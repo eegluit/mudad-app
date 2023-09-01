@@ -74,7 +74,9 @@ class User {
     this.email,
     this.isKyc,
     this.id,
-    this.profileUrl
+    this.isDeleted,
+    this.status,
+    this.storeRegistered
   });
 
   String? role;
@@ -83,7 +85,9 @@ class User {
   String? name;
   String? email;
   String? id;
-  String? profileUrl;
+  bool? isDeleted;
+  String? status;
+  bool? storeRegistered;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         role: json["role"],
@@ -92,7 +96,9 @@ class User {
         email: json["email"],
         id: json["id"],
         isKyc: json["isKyc"],
-    profileUrl: json["profile_url"],
+        isDeleted: json["isDeleted"],
+        status: json["status"],
+        storeRegistered: json["storeRegistered"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -102,6 +108,8 @@ class User {
         "name": name,
         "email": email,
         "id": id,
-        "profile_url": profileUrl,
+        "isDeleted": isDeleted,
+        "status": status,
+        "storeRegistered": storeRegistered,
       };
 }

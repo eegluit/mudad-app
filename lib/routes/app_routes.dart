@@ -11,6 +11,7 @@ import 'package:mudad/page/home/qr_code_scanner_view/payment_success_page.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/qr_code_scanner.dart';
 import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
 import 'package:mudad/page/top_offers_view/refer_a_friend_view.dart';
+import '../page/verify_identity/verification_pending_page.dart';
 import '../binding/auth_binding.dart';
 import '../binding/home_binding.dart';
 import '../binding/otp_binding.dart';
@@ -136,6 +137,10 @@ class AppRoutes {
     GetPage(
       name: VerificationCompletePage.route,
       page: () => const VerificationCompletePage(),
+    ),
+    GetPage(
+      name: VerificationPendingPage.route,
+      page: () => const VerificationPendingPage(),
     ),
     GetPage(
       name: TakeSelfiePage.route,

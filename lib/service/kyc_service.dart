@@ -6,7 +6,9 @@ import 'package:mudad/models/kyc_upload_selfie_response_model.dart';
 import '../utils/constant/constant.dart';
 import '../models/kyc_id_type_request_model.dart';
 import '../models/kyc_id_type_response_model.dart';
+import '../models/upload_profile_selfie_response_model.dart';
 import '../models/get_kyc_details_response_model.dart';
+import '../models/get_profile_selfie_response_model.dart';
 
 class KycService {
   Future<KycIdTypeResponseModel> submitKycIdType(
@@ -162,6 +164,62 @@ class KycService {
     }
   }
 
+  Future<UploadProfileSelfieResponseModel> uploadProfileSelfie(
+      File selfieFile, String userID, String authToken) async {
+    try {
+      String fileName = selfieFile.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        'profilePicture': await MultipartFile.fromFile(
+          selfieFile.path,
+          filename: fileName,
+          contentType: MediaType('image', 'jpg'),
+        ),
+        'UserId': userID
+      });
+      var response = await Dio().post(
+        '${Constant.baseURLUpdated}${Constant.profilePicture}',
+        data: formData,
+        options: Options(
+          contentType: Headers.formDataType,
+          headers: {'x-functions-key': authToken},
+        ),
+      );
+      UploadProfileSelfieResponseModel model =
+          UploadProfileSelfieResponseModel.fromJson(response.data);
+      model.code = 200;
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        UploadProfileSelfieResponseModel model =
+            UploadProfileSelfieResponseModel.fromJson(e.response!.data);
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        UploadProfileSelfieResponseModel model =
+            UploadProfileSelfieResponseModel(
+          //message: e.message,
+          errorMessage: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        UploadProfileSelfieResponseModel model =
+            UploadProfileSelfieResponseModel(
+          errorMessage: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      UploadProfileSelfieResponseModel model = UploadProfileSelfieResponseModel(
+        errorMessage: e.message,
+        code: 400,
+      );
+      return model;
+    }
+  }
+
   Future<GetKycDetailsResponseModel> getKycDetails(
       String userID, String token) async {
     try {
@@ -203,6 +261,52 @@ class KycService {
     } on SocketException catch (e) {
       GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
         message: e.message,
+        code: 400,
+      );
+      return model;
+    }
+  }
+
+    Future<GetProfileSelfieResponseModel> getProfilePicture(
+      String token,String userID) async {
+    try {
+      var response = await Dio().get(
+        '${Constant.baseURLUpdated}${Constant.profilePicture}/${userID}',
+        options: Options(
+          headers: {'x-functions-key': token},
+        ),
+      );
+      GetProfileSelfieResponseModel model =
+          GetProfileSelfieResponseModel.fromJson(response.data);
+      model.code = 200;
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        GetProfileSelfieResponseModel model =
+            GetProfileSelfieResponseModel.fromJson(e.response!.data);
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetProfileSelfieResponseModel model =
+            GetProfileSelfieResponseModel(
+          //message: e.message,
+          errorMessage: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        GetProfileSelfieResponseModel model =
+            GetProfileSelfieResponseModel(
+          errorMessage: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetProfileSelfieResponseModel model =
+          GetProfileSelfieResponseModel(
+        errorMessage: e.message,
         code: 400,
       );
       return model;

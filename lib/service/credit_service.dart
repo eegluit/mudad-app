@@ -203,7 +203,7 @@ class CreditService {
       String token) async {
     try {
       var response = await Dio().get(
-        '${Constant.baseURLCreditModule}${Constant.personalityTest}',
+        '${Constant.baseURLUpdated}${Constant.personalityTest}',
         options: Options(
           headers: {'x-functions-key': token},
         ),
@@ -250,9 +250,8 @@ class CreditService {
     String token,
   ) async {
     try {
-      print('ABC ${requestModel.toJson()}');
       var response = await Dio().post(
-        '${Constant.baseURLCreditModule}${Constant.personalityTest}/',
+        '${Constant.baseURLUpdated}${Constant.personalityTest}/',
         data: requestModel.toJson(),
         options: Options(
           contentType: Headers.textPlainContentType,
@@ -262,7 +261,6 @@ class CreditService {
           },
         ),
       );
-      print('ABC ${response.toString()}');
       CreditModuleDefaultResponse model =
           CreditModuleDefaultResponse.fromJson(response.data);
       model.code = 200;
@@ -309,7 +307,7 @@ class CreditService {
         'UserId': userId,
       });
       var response = await Dio().post(
-        '${Constant.baseURLCreditModule}${Constant.uploadSpendingBehavior}/',
+        '${Constant.baseURLUpdated}${Constant.uploadSpendingBehavior}/',
         data: formData,
         options: Options(
           contentType: Headers.formDataType,
@@ -366,7 +364,7 @@ class CreditService {
         'monthlyIncome': userDetails.monthlyIncome
       };
       var response = await Dio().post(
-        '${Constant.baseURLCreditModule}${Constant.addCredtiScoreUser}/',
+        '${Constant.baseURLUpdated}${Constant.addCredtiScoreUser}/',
         data: rawData,
         options: Options(
           contentType: Headers.textPlainContentType,

@@ -4,7 +4,7 @@ class Constant {
   Constant._();
   static String baseUrl = AppConstants.instance.baseUrl;
   static String imageUrl = AppConstants.instance.imageUrl;
-  static String baseURLCreditModule = AppConstants.instance.baseURLCreditModule;
+  static String baseURLUpdated = AppConstants.instance.baseURLUpdated;
 
   // static const String baseUrl = 'http://13.232.39.141:8080/v1/';
   static const String signUp = 'auth/register';
@@ -13,6 +13,7 @@ class Constant {
   static const String forgetPassword = 'auth/forgot-password';
   static const String verifyForgetOtp = 'auth/verify-forgot-otp';
   static const String resetPassword = 'auth/reset-password';
+  static const String dashboardProfileData = 'auth/user-details';
 
   static const String creditAddProfile = 'credit_score/add-profile';
   static const String creditUploadStatement = 'credit_score/upload-statement';
@@ -30,7 +31,11 @@ class Constant {
   static const String kycUploadSelfie = 'kyc/upload-selfie';
   static const String kycGetDetails = 'kyc/get-kyc-details';
 
-  static const String personalityTest = 'PersonalityTest';
-  static const String uploadSpendingBehavior = 'SpendingBehaviour';
-  static const String addCredtiScoreUser = 'user';
+  static const String personalityTest = 'CreditScore/PersonalityTest';
+  static const String uploadSpendingBehavior = 'CreditScore/SpendingBehaviour';
+  static const String addCredtiScoreUser = 'CreditScore/user';
+
+  static const String profilePicture = 'profilepicture';
+
+  static const String offers = 'offer';
 }

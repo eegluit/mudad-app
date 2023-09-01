@@ -8,7 +8,8 @@ class StringResource {
   String get currentUser => 'currentUser';
   String get isFirst => 'isFirst';
   String get isPermission => 'isPermission';
-  String get loginKey =>"isLoggedIn";
-  String get remember =>"remember";
-  String get token =>"token";
+  String get loginKey => "isLoggedIn";
+  String get remember => "remember";
+  String get token => "token";
+  String get userID => "userID";
 }

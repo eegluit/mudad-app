@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mudad/page/verify_identity/verification_pending_page.dart';
 
 import '../../page/home/verification_view/verification_view.dart';
 import '../../widget/image_picker/image_selection_util.dart';
@@ -63,7 +64,7 @@ class VerificationController extends GetxController{
 
   }
   onVerificationComplete(){
- Get.offAllNamed(HomePage.route);
+ Get.offAllNamed(VerificationPendingPage.route);
   }
   onSkipNowButton(){
 

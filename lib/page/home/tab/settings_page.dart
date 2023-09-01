@@ -101,8 +101,7 @@ class SettingsPage extends StatelessWidget {
                         Get.find<AuthServices>()
                                 .user
                                 .value
-                                .user
-                                ?.name
+                                .name
                                 .toString()
                                 .capitalize ??
                             "",

@@ -10,6 +10,8 @@ import '../network_calls/dio_client/dio_client.dart';
 import '../network_calls/exception/api_error_handler.dart';
 import '../utils/resource/app_constants.dart';
 import '../../models/get_vendors_response_model.dart';
+import '../../models/get_profile_selfie_response_model.dart';
+import '../../model/models/dashboard_model/get_user_profile_details.dart';
 
 class HomeRepo {
   final DioClient dioClient;
@@ -158,6 +160,93 @@ class HomeRepo {
     } catch (e) {
       logPrint("sign in error => $e");
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<GetProfileSelfieResponseModel> getProfilePicture(
+      String token, String userID) async {
+    try {
+      var response = await Dio().get(
+        '${Constant.baseURLUpdated}${Constant.profilePicture}/${userID}',
+        options: Options(
+          headers: {'x-functions-key': token},
+        ),
+      );
+      GetProfileSelfieResponseModel model =
+          GetProfileSelfieResponseModel.fromJson(response.data);
+      model.code = 200;
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        GetProfileSelfieResponseModel model =
+            GetProfileSelfieResponseModel.fromJson(e.response!.data);
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
+          //message: e.message,
+          errorMessage: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
+          errorMessage: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
+        errorMessage: e.message,
+        code: 400,
+      );
+      return model;
+    }
+  }
+
+  Future<GetUserProfileDetails> getDashboardUserDetails(
+      String authToken) async {
+    try {
+      var response = await Dio().get(
+        '${Constant.baseUrl}${Constant.dashboardProfileData}',
+        options: Options(
+          headers: {'Authentication': 'Bearer $authToken'},
+        ),
+      );
+      GetUserProfileDetails model =
+          GetUserProfileDetails.fromJson(response.data);
+      model.code = 200;
+      print("ABCDE ${model.toJson()}");
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        GetUserProfileDetails model =
+            GetUserProfileDetails.fromJson(e.response!.data);
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetUserProfileDetails model = GetUserProfileDetails(
+          //message: e.message,
+          message: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        GetUserProfileDetails model = GetUserProfileDetails(
+          message: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetUserProfileDetails model = GetUserProfileDetails(
+        message: e.message,
+        code: 400,
+      );
+      return model;
     }
   }
 }

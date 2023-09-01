@@ -56,6 +56,7 @@ class HomeController extends GetxController {
   RxBool isDashBoardLoading = false.obs;
   var creditService = CreditService();
   var token = Get.find<AuthServices>().getUserToken();
+  var userID = Get.find<AuthServices>().getUserID();
 
   String get getCreditToken => storage.read('creditToken') ?? '';
   void setCreditToken(String value) => storage.write('creditToken', value);

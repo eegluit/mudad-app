@@ -50,7 +50,6 @@ class QuizController extends GetxController {
           '_qcu9y-FVInVVxoG-OoWZJV9aH_3Kk9xnEceb0FzDiOnAzFuXGsgsg==');
       if (response.code != 200) {
         isFetching(false);
-        print('ABC error');
       } else {
         isFetching(false);
         quizQuestions.value = response.result!;
