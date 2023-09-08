@@ -13,8 +13,7 @@ class QrCodeController extends GetxController {
       qrController = controller.obs;
       controller.scannedDataStream.listen((scanData) {
         result.value = scanData;
-        Get.toNamed();
-        // Get.toNamed(PayMerchantScreen.route);
+        Get.toNamed(PayMerchantScreen.route);
       });
     });
   }
