@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
 
   List<Widget> pageList = <Widget>[
     MainPage(),
-    // OffersPage(),
+    OffersPage(),
     VendorsPage(),
     Transactionpage(),
     SettingsPage(),];

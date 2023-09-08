@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
-
+import 'package:mudad/utils/utils/resource/style_resource.dart';
+import '../../../controller/home_controller.dart';
 import '../../../utils/utils/resource/dimensions_resource.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 class OffersPage extends StatelessWidget {
   const OffersPage({Key? key}) : super(key: key);
+  static HomeController homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,7 @@ class OffersPage extends StatelessWidget {
       ),
       body: Container(
         margin: const EdgeInsets.only(top: DimensionResource.marginSizeLarge),
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -48,8 +54,11 @@ class OffersPage extends StatelessWidget {
           ),
         ),
         child: ListView.builder(
-          itemCount: 4,
+          itemCount: homeController.offerList.length,
           itemBuilder: (BuildContext context, int index) {
+            var dateTime =
+                DateTime.parse(homeController.offerList[index].validTo ?? "");
+            String formattedDate = DateFormat('dd MMM yyyy').format(dateTime);
             return Container(
               margin: const EdgeInsets.only(
                 left: 20,
@@ -115,21 +124,75 @@ class OffersPage extends StatelessWidget {
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
-                            '30% off on all products',
-                            style: TextStyle(
+                            homeController.offerList[index].description ?? '--',
+                            style: const TextStyle(
                               color: Color(0xFF1F276B),
                               fontSize: 14,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
+                          const SizedBox(
+                            height: 6,
+                          ),
                           Text(
-                            'Expires on 20 Sep 2022',
-                            style: TextStyle(
+                            'Expires on $formattedDate',
+                            style: const TextStyle(
                               color: Color(0xFFEE0202),
                               fontSize: 10,
                               fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // Copy the text to the clipboard when tapped
+                              Clipboard.setData(ClipboardData(
+                                  text: homeController
+                                          .offerList[index].couponCode ??
+                                      '-'));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Coupon copied!')),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: DottedBorder(
+                                  borderType: BorderType.RRect,
+                                  radius: const Radius.circular(6),
+                                  dashPattern: const [2, 2],
+                                  color: ColorResource.black,
+                                  strokeWidth: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          homeController.offerList[index]
+                                                  .couponCode ??
+                                              '-',
+                                          style: StyleResource.instance
+                                              .styleSemiBold(
+                                                  DimensionResource
+                                                      .fontSizeSmall,
+                                                  ColorResource.textColor),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Icon(
+                                          Icons.copy,
+                                          size: 15,
+                                          color: ColorResource.black,
+                                        )
+                                      ],
+                                    ),
+                                  )),
                             ),
                           ),
                         ],

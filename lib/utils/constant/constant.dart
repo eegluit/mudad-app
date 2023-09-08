@@ -5,6 +5,7 @@ class Constant {
   static String baseUrl = AppConstants.instance.baseUrl;
   static String imageUrl = AppConstants.instance.imageUrl;
   static String baseURLUpdated = AppConstants.instance.baseURLUpdated;
+  static String baseURLOffer = AppConstants.instance.offerBaseUrl;
 
   // static const String baseUrl = 'http://13.232.39.141:8080/v1/';
   static const String signUp = 'auth/register';
@@ -25,6 +26,7 @@ class Constant {
   static const String getCreditProfile = 'credit_score/get-profile';
   static const String getProfile = 'users/get-user-personal-info';
   static const String updateProfileUrl = 'users/update-user-personal-info';
+  static const String offersList = 'offer';
 
   static const String kycAddIdType = 'kyc/add-id-type';
   static const String kycUploadDoc = 'kyc/upload-document';

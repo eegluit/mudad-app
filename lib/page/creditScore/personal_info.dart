@@ -31,7 +31,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
-                SvgPicture.asset('images/credit_progress2.svg'),
+                Image.asset('images/credit_progress2.png'),
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
@@ -235,23 +235,27 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                       lastDate: DateTime.now(),
                                     );
 
-                                   if (pickedDate != null) {
-      if(DateTime.now().difference(pickedDate).inDays / 365 < 18){
-        Get.snackbar(
-          'Error',
-          "You must be at least 18 years old.",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      } else {
-        // Format the picked date as needed
-        String formattedDate =
-            "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-        controller.dobController.value.text = formattedDate;
-      }
-    }
-
+                                    if (pickedDate != null) {
+                                      if (DateTime.now()
+                                                  .difference(pickedDate)
+                                                  .inDays /
+                                              365 <
+                                          18) {
+                                        Get.snackbar(
+                                          'Error',
+                                          "You must be at least 18 years old.",
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          colorText: Colors.white,
+                                        );
+                                      } else {
+                                        // Format the picked date as needed
+                                        String formattedDate =
+                                            "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                                        controller.dobController.value.text =
+                                            formattedDate;
+                                      }
+                                    }
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
@@ -379,18 +383,22 @@ class PersonalInfoPage extends GetView<PersonalController> {
                               ),
                               onPressed: () {
                                 // Get.offNamed(BankStatementPage.route);
-                                if (validate(controller
-                                                  .fNameController.value.text, controller
-                                                  .lNameController.value.text, controller.gender.value == 'm'
-                                                      ? 'Male'
-                                                      : 'Female', controller
-                                                  .professionController.value.text, controller
-                                                  .empolyerController.value.text, controller
-                                                  .addressController.value.text, controller
-                                                  .incomeController.value.text, controller
-                                                  .dobController.value.text) && (controller.formKey.currentState
-                                        ?.validate() ??
-                                    false)) {
+                                if (validate(
+                                        controller.fNameController.value.text,
+                                        controller.lNameController.value.text,
+                                        controller.gender.value == 'm'
+                                            ? 'Male'
+                                            : 'Female',
+                                        controller
+                                            .professionController.value.text,
+                                        controller
+                                            .empolyerController.value.text,
+                                        controller.addressController.value.text,
+                                        controller.incomeController.value.text,
+                                        controller.dobController.value.text) &&
+                                    (controller.formKey.currentState
+                                            ?.validate() ??
+                                        false)) {
                                   controller.isLoading(true);
                                   controller.creditService
                                       .createCreditUser(
@@ -576,7 +584,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
         colorText: Colors.white,
       );
       return false;
-    } else if (dob.isEmpty){
+    } else if (dob.isEmpty) {
       Get.snackbar(
         'Error',
         "Please Enter Date of Birth",

@@ -10,6 +10,7 @@ import '../network_calls/dio_client/dio_client.dart';
 import '../network_calls/exception/api_error_handler.dart';
 import '../utils/resource/app_constants.dart';
 import '../../models/get_vendors_response_model.dart';
+import '../../models/get_offers_response_model.dart';
 import '../../models/get_profile_selfie_response_model.dart';
 import '../../model/models/dashboard_model/get_user_profile_details.dart';
 
@@ -72,6 +73,54 @@ class HomeRepo {
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<GetOfferResponseModel> getOffers() async {
+    try {
+      print("ABCD");
+      var response = await Dio().get(
+        '${Constant.baseURLOffer}${Constant.offersList}',
+        options: Options(
+          headers: {
+            'x-functions-key':
+                'tJeK8IYUu9V9LebykgmZsDwqts_QhW6KZzVzHCIbIfnIAzFu9p7doQ=='
+          },
+        ),
+      );
+      print("ABCD ${response}");
+      GetOfferResponseModel model =
+          GetOfferResponseModel.fromJson(response.data);
+      model.code = response.statusCode;
+      return model;
+    } on DioError catch (e) {
+            print("ABCD ${e}");
+      if (e.type == DioErrorType.response) {
+        GetOfferResponseModel model =
+            GetOfferResponseModel.fromJson(e.response!.data);
+        model.code = e.response!.statusCode;
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetOfferResponseModel model = GetOfferResponseModel(
+          errorMessage: e.message,
+          code: 408,
+        );
+        return model;
+      } else {
+        GetOfferResponseModel model = GetOfferResponseModel(
+          errorMessage: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetOfferResponseModel model = GetOfferResponseModel(
+        errorMessage: e.message,
+        code: 400,
+      );
+      return model;
     }
   }
 

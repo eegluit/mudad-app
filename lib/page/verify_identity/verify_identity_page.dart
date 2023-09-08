@@ -31,7 +31,7 @@ class VerifyIdentityPage extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.04,
               ),
-              SvgPicture.asset('images/progress.svg'),
+              Image.asset('images/progress.png'),
               SizedBox(
                 height: Get.height * 0.05,
               ),

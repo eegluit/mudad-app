@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'personal_info.dart';
 import '../../model/utils/resource/color_resource.dart';
 
-
 class CreditScorePage extends StatelessWidget {
   static const route = '/creditScorePage';
   const CreditScorePage({Key? key}) : super(key: key);
@@ -33,7 +32,7 @@ class CreditScorePage extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.05,
               ),
-              SvgPicture.asset('images/credit_progress1.svg'),
+              Image.asset('images/credit_progress1.png'),
               SizedBox(
                 height: Get.height * 0.05,
               ),

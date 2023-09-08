@@ -21,7 +21,7 @@ class MalaCreditReportPage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.04,
           ),
-          SvgPicture.asset('images/progress3.svg'),
+          Image.asset('images/progress3.png'),
           SizedBox(
             height: Get.height * 0.05,
           ),

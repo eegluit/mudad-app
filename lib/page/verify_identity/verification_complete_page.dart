@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'verification_cancel_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 
-
 class VerificationCompletePage extends StatelessWidget {
   static const route = '/verificationCompletePage';
   const VerificationCompletePage({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class VerificationCompletePage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.04,
           ),
-          SvgPicture.asset('images/progress4.svg'),
+          Image.asset('images/progress4.png'),
           SizedBox(
             height: Get.height * 0.05,
           ),
@@ -37,7 +36,7 @@ class VerificationCompletePage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.05,
           ),
-          SvgPicture.asset('images/check.svg'),
+          Image.asset('images/check.png'),
           SizedBox(
             height: Get.height * 0.10,
           ),
@@ -73,7 +72,7 @@ class VerificationCompletePage extends StatelessWidget {
                 Get.toNamed(VerificationCancelPage.route);
               },
               child: const Text(
-                'Calculate Credit Store',
+                'Apply for Loan',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,

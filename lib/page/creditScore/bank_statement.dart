@@ -12,9 +12,14 @@ import '../../model/utils/resource/color_resource.dart';
 class BankStatementPage extends StatelessWidget {
   static const route = '/bankStatementPage';
   static HomeController homeController = Get.find<HomeController>();
-  static List<String> bankAccounts = ['Please select a Bank' ,'Bank Dhofar SAOG', 'Bank Muscat SAOG', 'National Bank of Oman SAOG'];
+  static List<String> bankAccounts = [
+    'Please select a Bank',
+    'Bank Dhofar SAOG',
+    'Bank Muscat SAOG',
+    'National Bank of Oman SAOG'
+  ];
 
- const BankStatementPage({Key? key}) : super(key: key);
+  const BankStatementPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +36,8 @@ class BankStatementPage extends StatelessWidget {
             ),
             Obx(
               () => homeController.selectedBankStatement.value.path != ""
-                  ? SvgPicture.asset('images/credit_progress4.svg')
-                  : SvgPicture.asset('images/credit_progress3.svg'),
+                  ? Image.asset('images/credit_progress4.png')
+                  : Image.asset('images/credit_progress3.png'),
             ),
             //SvgPicture.asset('images/credit_progress3.svg'),
             SizedBox(
@@ -137,23 +142,23 @@ class BankStatementPage extends StatelessWidget {
                   const SizedBox(
                     height: 25,
                   ),
-                  Center(child: 
-                  Obx(
+                  Center(
+                    child: Obx(
                       () => DropdownButton<String>(
                         value: homeController.selectedBankValue.value,
-    items: bankAccounts.map((String item) {
-      return DropdownMenuItem<String>(
-        value: item,
-        child: Text(item),
-      );
-    }).toList(),
-    onChanged: (newValue) {
-      homeController.selectedBankValue.value = newValue!;
-    },
-  ),
-),
-),
-            const SizedBox(
+                        items: bankAccounts.map((String item) {
+                          return DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          homeController.selectedBankValue.value = newValue!;
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
                     height: 25,
                   ),
                   Row(
@@ -284,14 +289,17 @@ class BankStatementPage extends StatelessWidget {
                               .then((response) {
                             homeController.isLoading(false);
                             if (response.code != 200) {
-                              toastShow(error: true, massage: response.errorMessage);
+                              toastShow(
+                                  error: true, massage: response.errorMessage);
                               // Get.snackbar('Error', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.red,
                               //     colorText: Colors.white);
                             } else {
                               toastShow(
-                                  error: false, massage: 'Bank statement uploaded successfully!');
+                                  error: false,
+                                  massage:
+                                      'Bank statement uploaded successfully!');
                               // Get.snackbar('Success', '${response.message}',
                               //     snackPosition: SnackPosition.BOTTOM,
                               //     backgroundColor: Colors.green.shade600,

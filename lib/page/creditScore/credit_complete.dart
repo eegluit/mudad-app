@@ -6,7 +6,6 @@ import '../../widget/toast_view/showtoast.dart';
 import '../home/home_page.dart';
 import '../../model/utils/resource/color_resource.dart';
 
-
 class CreditCompleteScorePage extends StatelessWidget {
   static const route = '/creditCompletePage';
   static HomeController homeController = Get.find<HomeController>();
@@ -45,7 +44,7 @@ class CreditCompleteScorePage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.04,
           ),
-          SvgPicture.asset('images/progress4.svg'),
+          Image.asset('images/progress4.png'),
           SizedBox(
             height: Get.height * 0.05,
           ),
@@ -61,7 +60,7 @@ class CreditCompleteScorePage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.15,
           ),
-          SvgPicture.asset('images/check.svg'),
+          Image.asset('images/check.png'),
           SizedBox(
             height: Get.height * 0.15,
           ),

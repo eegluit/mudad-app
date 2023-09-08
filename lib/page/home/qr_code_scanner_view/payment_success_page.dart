@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mudad/page/home/home_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 
-
 class PaymentSuccessPage extends StatelessWidget {
   static const route = '/paymentSuccessPage';
   const PaymentSuccessPage({Key? key}) : super(key: key);
@@ -36,7 +35,7 @@ class PaymentSuccessPage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.05,
           ),
-          SvgPicture.asset('images/check.svg'),
+          Image.asset('images/check.png'),
           SizedBox(
             height: Get.height * 0.10,
           ),
@@ -72,7 +71,6 @@ class PaymentSuccessPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-         
         ],
       ),
     );

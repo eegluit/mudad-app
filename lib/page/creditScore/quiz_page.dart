@@ -30,7 +30,7 @@ class QuizPage extends StatelessWidget {
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
-                SvgPicture.asset('images/credit_progress5.svg'),
+                Image.asset('images/credit_progress5.png'),
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
@@ -80,8 +80,7 @@ class QuizPage extends StatelessWidget {
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount:
                                       quizController.responseOptionList.length,
-                                  itemBuilder:
-                                      (BuildContext context, int idx) {
+                                  itemBuilder: (BuildContext context, int idx) {
                                     var data = quizController.responseOptionList
                                         .elementAt(idx);
                                     return Obx(

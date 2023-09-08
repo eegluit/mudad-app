@@ -6,6 +6,7 @@ import 'package:mudad/models/get_vendors_response_model.dart';
 import 'package:mudad/utils/utils/resource/image_resource.dart';
 import 'package:mudad/widget/toast_view/showtoast.dart';
 import '../model/models/get_vendor_model/get_vendor_model.dart';
+import '../models/get_offers_response_model.dart';
 import '../model/models/profile_model/get_profile_model.dart';
 import '../model/models/profile_model/get_user_profile.dart';
 import '../model/network_calls/dio_client/get_it_instance.dart';
@@ -26,9 +27,10 @@ class HomeController extends GetxController {
   Rx<GetVendorsModel> vendorData = GetVendorsModel().obs;
   Rx<GetProfileModel> profileData = GetProfileModel().obs;
   List<VendorsResponseModel> vendorList = [];
+  List<OfferResponseModel> offerList = [];
   List<Map<String, dynamic>> bottomBarList = [
     {"image": 'images/home.svg', "title": "Home"},
-    // {"image": 'images/offers.svg', "title": "Offers"},
+    {"image": 'images/offers.svg', "title": "Offers"},
     {"image": 'images/vendors.svg', "title": "Vendors"},
     {"image": ImageResource.instance.transactionIcon, "title": "Transaction"},
     {"image": 'images/settings.svg', "title": "Settings"},
@@ -124,6 +126,14 @@ class HomeController extends GetxController {
     });
   }
 
+  Future getOffers() async {
+    print("ABCD --");
+    homeProvider.homeRepo.getOffers().then((response) {
+      print("ABCD offers Received");
+      offerList = response.result!;
+    });
+  }
+
   Future getProfile() async {
     isProfileLoading(true);
     await homeProvider.getProfile(onError: (status, message) {
@@ -147,6 +157,7 @@ class HomeController extends GetxController {
     getProfile();
     getDashBoardData();
     getVendors();
+    getOffers();
     super.onInit();
   }
 }

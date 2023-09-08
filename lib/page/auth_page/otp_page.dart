@@ -22,6 +22,7 @@ class OtpPage extends GetView<OtpController> {
   Widget build(BuildContext context) {
     var token = Get.arguments[0].toString();
     var screenName = Get.arguments[1].toString();
+    var email = Get.arguments[2]?.toString();
     final defaultPinTheme = PinTheme(
       width: 58,
       height: 58,
@@ -69,9 +70,9 @@ class OtpPage extends GetView<OtpController> {
             const SizedBox(
               height: 32,
             ),
-            const Text(
-              'Please enter the OTP sent to XXX@gmail.com',
-              style: TextStyle(
+            Text(
+              'Please enter the OTP sent to $email',
+              style: const TextStyle(
                 color: ColorResource.mainColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,

@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 
-
 class VerificationCancelPage extends StatelessWidget {
   static const route = '/verificationCancelPage';
   const VerificationCancelPage({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class VerificationCancelPage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.04,
           ),
-          SvgPicture.asset('images/progress3.svg'),
+          SvgPicture.asset('images/progress3.png'),
           SizedBox(
             height: Get.height * 0.05,
           ),
@@ -74,8 +73,7 @@ class VerificationCancelPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(13)),
                 ),
               ),
-              onPressed: () {
-              },
+              onPressed: () {},
               child: const Text(
                 'Try again',
                 style: TextStyle(

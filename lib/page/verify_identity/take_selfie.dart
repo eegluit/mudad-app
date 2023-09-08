@@ -7,7 +7,6 @@ import '../../controller/take_selfie_controller.dart';
 import 'verification_complete_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 
-
 class TakeSelfiePage extends StatelessWidget {
   static const route = '/takeSelfiePage';
   static TakeSelfieController selfieController =
@@ -26,7 +25,7 @@ class TakeSelfiePage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.04,
           ),
-          SvgPicture.asset('images/progress2.svg'),
+          Image.asset('images/progress2.png'),
           SizedBox(
             height: Get.height * 0.05,
           ),
@@ -104,7 +103,9 @@ class TakeSelfiePage extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Container(
             padding: const EdgeInsets.only(
               left: 28,
