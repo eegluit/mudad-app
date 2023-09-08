@@ -3,20 +3,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mudad/model/services/auth_service.dart';
-import 'package:mudad/model/utils/resource/app_constants.dart';
 import 'package:mudad/page/add_card/add_a_card.dart';
 import 'package:mudad/page/home/change_password_view/change_password_screen.dart';
 import 'package:mudad/page/home/edit_profile_view/edit_profile_screen.dart';
 import 'package:mudad/page/home/info_page/info_page_view.dart';
-import 'package:mudad/page/top_offers_view/refer_a_friend_view.dart';
 import 'package:mudad/widget/cachednetworkimagewidget/cachednetworkimagewidget.dart';
 import '../../../controller/home_controller.dart';
 import '../../../model/utils/resource/image_resource.dart';
 import '../../../utils/utils/resource/color_resource.dart';
 import '../../../utils/utils/resource/dimensions_resource.dart';
 import '../../auth_page/sign_in_page.dart';
-import '../../verify_identity/verify_identity_page.dart';
-import '../verification_view/verification_view.dart';
+import 'dart:convert';
 
 class SettingsPage extends StatelessWidget {
   static HomeController homeController = Get.find<HomeController>();
@@ -88,11 +85,21 @@ class SettingsPage extends StatelessWidget {
                             width: 1,
                           ),
                         ),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: cachedNetworkImage(
-                                homeController.profileData.value.profile ??
-                                    ImageResource.instance.defaultUser)),
+                        child: homeController.profileBaseImage.value != ""
+                      ? Obx(() {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.memory(
+                              base64.decode(homeController.profileBaseImage.value),
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        })
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: cachedNetworkImage(
+                              homeController.profileData.value.profile ??
+                                  ImageResource.instance.defaultUser)),
                       ),
                       const SizedBox(
                         width: 20,

@@ -21,6 +21,7 @@ class HomeController extends GetxController {
   HomeProvider homeProvider = getIt();
   Rx<File> selectedBankStatement = File("").obs;
   RxInt selectedIndex = 0.obs;
+  RxString profileBaseImage = "".obs;
   RxBool isMerchantLoading = false.obs;
   RxBool isProfileLoading = false.obs;
   Rx<DashBoard> dashBoardData = DashBoard().obs;
@@ -107,6 +108,16 @@ class HomeController extends GetxController {
     });
   }
 
+  Future getProfileImage() async {
+    var token = 'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==';
+    var userID = Get.find<AuthServices>().getUserID();
+    homeProvider.homeRepo.getProfilePicture(token, userID).then((response) {
+      if (response.code == 200) {
+        profileBaseImage.value = response.result ?? "";
+      }
+    });
+  }
+
   // Future getVendors()async{
   //   isMerchantLoading.value = true;
   //   await homeProvider.getVendors(onError: (status,message){
@@ -158,6 +169,7 @@ class HomeController extends GetxController {
     getDashBoardData();
     getVendors();
     getOffers();
+    getProfileImage();
     super.onInit();
   }
 }

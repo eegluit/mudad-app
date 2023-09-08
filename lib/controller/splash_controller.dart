@@ -29,7 +29,7 @@ class SplashController extends GetxController {
         if (Get.find<AuthServices>().user.value.isKyc == false) {
           Get.toNamed(VerificationScreen.route);
         } else {
-          if (Get.find<AuthServices>().user.value.status != 'pending') {
+          if (Get.find<AuthServices>().user.value.status == 'pending') {
             Get.offNamed(VerificationPendingPage.route);
           } else {
             Get.offNamed(HomePage.route);

@@ -2,13 +2,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mudad/controller/qr_code_controller/qr_code_controller.dart';
-import 'package:mudad/model/models/get_vendor_model/get_vendor_model.dart';
 import 'package:mudad/page/add_card/add_a_card.dart';
-import 'package:mudad/page/available_merchant/available_merchant_view.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/qr_code_scanner.dart';
 import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
-import 'package:mudad/page/top_offers_view/refer_a_friend_view.dart';
 import 'package:mudad/page/top_offers_view/top_offers_view.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 import 'package:mudad/utils/utils/resource/style_resource.dart';
@@ -22,9 +18,7 @@ import '../../../widget/cachednetworkimagewidget/cachednetworkimagewidget.dart';
 import '../../creditScore/credit_score.dart';
 import '../../notification_page.dart';
 import '../../pending_payment_page.dart';
-import '../../transaction_page.dart';
-import '../vendor_map_location/vendor_map_location.dart';
-
+import 'dart:convert';
 
 class MainPage extends GetView<HomeController> {
   const MainPage({Key? key}) : super(key: key);
@@ -46,13 +40,21 @@ class MainPage extends GetView<HomeController> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
                       border: Border.all(color: ColorResource.mainColor)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: cachedNetworkImage(
-                        controller.profileData.value.profile ??
-                            ImageResource.instance.defaultUser,
-                        fit: BoxFit.cover),
-                  ),
+                  child: controller.profileBaseImage.value != ""
+                      ? Obx(() {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.memory(
+                              base64.decode(controller.profileBaseImage.value),
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        })
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: cachedNetworkImage(
+                              controller.profileData.value.profile ??
+                                  ImageResource.instance.defaultUser)),
                 ),
                 const SizedBox(
                   width: DimensionResource.marginSizeSmall,

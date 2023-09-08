@@ -35,8 +35,7 @@ class ProfileImagePox extends GetView<EditProfileController> {
                       border:
                           Border.all(width: 2, color: ColorResource.mainColor),
                       color: ColorResource.lightGrey),
-                  child: controller.profileBaseImage.value != "" ||
-                          controller.profileBaseImage.value.isNotEmpty
+                  child: controller.profileBaseImage.value != ""
                       ? Obx(() {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(100),
