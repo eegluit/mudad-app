@@ -216,7 +216,7 @@ class OtpPage extends GetView<OtpController> {
                               ]);
                             }
                           } else {
-                            Get.toNamed(VerificationScreen.route);
+                            Get.offAllNamed(VerificationScreen.route);
                           }
                           // Get.snackbar('Success', 'Successfully $screenName',
                           //     snackPosition: SnackPosition.BOTTOM,

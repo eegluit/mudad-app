@@ -310,7 +310,7 @@ class CreditService {
         '${Constant.baseURLUpdated}${Constant.uploadSpendingBehavior}/',
         data: formData,
         options: Options(
-          contentType: Headers.formDataType,
+          contentType: Headers.formUrlEncodedContentType,
           headers: {'x-functions-key': token},
         ),
       );

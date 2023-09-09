@@ -47,10 +47,10 @@ class SplashController extends GetxController {
       return;
     }
     homeProvider.homeRepo.getDashboardUserDetails(token).then((response) async {
-      print("ABCD ${response.toJson()}");
+      //print("ABCD ${response.toJson()}");
       if (response.code == 200) {
         try {
-          await Get.find<AuthServices>().saveUser(response.user!.toJson());
+          await Get.find<AuthServices>().saveUser(response.user?.toJson()??{});
           print("ABCD data saved}");
         } catch (e) {
           rethrow;

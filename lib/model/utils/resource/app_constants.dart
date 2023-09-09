@@ -9,9 +9,12 @@ class AppConstants {
   ///default theme
   String get defaultTheme => "light";
 
+  // /// base url
+  // String get baseUrl =>
+  //     'http://54.173.143.147/v1/';
   /// base url
   String get baseUrl =>
-      'http://54.173.143.147/v1/';
+      'http://44.203.153.253:3000/v1/';
 
   String get imageUrl =>
       'http://ec2-13-127-138-135.ap-south-1.compute.amazonaws.com:8081/static/docs/';

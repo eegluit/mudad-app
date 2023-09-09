@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mudad/controller/take_selfie_controller.dart';
 import 'package:mudad/widget/cachednetworkimagewidget/cachednetworkimagewidget.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
+import 'package:mudad/widget/log_print/log_print_condition.dart';
 
 import '../../../controller/verification_controller/verification_conroller.dart';
 import '../../../models/select_type_model.dart';
@@ -97,7 +98,7 @@ class VerificationScreen extends StatelessWidget {
                   Visibility(
                       visible: controller.currentStep.value == 1 ||
                           (controller.currentStep.value == 2 &&
-                              controller.selectedIdPic.value.path != "") ||
+                              controller.documentMap.isNotEmpty) ||
                           controller.currentStep.value == 3 ||
                           controller.currentStep.value == 4,
                       child: CommonButton(
@@ -118,6 +119,7 @@ class VerificationScreen extends StatelessWidget {
                               : controller.currentStep.value == 2
                                   ? () => selfieController.kycService
                                           .submitKycDoc(
+                                              controller.documentMap,
                                               controller.selectedIdPic.value,
                                               token)
                                           .then((response) {
@@ -130,36 +132,43 @@ class VerificationScreen extends StatelessWidget {
                                         }
                                       })
                                   : controller.currentStep.value == 3
-                                      ? () => selfieController.kycService
-                                              .uploadProfileSelfie(
-                                                  controller.selectSelfie.value,
-                                                  userID,
-                                                  "ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==")
-                                              .then((response) {
-                                            if (response.code != 200) {
-                                              toastShow(
-                                                  error: true,
-                                                  massage:
-                                                      response.errorMessage);
-                                            } else {
-                                              controller.onTakeSelfie();
-                                            }
-                                          }).then((_) {
-                                            selfieController.kycService
-                                                .submitKycSelfie(
-                                                    controller
-                                                        .selectSelfie.value,
-                                                    token)
-                                                .then((response) {
-                                              if (response.code != 200) {
-                                                toastShow(
-                                                    error: true,
-                                                    massage: response.message);
-                                              } else {
-                                                controller.onTakeSelfie();
-                                              }
-                                            });
-                                          })
+                                      ? () {
+                            if(controller.selectSelfie.value.path != ""){
+                              controller.onSkipNowButton();
+                            }else{
+                              controller.liveness();
+                            }
+                            // selfieController.kycService
+                            //     .uploadProfileSelfie(
+                            //     controller.selectSelfie.value,
+                            //     userID,
+                            //     "ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==")
+                            //     .then((response) {
+                            //   if (response.code != 200) {
+                            //     toastShow(
+                            //         error: true,
+                            //         massage:
+                            //         response.errorMessage);
+                            //   } else {
+                            //     controller.onTakeSelfie();
+                            //   }
+                            // }).then((_) {
+                            //   selfieController.kycService
+                            //       .submitKycSelfie(
+                            //       controller
+                            //           .selectSelfie.value,
+                            //       token)
+                            //       .then((response) {
+                            //     if (response.code != 200) {
+                            //       toastShow(
+                            //           error: true,
+                            //           massage: response.message);
+                            //     } else {
+                            //       controller.onTakeSelfie();
+                            //     }
+                            //   });
+                            // });
+                          }
                                       : controller.onVerificationComplete,
                           color: ColorResource.mainColor)),
                   Visibility(
@@ -289,92 +298,111 @@ class SelectIdWidget extends GetView<VerificationController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: DimensionResource.marginSizeLarge,
-                vertical: DimensionResource.marginSizeLarge),
-            child: Text(
-              controller.verifyPageDataList[controller.currentStep.value - 1]
-                  .subTitle,
-              style: StyleResource.instance
-                  .styleMedium(DimensionResource.fontSizeExtraLarge,
-                      ColorResource.mainColor)
-                  .copyWith(height: 1.7, letterSpacing: .5),
-            ),
-          ),
-          const SizedBox(
-            height: DimensionResource.marginSizeExtraLarge + 20,
-          ),
+      return Stack(
+        children:[
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(typeList.length, (index) {
-              var data = typeList.elementAt(index);
-              return GestureDetector(
-                onTap: () {
-                  controller.selectedId.value = index;
-                  selfieController.kycService
-                      .submitKycIdType(data.name!, token)
-                      .then((response) {
-                    if (response.code != 200) {
-                      toastShow(error: true, massage: response.message);
-                    } else {
-                      controller.openSelfieCamera();
-                    }
-                  });
-                },
-                child: Card(
-                    margin: const EdgeInsets.only(
-                        bottom: DimensionResource.marginSizeExtraLarge),
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: DimensionResource.marginSizeLarge,
-                          vertical: DimensionResource.marginSizeDefault),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 33,
-                            width: 33,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                    color: ColorResource.mainColor, width: 2.5),
-                                color: controller.selectedId.value == index
-                                    ? ColorResource.mainColor
-                                    : ColorResource.white),
-                            child: Center(
-                                child: controller.selectedId.value == index
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Image.asset(
-                                            ImageResource.instance.checkIcon),
-                                      )
-                                    : Container()),
-                          ),
-                          const SizedBox(
-                            width: DimensionResource.marginSizeDefault,
-                          ),
-                          Text(
-                            data.name ?? "",
-                            style: StyleResource.instance
-                                .styleMedium(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: DimensionResource.marginSizeLarge,
+                    vertical: DimensionResource.marginSizeLarge),
+                child: Text(
+                  controller.verifyPageDataList[controller.currentStep.value - 1]
+                      .subTitle,
+                  style: StyleResource.instance
+                      .styleMedium(DimensionResource.fontSizeExtraLarge,
+                      ColorResource.mainColor)
+                      .copyWith(height: 1.7, letterSpacing: .5),
+                ),
+              ),
+              const SizedBox(
+                height: DimensionResource.marginSizeExtraLarge + 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(typeList.length, (index) {
+                  var data = typeList.elementAt(index);
+                  return GestureDetector(
+                    onTap: () {
+                      controller.selectedId.value = index;
+                      selfieController.kycService
+                          .submitKycIdType(data.name!, token)
+                          .then((response) {
+                        if (response.code != 200) {
+                          toastShow(error: true, massage: response.message);
+                        } else {
+                          /// todo : upload id doc
+
+                          controller.onDocumentScan();
+                        }
+                      });
+                    },
+                    child: Card(
+                        margin: const EdgeInsets.only(
+                            bottom: DimensionResource.marginSizeExtraLarge),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: DimensionResource.marginSizeLarge,
+                              vertical: DimensionResource.marginSizeDefault),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 33,
+                                width: 33,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(
+                                        color: ColorResource.mainColor, width: 2.5),
+                                    color: controller.selectedId.value == index
+                                        ? ColorResource.mainColor
+                                        : ColorResource.white),
+                                child: Center(
+                                    child: controller.selectedId.value == index
+                                        ? Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Image.asset(
+                                          ImageResource.instance.checkIcon),
+                                    )
+                                        : Container()),
+                              ),
+                              const SizedBox(
+                                width: DimensionResource.marginSizeDefault,
+                              ),
+                              Text(
+                                data.name ?? "",
+                                style: StyleResource.instance
+                                    .styleMedium(
                                     DimensionResource.fontSizeExtraLarge,
                                     ColorResource.mainColor)
-                                .copyWith(
+                                    .copyWith(
                                   letterSpacing: .6,
                                 ),
-                          )
-                        ],
-                      ),
-                    )),
-              );
-            }),
+                              )
+                            ],
+                          ),
+                        )),
+                  );
+                }),
+              ),
+
+              // Image.file(controller.selectedIdPic.value)
+            ],
           ),
-        ],
+          Visibility(
+            visible: !controller.isInitialise.value,
+            child: Container(
+              color: Colors.white.withOpacity(0.4),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: ColorResource.mainColor,
+                ),
+              )
+            )
+          )
+        ]
       );
     });
   }
@@ -385,6 +413,7 @@ class SelfieWidget extends GetView<VerificationController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      logPrint("dfdfd ${controller.selectedIdPic.value.path}");
       return Column(
         children: [
           Padding(
@@ -412,9 +441,9 @@ class SelfieWidget extends GetView<VerificationController> {
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.elliptical(170, 220)),
             ),
-            child: controller.selectedIdPic.value.path == ""
+            child: controller.selectSelfie.value.path == ""
                 ? ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.elliptical(170, 220)),
+                    borderRadius: const BorderRadius.all(Radius.elliptical(170, 220)),
                     child:
                         cachedNetworkImage(ImageResource.instance.defaultUser))
                 : ClipRRect(
