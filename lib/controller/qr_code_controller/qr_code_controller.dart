@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudad/page/add_card/add_a_card.dart';
+import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/pay_merchant.dart';
 
@@ -13,7 +14,8 @@ class QrCodeController extends GetxController {
       qrController = controller.obs;
       controller.scannedDataStream.listen((scanData) {
         result.value = scanData;
-        Get.toNamed(PayMerchantScreen.route);
+        // Get.toNamed(PayMerchantScreen.route);
+        Get.toNamed(LastTransactionScreen.route);
       });
     });
   }

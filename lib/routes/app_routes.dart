@@ -154,6 +154,7 @@ class AppRoutes {
     GetPage(
       name: Transactionpage.route,
       page: () => const Transactionpage(),
+      binding: HomeBinding()
     ),
     GetPage(
         name: PendingPaymentPage.route,

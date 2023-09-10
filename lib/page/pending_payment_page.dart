@@ -7,10 +7,17 @@ import 'package:status_change/status_change.dart';
 
 import '../controller/pending_payment_controller.dart';
 
-class PendingPaymentPage extends GetView<PendingPaymentController> {
+class PendingPaymentPage extends StatefulWidget {
   static const route = '/pendingPaymentPage';
   const PendingPaymentPage({Key? key}) : super(key: key);
 
+  @override
+  _PendingPaymentPageState createState() => _PendingPaymentPageState();
+}
+
+class _PendingPaymentPageState extends State<PendingPaymentPage> {
+  final PendingPaymentController controller =
+      Get.put(PendingPaymentController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +50,13 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
               height: 10,
             ),
             Container(
-              height: Get.height*0.13,
+              height: Get.height * 0.13,
               width: double.infinity,
-              decoration:const BoxDecoration(
-                color:  ColorResource.mainColor,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft:Radius.circular(20) ),
+              decoration: const BoxDecoration(
+                color: ColorResource.mainColor,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20)),
               ),
               margin: const EdgeInsets.only(
                 left: 19,
@@ -84,7 +93,7 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
             ),
             Container(
               width: Get.width,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -93,7 +102,7 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
                     blurRadius: 13,
                   )
                 ],
-                borderRadius:const BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
@@ -125,8 +134,15 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
                   const SizedBox(
                       height: 170,
                       child: Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: DimensionResource.marginSizeLarge,vertical: 10),
-                        child: StepBar(currentStep: 1, stepThirdComplete: false, stepSecondComplete: false, stepFirstComplete: true, stepFourthComplete: false),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: DimensionResource.marginSizeLarge,
+                            vertical: 10),
+                        child: StepBar(
+                            currentStep: 1,
+                            stepThirdComplete: false,
+                            stepSecondComplete: false,
+                            stepFirstComplete: true,
+                            stepFourthComplete: false),
                       )),
                   const Divider(
                     height: 0.5,
@@ -140,68 +156,83 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Choose an amount',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: Color(0xFF30324B),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.chooseAmountList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Obx(
-                                 () {
-                                  return GestureDetector(
-                                    onTap: (){
-                                      controller.selectedAmount.value = index;
-                                    },
-                                    child: Card(
-                                      margin: EdgeInsets.only(
-                                        left: index == 0 ? 0 : 15,
-                                      ),
-                                      elevation: 3,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6.0),
-                                      ),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: DimensionResource.marginSizeSmall
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: controller.selectedAmount.value == index ? ColorResource.secondColor:Colors.white,
-                                          border: Border.all(
-                                            color: const Color(0xFF1F276B),
-                                            width: 1,
-                                          ),
-                                          borderRadius: BorderRadius.circular(6.0),
-                                        ),
-                                        child:  Center(
-                                          child:  Text(
-                                            controller.chooseAmountList[index],
-                                            style:  TextStyle(
-                                              color: controller.selectedAmount.value == index ?Colors.white :Color(0xFF1F276B),
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              );
-                            },
-                          ),
-                        ),
+                        // Obx(() {
+                        //   return Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       const Text('Loan Foreclosure'),
+                        //       Checkbox(
+                        //         value: controller.isSelected.value,
+                        //         onChanged: (value) {
+                        //           controller.isSelected.value = value ?? false;
+                        //         },
+                        //       ),
+                        //     ],
+                        //   );
+                        // }),
+
+                        // const Text(
+                        //   'Choose an amount',
+                        //   style: TextStyle(
+                        //     fontWeight: FontWeight.w700,
+                        //     fontSize: 16,
+                        //     color: Color(0xFF30324B),
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 15,
+                        // ),
+                        // SizedBox(
+                        //   height: 30,
+                        //   child: ListView.builder(
+                        //     scrollDirection: Axis.horizontal,
+                        //     itemCount: controller.chooseAmountList.length,
+                        //     itemBuilder: (BuildContext context, int index) {
+                        //       return Obx(
+                        //          () {
+                        //           return GestureDetector(
+                        //             onTap: (){
+                        //               controller.selectedAmount.value = index;
+                        //             },
+                        //             child: Card(
+                        //               margin: EdgeInsets.only(
+                        //                 left: index == 0 ? 0 : 15,
+                        //               ),
+                        //               elevation: 3,
+                        //               shape: RoundedRectangleBorder(
+                        //                 borderRadius: BorderRadius.circular(6.0),
+                        //               ),
+                        //               child: Container(
+                        //                 padding: const EdgeInsets.symmetric(
+                        //                   horizontal: DimensionResource.marginSizeSmall
+                        //                 ),
+                        //                 decoration: BoxDecoration(
+                        //                   color: controller.selectedAmount.value == index ? ColorResource.secondColor:Colors.white,
+                        //                   border: Border.all(
+                        //                     color: const Color(0xFF1F276B),
+                        //                     width: 1,
+                        //                   ),
+                        //                   borderRadius: BorderRadius.circular(6.0),
+                        //                 ),
+                        //                 child:  Center(
+                        //                   child:  Text(
+                        //                     controller.chooseAmountList[index],
+                        //                     style:  TextStyle(
+                        //                       color: controller.selectedAmount.value == index ?Colors.white :Color(0xFF1F276B),
+                        //                       fontSize: 10,
+                        //                       fontWeight: FontWeight.w700,
+                        //                     ),
+                        //                     textAlign: TextAlign.center,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           );
+                        //         }
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                         const SizedBox(
                           height: 20,
                         ),
@@ -222,35 +253,43 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
                             scrollDirection: Axis.horizontal,
                             itemCount: controller.selectPaymentList.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Obx(
-                                () {
-                                  return GestureDetector(
-                                    onTap: (){
-                                      controller.selectedPay.value = index;
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                        left: index == 0 ? 0 : 15,
-                                      ),
-                                      padding: const EdgeInsets.only(
-                                        left: 15,
-                                        right: 15,
-                                        top: 6,
-                                        bottom: 6,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color:  controller.selectedPay.value == index?ColorResource.secondColor: Colors.white,
-                                        border: Border.all(
-                                          color: const Color(0xFF1F276B),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(4.0),
-                                      ),
-                                      child: Image.asset(controller.selectPaymentList[index],color:controller.selectedPay.value == index?Colors.white: ColorResource.secondColor,height: 18,),
+                              return Obx(() {
+                                return GestureDetector(
+                                  onTap: () {
+                                    controller.selectedPay.value = index;
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      left: index == 0 ? 0 : 15,
                                     ),
-                                  );
-                                }
-                              );
+                                    padding: const EdgeInsets.only(
+                                      left: 15,
+                                      right: 15,
+                                      top: 6,
+                                      bottom: 6,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          controller.selectedPay.value == index
+                                              ? ColorResource.secondColor
+                                              : Colors.white,
+                                      border: Border.all(
+                                        color: const Color(0xFF1F276B),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                    child: Image.asset(
+                                      controller.selectPaymentList[index],
+                                      color:
+                                          controller.selectedPay.value == index
+                                              ? Colors.white
+                                              : ColorResource.secondColor,
+                                      height: 18,
+                                    ),
+                                  ),
+                                );
+                              });
                             },
                           ),
                         ),
@@ -323,7 +362,34 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
                     ),
                   ),
                   const SizedBox(
-                    height: 54,
+                    height: 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25, right: 25),
+                    child: SizedBox(
+                      width: Get.width,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(13),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'Loan Foreclosure',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 25, right: 25),
@@ -350,7 +416,7 @@ class PendingPaymentPage extends GetView<PendingPaymentController> {
                     ),
                   ),
                   const SizedBox(
-                    height: 54,
+                    height: 40,
                   ),
                 ],
               ),

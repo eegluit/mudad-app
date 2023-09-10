@@ -6,6 +6,7 @@ import 'package:mudad/page/add_card/add_a_card.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/qr_code_scanner.dart';
 import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
 import 'package:mudad/page/top_offers_view/top_offers_view.dart';
+import 'package:mudad/page/transaction_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 import 'package:mudad/utils/utils/resource/style_resource.dart';
 import 'package:shimmer/shimmer.dart';
@@ -300,7 +301,7 @@ class MainPage extends GetView<HomeController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Pending Payments',
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
@@ -310,10 +311,10 @@ class MainPage extends GetView<HomeController> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed(LastTransactionScreen.route);
+                                Get.toNamed(Transactionpage.route);
                               },
-                              child: Text(
-                                'Generated Bill',
+                              child: const Text(
+                                'All Transactions',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,

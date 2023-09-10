@@ -26,7 +26,7 @@ class CommonButton extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: MaterialButton(
-              onPressed: onPressed,
+              onPressed: loading ? null: onPressed,
               child: Center(
                 child: loading == true
                     ? const SizedBox(

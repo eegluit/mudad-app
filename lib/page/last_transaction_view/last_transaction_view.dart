@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mudad/page/home/qr_code_scanner_view/otp_validation_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 import 'package:mudad/utils/utils/resource/image_resource.dart';
 import 'package:mudad/utils/utils/resource/style_resource.dart';
@@ -17,52 +18,56 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
-        if(controller.showDueView.value){
+      onWillPop: () async {
+        if (controller.showDueView.value) {
           controller.showDueView.value = false;
-        }else{
+        } else {
           Get.back();
         }
         return false;
       },
       child: BaseView(
-          title: "Generated Bill",
-          topChild: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: DimensionResource.marginSizeLarge),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'RO10000',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w500,
-                  ),
+        title: "Generated Bill",
+        topChild: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: DimensionResource.marginSizeLarge),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'RO10000',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 32,
+                  fontWeight: FontWeight.w500,
                 ),
-                Text(
-                  controller.showDueView.value? "Total Due": "Bill generated on 1st Jan",
-                  style: TextStyle(
-                    color: ColorResource.borderColor.withOpacity(0.7),
-                    fontSize: 14,
-                    letterSpacing: .5,
-                    fontWeight: FontWeight.w500,
-                  ),
+              ),
+              Text(
+                controller.showDueView.value
+                    ? "Total Due"
+                    : "Bill generated on 1st Jan",
+                style: TextStyle(
+                  color: ColorResource.borderColor.withOpacity(0.7),
+                  fontSize: 14,
+                  letterSpacing: .5,
+                  fontWeight: FontWeight.w500,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          onBack: (){
-            if(controller.showDueView.value){
-              controller.showDueView.value = false;
-            }else{
-              Get.back();
-            }
-          },
-          child: Obx(() =>
-              controller.showDueView.value ? dueView() : billGenerateView())),
+        ),
+        onBack: () {
+          if (controller.showDueView.value) {
+            controller.showDueView.value = false;
+          } else {
+            Get.back();
+          }
+        },
+        child: SingleChildScrollView(
+            child: Obx(() =>
+                controller.showDueView.value ? dueView() : billGenerateView())),
+      ),
     );
   }
 
@@ -171,7 +176,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeLarge,
               vertical: DimensionResource.marginSizeOverExtraLarge),
           child: CommonButton(
@@ -391,7 +396,9 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           child: CommonButton(
               text: "Pay Now",
               loading: false,
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(OtpValidationPage.route);
+              },
               color: ColorResource.mainColor),
         )
       ],

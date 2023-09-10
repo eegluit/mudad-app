@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
     MainPage(),
     OffersPage(),
     VendorsPage(),
-    Transactionpage(),
+    // Transactionpage(),
     SettingsPage(),];
 
   @override

@@ -33,7 +33,7 @@ class HomeController extends GetxController {
     {"image": 'images/home.svg', "title": "Home"},
     {"image": 'images/offers.svg', "title": "Offers"},
     {"image": 'images/vendors.svg', "title": "Vendors"},
-    {"image": ImageResource.instance.transactionIcon, "title": "Transaction"},
+    // {"image": ImageResource.instance.transactionIcon, "title": "Transaction"},
     {"image": 'images/settings.svg', "title": "Settings"},
   ];
 
