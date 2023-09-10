@@ -6,6 +6,7 @@ class Constant {
   static String imageUrl = AppConstants.instance.imageUrl;
   static String baseURLUpdated = AppConstants.instance.baseURLUpdated;
   static String baseURLOffer = AppConstants.instance.offerBaseUrl;
+  static String baseURLLMS = AppConstants.instance.baseURLLMS;
 
   // static const String baseUrl = 'http://13.232.39.141:8080/v1/';
   static const String signUp = 'auth/register';
@@ -40,4 +41,6 @@ class Constant {
   static const String profilePicture = 'profilepicture';
 
   static const String offers = 'offer';
+
+  static const String generateReceipt = 'MerchantBillGeneration';
 }

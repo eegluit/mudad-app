@@ -26,48 +26,65 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
         }
         return false;
       },
-      child: BaseView(
-        title: "Generated Bill",
-        topChild: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: DimensionResource.marginSizeLarge),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'RO10000',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w500,
-                ),
+      child: Obx(() {
+        if (controller.isLoading.value) {
+          // Show a loader widget here when isLoading is true
+          return Container(
+            color: ColorResource.white.withOpacity(1),
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: ColorResource.mainColor,
               ),
-              Text(
-                controller.showDueView.value
-                    ? "Total Due"
-                    : "Bill generated on 1st Jan",
-                style: TextStyle(
-                  color: ColorResource.borderColor.withOpacity(0.7),
-                  fontSize: 14,
-                  letterSpacing: .5,
-                  fontWeight: FontWeight.w500,
-                ),
+            ),
+          );
+        } else {
+          return BaseView(
+            title: "Generated Bill",
+            topChild: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: DimensionResource.marginSizeLarge,
               ),
-            ],
-          ),
-        ),
-        onBack: () {
-          if (controller.showDueView.value) {
-            controller.showDueView.value = false;
-          } else {
-            Get.back();
-          }
-        },
-        child: SingleChildScrollView(
-            child: Obx(() =>
-                controller.showDueView.value ? dueView() : billGenerateView())),
-      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'RO ${controller.receipt?.total ?? "-"}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(
+                    controller.showDueView.value
+                        ? "Total Due"
+                        : "Bill generated on ${controller.generateDate()}",
+                    style: TextStyle(
+                      color: ColorResource.borderColor.withOpacity(0.7),
+                      fontSize: 14,
+                      letterSpacing: .5,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            onBack: () {
+              if (controller.showDueView.value) {
+                controller.showDueView.value = false;
+              } else {
+                Get.back();
+              }
+            },
+            child: SingleChildScrollView(
+              child: Obx(() => controller.showDueView.value
+                  ? dueView()
+                  : billGenerateView()),
+            ),
+          );
+        }
+      }),
     );
   }
 
@@ -78,6 +95,10 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
         const SizedBox(
           height: DimensionResource.marginSizeDefault,
         ),
+        const SizedBox(
+          height: DimensionResource.marginSizeDefault,
+        ),
+        amountExpendRow("Invoice #${controller.receipt?.invoice ?? "-"}", ""),
         const Divider(
           color: ColorResource.borderColor,
           thickness: 1.4,
@@ -85,11 +106,26 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
         const SizedBox(
           height: DimensionResource.marginSizeDefault,
         ),
-        amountExpendRow("Spends in December", "RO10000"),
+        amountExpendRow("Customer:", controller.receipt?.consumerName ?? "-"),
         const SizedBox(
           height: DimensionResource.marginSizeDefault,
         ),
-        amountExpendRow("Minimum Amount Due", "RO10000"),
+        amountExpendRow(
+            "Product Summary:", controller.receipt?.productSummary ?? "-"),
+        const SizedBox(
+          height: DimensionResource.marginSizeDefault,
+        ),
+        amountExpendRow("Price:", "RO ${controller.receipt?.price ?? '-'}"),
+        const SizedBox(
+          height: DimensionResource.marginSizeDefault,
+        ),
+        amountExpendRow(
+            "Tax percentage:", "${controller.receipt?.taxPercentage ?? "-"}%"),
+        const SizedBox(
+          height: DimensionResource.marginSizeDefault,
+        ),
+        amountExpendRow(
+            "Total price:", "RO ${controller.receipt?.total ?? "-"}"),
         const SizedBox(
           height: DimensionResource.marginSizeDefault,
         ),
@@ -110,70 +146,65 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeLarge),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(controller.transactionList.length, (index) {
-              TransactionList data =
-                  controller.transactionList.elementAt(index);
-              return Container(
-                margin: EdgeInsets.only(top: DimensionResource.marginSizeSmall),
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                            color: ColorResource.greenColor.withOpacity(0.3)))),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: DimensionResource.marginSizeSmall,
-                    vertical: DimensionResource.marginSizeSmall),
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: data.color),
-                      padding: const EdgeInsets.all(8),
-                      child: Image.asset(
-                        data.image ?? "",
-                        height: 45,
-                      ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              margin: const EdgeInsets.only(top: DimensionResource.marginSizeSmall),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          color: ColorResource.greenColor.withOpacity(0.3)))),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: DimensionResource.marginSizeSmall,
+                  vertical: DimensionResource.marginSizeSmall),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: ColorResource.lightGreenColor),
+                    padding: const EdgeInsets.all(8),
+                    child: Image.asset(
+                      ImageResource.instance.transactionOne,
+                      height: 45,
                     ),
-                    const SizedBox(
-                      width: DimensionResource.marginSizeDefault,
+                  ),
+                  const SizedBox(
+                    width: DimensionResource.marginSizeDefault,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.receipt?.name ?? "-",
+                          style: StyleResource.instance.styleMedium(
+                              DimensionResource.fontSizeDefault,
+                              ColorResource.black),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          controller.generateDate(),
+                          style: StyleResource.instance.styleMedium(
+                              DimensionResource.fontSizeDefault,
+                              ColorResource.black),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            data.name ?? "",
-                            style: StyleResource.instance.styleMedium(
-                                DimensionResource.fontSizeDefault,
-                                ColorResource.black),
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            data.date ?? "",
-                            style: StyleResource.instance.styleMedium(
-                                DimensionResource.fontSizeDefault,
-                                ColorResource.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      data.price ?? "",
-                      style: StyleResource.instance.styleMedium(
-                          DimensionResource.fontSizeDefault,
-                          ColorResource.black),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ),
+                  ),
+                  Text(
+                    "RO ${controller.receipt?.total ?? "-"}",
+                    style: StyleResource.instance.styleMedium(
+                        DimensionResource.fontSizeDefault, ColorResource.black),
+                  ),
+                ],
+              ),
+            )
+          ]),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
@@ -215,7 +246,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeLarge),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,7 +331,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeLarge),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -390,7 +421,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeLarge,
               vertical: DimensionResource.marginSizeOverExtraLarge),
           child: CommonButton(

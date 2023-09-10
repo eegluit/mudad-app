@@ -15,7 +15,7 @@ class QrCodeController extends GetxController {
       controller.scannedDataStream.listen((scanData) {
         result.value = scanData;
         // Get.toNamed(PayMerchantScreen.route);
-        Get.toNamed(LastTransactionScreen.route);
+        Get.toNamed(LastTransactionScreen.route,arguments: [result.value.code]);
       });
     });
   }

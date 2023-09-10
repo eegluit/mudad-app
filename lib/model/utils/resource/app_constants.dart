@@ -19,4 +19,6 @@ class AppConstants {
       'https://madadcreditscore.azurewebsites.net/api/';
 
   String get offerBaseUrl => 'https://madadoffer.azurewebsites.net/api/';
+
+  String get baseURLLMS => 'https://madadlms.azurewebsites.net/api/Lms/';
 }
