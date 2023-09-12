@@ -45,6 +45,16 @@ class SelectIdTypePage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.08,
           ),
+          const Center(
+            child: Text(
+              'Please provide one of the following documents: passport, national ID, or drivering license for verification.',
+              style: TextStyle(
+                color: ColorResource.mainColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 50, right: 40),
             child: ListView.builder(
