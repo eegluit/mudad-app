@@ -240,7 +240,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeLarge),
           child: Text(
-            "Payment Plan",
+            "Repayment Plan",
             style: StyleResource.instance.styleMedium(
                 DimensionResource.fontSizeLarge, ColorResource.secondColor),
           ),

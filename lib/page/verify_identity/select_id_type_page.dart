@@ -17,15 +17,7 @@ class SelectIdTypePage extends StatelessWidget {
     List<SelectTypeModel> typeList = [
       SelectTypeModel(
         id: 1,
-        name: "Passport",
-      ),
-      SelectTypeModel(
-        id: 2,
-        name: "ID Card",
-      ),
-      SelectTypeModel(
-        id: 3,
-        name: "Drivers License",
+        name: "Upload Document",
       ),
     ];
     return Scaffold(
@@ -43,7 +35,7 @@ class SelectIdTypePage extends StatelessWidget {
             height: Get.height * 0.05,
           ),
           const Text(
-            'Select ID Type',
+            'Upload ID',
             style: TextStyle(
               color: ColorResource.mainColor,
               fontSize: 32,

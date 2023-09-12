@@ -26,11 +26,11 @@ class LastTransactionController extends GetxController {
         color: ColorResource.lightGreenColor),
   ].obs;
   RxList<PaymentPlan> paymentPlan = <PaymentPlan>[
-    PaymentPlan(title: "Full payment", price: "", percentage: ""),
+    PaymentPlan(title: "Split in 4 months", price: "RO2,50/Month", percentage: "@ 8% p.a."),
     PaymentPlan(
-        title: "2 Month", price: "RO2,50/Month", percentage: "@ 10% p.a."),
+        title: "Split in 5 months", price: "RO2,50/Month", percentage: "@ 10% p.a."),
     PaymentPlan(
-        title: "3 Month", price: "RO1,66/Month", percentage: "@ 14% p.a."),
+        title: "Split in 6 months", price: "RO1,66/Month", percentage: "@ 14% p.a."),
   ].obs;
   RxList<PaymentPlan> paymentMethod = <PaymentPlan>[
     PaymentPlan(title: "Debit card", price: "", percentage: ""),

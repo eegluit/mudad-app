@@ -8,7 +8,7 @@ import '../../page/home/verification_view/verification_view.dart';
 import '../../widget/image_picker/image_selection_util.dart';
 import '../../page/home/home_page.dart';
 
-class VerificationController extends GetxController{
+class VerificationController extends GetxController {
   RxInt currentStep = 1.obs;
   RxInt selectedId = (-1).obs;
   RxBool isVerified = true.obs;
@@ -17,56 +17,48 @@ class VerificationController extends GetxController{
   List<VerifyPage> verifyPageDataList = <VerifyPage>[
     VerifyPage(
         title: "Verify Your Identity",
-        subTitle: "Simply use your phone camera to capture the following: "
-    ),
-    VerifyPage(
-        title: "Select ID Type",
-        subTitle: ""
-    ),
+        subTitle: "Simply use your phone camera to capture the following: "),
+    VerifyPage(title: "Upload ID", subTitle: ""),
     VerifyPage(
         title: "Take a Selfie",
-        subTitle: "Place your face inside the oval and press start when you are ready"
-    ),
-    VerifyPage(
-        title: "Verification\nProcess ",
-        subTitle: ""
-    ),
+        subTitle:
+            "Place your face inside the oval and press start when you are ready"),
+    VerifyPage(title: "Verification\nProcess ", subTitle: ""),
   ];
 
   late ImageSelectionUtil imageSelectionUtils =
-  ImageSelectionUtil((String base64Image,File imageFiles) async {
-    if(currentStep.value == 2){
+      ImageSelectionUtil((String base64Image, File imageFiles) async {
+    if (currentStep.value == 2) {
       selectedIdPic.value = imageFiles;
-    }else{
-    selectSelfie.value = imageFiles;
+    } else {
+      selectSelfie.value = imageFiles;
     }
   });
 
-  openSelfieCamera(){
+  openSelfieCamera() {
     imageSelectionUtils.pickImageViaCamera();
   }
 
-  onVerifyIdentity(){
+  onVerifyIdentity() {
     currentStep.value = 2;
   }
 
-  onSelectId(){
+  onSelectId() {
     currentStep.value = 3;
     openSelfieCamera();
   }
 
-  onTakeSelfie(){
-    if(selectSelfie.value.path == ""){
+  onTakeSelfie() {
+    if (selectSelfie.value.path == "") {
       openSelfieCamera();
-    }else{
+    } else {
       currentStep.value = 4;
     }
+  }
 
+  onVerificationComplete() {
+    Get.offAllNamed(VerificationPendingPage.route);
   }
-  onVerificationComplete(){
- Get.offAllNamed(VerificationPendingPage.route);
-  }
-  onSkipNowButton(){
 
-  }
+  onSkipNowButton() {}
 }

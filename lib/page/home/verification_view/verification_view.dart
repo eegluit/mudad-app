@@ -273,15 +273,7 @@ class SelectIdWidget extends GetView<VerificationController> {
   List<SelectTypeModel> typeList = [
     SelectTypeModel(
       id: 1,
-      name: "Passport",
-    ),
-    SelectTypeModel(
-      id: 2,
-      name: "ID Card",
-    ),
-    SelectTypeModel(
-      id: 3,
-      name: "Driver's License",
+      name: "Upload Document",
     ),
   ];
   var typeId = 0.obs;

@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Mudad',
+      title: 'Madad',
       theme: ThemeData(
         primarySwatch: generateMaterialColor(
           color: ColorResource.mainColor,

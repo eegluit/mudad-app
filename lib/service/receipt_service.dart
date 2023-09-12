@@ -15,7 +15,7 @@ class ReceiptService {
   Future<GenerateReceiptResponseModel> getMerchantReceipt(
       String receiptId, String consumerId) async {
     try {
-      print("ABC 01");
+      print("ABC '${Constant.baseURLLMS}${Constant.generateReceipt}/${receiptId}/${consumerId}'");
       var response = await Dio().post(
         '${Constant.baseURLLMS}${Constant.generateReceipt}/${receiptId}/${consumerId}',
         data: {},
