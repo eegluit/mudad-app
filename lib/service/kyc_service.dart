@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mudad/models/kyc_upload_doc_response_model.dart';
 import 'package:mudad/models/kyc_upload_selfie_response_model.dart';
+import 'package:mudad/widget/log_print/log_print_condition.dart';
 import '../utils/constant/constant.dart';
 import '../models/kyc_id_type_request_model.dart';
 import '../models/kyc_id_type_response_model.dart';
@@ -59,28 +62,25 @@ class KycService {
   }
 
   Future<KycUploadDocResponseModel> submitKycDoc(
-      File kycIdFile, String token) async {
+      Map<String,dynamic> kycIdFile,File imageFile, String token) async {
+    logPrint(" ${jsonEncode(kycIdFile)}");
+
     try {
-      String fileName = kycIdFile.path.split('/').last;
-      FormData formData = FormData.fromMap({
-        'document': await MultipartFile.fromFile(
-          kycIdFile.path,
-          filename: fileName,
-          contentType: MediaType('image', 'jpg'),
-        ),
-      });
       var response = await Dio().post(
         '${Constant.baseUrl}${Constant.kycUploadDoc}',
-        data: formData,
+        data: {
+          'document': jsonEncode(kycIdFile),
+        },
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {'authentication': 'Bearer $token'},
         ),
       );
       KycUploadDocResponseModel model =
-          KycUploadDocResponseModel.fromJson(response.data);
+      KycUploadDocResponseModel.fromJson(response.data);
       model.code = 200;
       return model;
+
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
         KycUploadDocResponseModel model =
@@ -189,6 +189,7 @@ class KycService {
       model.code = 200;
       return model;
     } on DioError catch (e) {
+      log("DioError ${e.response!.data}");
       if (e.type == DioErrorType.response) {
         UploadProfileSelfieResponseModel model =
             UploadProfileSelfieResponseModel.fromJson(e.response!.data);
