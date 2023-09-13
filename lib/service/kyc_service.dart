@@ -73,7 +73,7 @@ class KycService {
         '${Constant.baseUrl}${Constant.kycUploadDoc}',
         data: formData,
         options: Options(
-          contentType: Headers.formDataType,
+          contentType: Headers.formUrlEncodedContentType,
           headers: {'authentication': 'Bearer $token'},
         ),
       );
@@ -126,7 +126,7 @@ class KycService {
         '${Constant.baseUrl}${Constant.kycUploadSelfie}',
         data: formData,
         options: Options(
-          contentType: Headers.formDataType,
+          contentType: Headers.formUrlEncodedContentType,
           headers: {'authentication': 'Bearer $token'},
         ),
       );
@@ -180,7 +180,7 @@ class KycService {
         '${Constant.baseURLUpdated}${Constant.profilePicture}',
         data: formData,
         options: Options(
-          contentType: Headers.formDataType,
+          contentType: Headers.formUrlEncodedContentType,
           headers: {'x-functions-key': authToken},
         ),
       );
