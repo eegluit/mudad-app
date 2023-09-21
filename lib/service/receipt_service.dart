@@ -15,10 +15,13 @@ class ReceiptService {
   Future<GenerateReceiptResponseModel> getMerchantReceipt(
       String receiptId, String consumerId) async {
     try {
-      print("ABC '${Constant.baseURLLMS}${Constant.generateReceipt}/${receiptId}/${consumerId}'");
       var response = await Dio().post(
-        '${Constant.baseURLLMS}${Constant.generateReceipt}/${receiptId}/${consumerId}',
+        '${Constant.baseURLLMS}${Constant.generateReceipt}',
         data: {},
+        queryParameters: {
+          'MerchantBillGenerationId': receiptId,
+          'consumerId': consumerId
+        },
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {
@@ -36,7 +39,10 @@ class ReceiptService {
       print("ABCD Error ${e}");
       if (e.type == DioErrorType.response) {
         GenerateReceiptResponseModel model =
-            GenerateReceiptResponseModel.fromJson(e.response!.data);
+            GenerateReceiptResponseModel(
+          errorMessage: "The code you entered is incorrect. Kindly process again.",
+          code: 400,
+        );
         return model;
       } else if (e.type == DioErrorType.connectTimeout ||
           e.type == DioErrorType.receiveTimeout ||

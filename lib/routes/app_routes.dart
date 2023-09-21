@@ -9,6 +9,7 @@ import 'package:mudad/page/home/edit_profile_view/edit_profile_screen.dart';
 import 'package:mudad/page/home/info_page/info_page_view.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/payment_success_page.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/qr_code_scanner.dart';
+import 'package:mudad/page/home/rooted_device_view.dart';
 import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
 import 'package:mudad/page/top_offers_view/refer_a_friend_view.dart';
 import '../page/verify_identity/verification_pending_page.dart';
@@ -141,6 +142,10 @@ class AppRoutes {
     GetPage(
       name: VerificationPendingPage.route,
       page: () => const VerificationPendingPage(),
+    ),
+    GetPage(
+      name: RootedDevicePage.route,
+      page: () => const RootedDevicePage(),
     ),
     GetPage(
       name: TakeSelfiePage.route,

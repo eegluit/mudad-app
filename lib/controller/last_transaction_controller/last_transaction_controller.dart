@@ -13,6 +13,7 @@ class LastTransactionController extends GetxController {
   RxBool showDueView = false.obs;
   RxInt selectedPlan = 0.obs;
   RxInt selectedPayment = 0.obs;
+  RxInt selectedMethod = 0.obs;
   RxString transactionId = "".obs;
   RxBool isLoading = true.obs;
   ReceiptResponse? receipt;
@@ -26,16 +27,21 @@ class LastTransactionController extends GetxController {
         color: ColorResource.lightGreenColor),
   ].obs;
   RxList<PaymentPlan> paymentPlan = <PaymentPlan>[
-    PaymentPlan(title: "Split in 4 months", price: "RO2,50/Month", percentage: "@ 8% p.a."),
     PaymentPlan(
-        title: "Split in 5 months", price: "RO2,50/Month", percentage: "@ 10% p.a."),
+        title: "2 months", price: "RO2,50/Month", percentage: "@ 8% p.a."),
     PaymentPlan(
-        title: "Split in 6 months", price: "RO1,66/Month", percentage: "@ 14% p.a."),
+        title: "3 months", price: "RO2,50/Month", percentage: "@ 10% p.a."),
+  ].obs;
+  RxList<PaymentPlan> splitPayment = <PaymentPlan>[
+    PaymentPlan(
+        title: "4 months", price: "RO2,50/Month", percentage: "@ 8% p.a."),
+    PaymentPlan(
+        title: "5 months", price: "RO2,50/Month", percentage: "@ 10% p.a."),
+    PaymentPlan(
+        title: "6 months", price: "RO2,50/Month", percentage: "@ 10% p.a."),
   ].obs;
   RxList<PaymentPlan> paymentMethod = <PaymentPlan>[
     PaymentPlan(title: "Debit card", price: "", percentage: ""),
-    PaymentPlan(title: "Credit card", price: "", percentage: ""),
-    PaymentPlan(title: "PayPal", price: "", percentage: ""),
   ].obs;
 
   @override
@@ -44,17 +50,15 @@ class LastTransactionController extends GetxController {
       transactionId.value = Get.arguments[0];
     }
     if (transactionId.value.isNotEmpty) {
-      service
-          .getMerchantReceipt(
-              transactionId.value, userID)
-          .then((value) {
+      service.getMerchantReceipt(transactionId.value, userID).then((value) {
         if (value.code == 200) {
           isLoading.value = false;
           receipt = value.result;
           toastShow(error: false, massage: value.successMessage);
         } else {
-          isLoading.value = false;
           toastShow(error: true, massage: value.errorMessage);
+          Get.back();
+          isLoading.value = false;
         }
       });
     }
@@ -62,8 +66,7 @@ class LastTransactionController extends GetxController {
   }
 
   String generateDate() {
-    var dateTime =
-                DateTime.parse(receipt?.createdOn ?? "");
+    var dateTime = DateTime.parse(receipt?.createdOn ?? "");
     return DateFormat('dd MMM yyyy').format(dateTime);
   }
 }

@@ -123,10 +123,8 @@ class AuthService {
             contentType: Headers.formUrlEncodedContentType,
             headers: {'authentication': 'Bearer $token'}),
       );
-      print("ABC ${response.data.toString()}");
       logPrint(response.data);
       UserModel model = UserModel.fromJson(response.data);
-      print("ABCD ${model.toJson()}");
       return model;
     } on DioError catch (e) {
       logPrint(e.response!.statusCode);

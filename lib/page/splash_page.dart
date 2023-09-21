@@ -11,7 +11,7 @@ class SplashPage extends GetView<SplashController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SplashController());
+    Get.put(SplashController(context));
     return Scaffold(
       body: Container(
           color: ColorResource.white,

@@ -10,9 +10,11 @@ import 'routes/app_routes.dart';
 import 'package:flutter/services.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 import 'package:material_color_generator/material_color_generator.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 void main() async {
   await initServices();
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   runApp(MyApp());
 }
 

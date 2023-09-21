@@ -13,6 +13,7 @@ import '../../models/get_vendors_response_model.dart';
 import '../../models/get_offers_response_model.dart';
 import '../../models/get_profile_selfie_response_model.dart';
 import '../../model/models/dashboard_model/get_user_profile_details.dart';
+import '../../models/get_user_loans_response_model.dart';
 
 class HomeRepo {
   final DioClient dioClient;
@@ -78,7 +79,6 @@ class HomeRepo {
 
   Future<GetOfferResponseModel> getOffers() async {
     try {
-      print("ABCD");
       var response = await Dio().get(
         '${Constant.baseURLOffer}${Constant.offersList}',
         options: Options(
@@ -88,13 +88,11 @@ class HomeRepo {
           },
         ),
       );
-      print("ABCD ${response}");
       GetOfferResponseModel model =
           GetOfferResponseModel.fromJson(response.data);
       model.code = response.statusCode;
       return model;
     } on DioError catch (e) {
-            print("ABCD ${e}");
       if (e.type == DioErrorType.response) {
         GetOfferResponseModel model =
             GetOfferResponseModel.fromJson(e.response!.data);
@@ -267,7 +265,6 @@ class HomeRepo {
       GetUserProfileDetails model =
           GetUserProfileDetails.fromJson(response.data);
       model.code = 200;
-      print("ABCDE ${model.toJson()}");
       return model;
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
@@ -293,6 +290,52 @@ class HomeRepo {
     } on SocketException catch (e) {
       GetUserProfileDetails model = GetUserProfileDetails(
         message: e.message,
+        code: 400,
+      );
+      return model;
+    }
+  }
+
+  Future<GetUserLoansResponseModel> getLoans(String userID) async {
+    try {
+      print("ABCD ${Constant.baseURLLMS}${Constant.getAllLoans}${userID}");
+      var response = await Dio().get(
+        '${Constant.baseURLLMS}${Constant.getAllLoans}${userID}',
+        options: Options(
+          headers: {
+            'x-functions-key':
+                'QFipKbWv0UxAphy05khVd_q9_xwQdmCFTlO95aDaWy1fAzFuO5VKpA=='
+          },
+        ),
+      );
+      GetUserLoansResponseModel model =
+          GetUserLoansResponseModel.fromJson(response.data);
+      model.code = response.statusCode;
+      return model;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        GetUserLoansResponseModel model =
+            GetUserLoansResponseModel.fromJson(e.response!.data);
+        model.code = e.response!.statusCode;
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GetUserLoansResponseModel model = GetUserLoansResponseModel(
+          errorMessage: e.message,
+          code: 408,
+        );
+        return model;
+      } else {
+        GetUserLoansResponseModel model = GetUserLoansResponseModel(
+          errorMessage: e.message,
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GetUserLoansResponseModel model = GetUserLoansResponseModel(
+        errorMessage: e.message,
         code: 400,
       );
       return model;

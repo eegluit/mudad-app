@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mudad/page/add_card/add_a_card.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/otp_validation_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 import 'package:mudad/utils/utils/resource/image_resource.dart';
@@ -151,7 +152,8 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
-              margin: const EdgeInsets.only(top: DimensionResource.marginSizeSmall),
+              margin:
+                  const EdgeInsets.only(top: DimensionResource.marginSizeSmall),
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
@@ -238,9 +240,21 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: DimensionResource.marginSizeLarge),
+              horizontal: DimensionResource.marginSizeDefault),
           child: Text(
             "Repayment Plan",
+            style: StyleResource.instance.styleMedium(
+                DimensionResource.fontSizeLarge, ColorResource.secondColor),
+          ),
+        ),
+        const SizedBox(
+          height: DimensionResource.marginSizeDefault,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: DimensionResource.marginSizeDefault),
+          child: Text(
+            "Split Payment",
             style: StyleResource.instance.styleMedium(
                 DimensionResource.fontSizeLarge, ColorResource.secondColor),
           ),
@@ -270,6 +284,84 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
                             color: ColorResource.borderColor),
                         child: Visibility(
                             visible: controller.selectedPlan.value == index,
+                            child: const Icon(
+                              Icons.circle,
+                              color: ColorResource.secondColor,
+                              size: 15,
+                            )),
+                      ),
+                      const SizedBox(
+                        width: DimensionResource.marginSizeDefault,
+                      ),
+                      Expanded(
+                        child: Text(
+                          data.title ?? "",
+                          style: StyleResource.instance.styleMedium(
+                              DimensionResource.fontSizeDefault,
+                              ColorResource.textColor_8),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            data.price ?? "",
+                            style: StyleResource.instance.styleMedium(
+                                DimensionResource.fontSizeDefault,
+                                ColorResource.black),
+                          ),
+                          Text(
+                            data.percentage ?? "",
+                            style: StyleResource.instance.styleRegular(
+                                DimensionResource.fontSizeSmall,
+                                ColorResource.textColor_8),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
+        const SizedBox(
+          height: DimensionResource.marginSizeDefault,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: DimensionResource.marginSizeLarge),
+          child: Text(
+            "Select Installment",
+            style: StyleResource.instance.styleMedium(
+                DimensionResource.fontSizeLarge, ColorResource.secondColor),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: DimensionResource.marginSizeLarge),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: List.generate(controller.splitPayment.length, (index) {
+              PaymentPlan data = controller.splitPayment.elementAt(index);
+              return GestureDetector(
+                onTap: () {
+                  controller.selectedMethod.value = index;
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      top: DimensionResource.marginSizeLarge),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: ColorResource.borderColor),
+                        child: Visibility(
+                            visible: controller.selectedMethod.value == index,
                             child: const Icon(
                               Icons.circle,
                               color: ColorResource.secondColor,
@@ -428,7 +520,8 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
               text: "Pay Now",
               loading: false,
               onPressed: () {
-                Get.toNamed(OtpValidationPage.route);
+                Get.toNamed(AddCardScreen.route);
+                // Get.toNamed(OtpValidationPage.route);
               },
               color: ColorResource.mainColor),
         )

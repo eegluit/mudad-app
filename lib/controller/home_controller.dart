@@ -138,10 +138,14 @@ class HomeController extends GetxController {
   }
 
   Future getOffers() async {
-    print("ABCD --");
     homeProvider.homeRepo.getOffers().then((response) {
-      print("ABCD offers Received");
       offerList = response.result!;
+    });
+  }
+
+  Future getLoans() async {
+    homeProvider.homeRepo.getLoans(userID).then((value) {
+      print("ABC ${value.result.toString()}");
     });
   }
 
@@ -169,6 +173,7 @@ class HomeController extends GetxController {
     getDashBoardData();
     getVendors();
     getOffers();
+    getLoans();
     getProfileImage();
     super.onInit();
   }

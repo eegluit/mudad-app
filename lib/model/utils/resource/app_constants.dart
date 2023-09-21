@@ -14,9 +14,7 @@ class AppConstants {
   //     'http://54.173.143.147/v1/';
   /// base url
 
-  String get baseUrl =>
-      'http://44.203.153.253:3000/v1/';
-
+  String get baseUrl => 'http://44.203.153.253:3000/v1/';
 
   String get imageUrl =>
       'http://ec2-13-127-138-135.ap-south-1.compute.amazonaws.com:8081/static/docs/';
@@ -26,5 +24,5 @@ class AppConstants {
 
   String get offerBaseUrl => 'https://madadoffer.azurewebsites.net/api/';
 
-  String get baseURLLMS => 'https://madadlms.azurewebsites.net/api/Lms/';
+  String get baseURLLMS => 'https://madadlms.azurewebsites.net/api/';
 }

@@ -42,5 +42,7 @@ class Constant {
 
   static const String offers = 'offer';
 
-  static const String generateReceipt = 'MerchantBillGeneration';
+  static const String generateReceipt = 'Lms/MerchantBillGeneration';
+
+  static const String getAllLoans = 'GetLoan/user/';
 }

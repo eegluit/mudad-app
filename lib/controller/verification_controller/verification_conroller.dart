@@ -61,7 +61,6 @@ Rx<Uint8List> imageUint8ListData = Uint8List(0).obs;
   onDocumentScan() {
     DocumentReader.showScanner().then((value) {
       log("val $value");
-
     });
   }
 
@@ -76,7 +75,6 @@ Rx<Uint8List> imageUint8ListData = Uint8List(0).obs;
   }
 
   liveness() {
-    logPrint("face sdk error ");
     try{
       Regula.FaceSDK.startLiveness().then((value) async {
         //log("facesdk result ${value}");
@@ -284,9 +282,9 @@ Rx<Uint8List> imageUint8ListData = Uint8List(0).obs;
     log("DocumentReaderResults ${results.authenticityResult}");
 if(results != null){
   // Get surname
-  String? surname = results.getTextFieldValueByType(EVisualFieldType.FT_SURNAME, source: ERPRMResultType.RPRM_RESULT_TYPE_VISUAL_OCR_EXTENDED, original: true);
+  String? surname = await results.textFieldValueByType(EVisualFieldType.FT_SURNAME);
 // Get address
-  String? address = results.getTextFieldValueByType(EVisualFieldType.FT_ADDRESS,source: ERPRMResultType.RPRM_RESULT_TYPE_BAR_CODES_TEXT_DATA, original: true);
+  String? address = await results.textFieldValueByType(EVisualFieldType.FT_ADDRESS);
 log("surname $surname");
 log("address $address");
 }
