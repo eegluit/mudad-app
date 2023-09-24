@@ -9,6 +9,8 @@ import 'package:http_parser/http_parser.dart';
 import '../models/personality_test_questions_response_model.dart';
 import '../models/credit_module_default_response.dart';
 import '../models/add_credit_score_user_request_model.dart';
+import 'package:mudad/model/services/auth_service.dart';
+// import 'package:get/get.dart';
 
 class CreditService {
   Future<BaseModel> addProfile(
@@ -34,7 +36,6 @@ class CreditService {
           'monthly_income': monthlyIncome,
         },
         options: Options(
-          contentType: Headers.formUrlEncodedContentType,
           headers: {'authentication': 'Bearer $token'},
         ),
       );
@@ -55,14 +56,14 @@ class CreditService {
         return model;
       } else {
         BaseModel model = BaseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       BaseModel model = BaseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -97,14 +98,14 @@ class CreditService {
         return model;
       } else {
         BaseModel model = BaseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       BaseModel model = BaseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -137,14 +138,14 @@ class CreditService {
         return model;
       } else {
         BaseModel model = BaseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       BaseModel model = BaseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -185,14 +186,14 @@ class CreditService {
         return model;
       } else {
         BaseModel model = BaseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       BaseModel model = BaseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -222,7 +223,7 @@ class CreditService {
           e.type == DioErrorType.sendTimeout) {
         GetPersonalityQuestionsResponseModel model =
             GetPersonalityQuestionsResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           errorMessage: "Request timeout",
           code: 408,
         );
@@ -230,7 +231,7 @@ class CreditService {
       } else {
         GetPersonalityQuestionsResponseModel model =
             GetPersonalityQuestionsResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
@@ -238,7 +239,7 @@ class CreditService {
     } on SocketException catch (e) {
       GetPersonalityQuestionsResponseModel model =
           GetPersonalityQuestionsResponseModel(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -280,14 +281,14 @@ class CreditService {
         return model;
       } else {
         CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -327,21 +328,21 @@ class CreditService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           errorMessage: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -350,7 +351,7 @@ class CreditService {
 
   Future<CreditModuleDefaultResponse> createCreditUser(
     AddCreditScoreUserRequestModel userDetails,
-    String token,
+    String userID,
   ) async {
     try {
       final Map<String, dynamic> rawData = {
@@ -364,16 +365,18 @@ class CreditService {
         'monthlyIncome': userDetails.monthlyIncome
       };
       var response = await Dio().post(
-        '${Constant.baseURLUpdated}${Constant.addCredtiScoreUser}/',
+        '${Constant.baseURLUpdated}${Constant.addCredtiScoreUser}/${userID}',
         data: rawData,
         options: Options(
           contentType: Headers.textPlainContentType,
           headers: {
-            'x-functions-key': token,
+            'x-functions-key':
+                'ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==',
             'Content-Type': 'application/json'
           },
         ),
       );
+      print("ABC ${response}");
       CreditModuleDefaultResponse model =
           CreditModuleDefaultResponse.fromJson(response.data);
       model.code = 200;
@@ -387,21 +390,21 @@ class CreditService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           errorMessage: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       CreditModuleDefaultResponse model = CreditModuleDefaultResponse(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;

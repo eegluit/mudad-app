@@ -53,7 +53,7 @@ class SplashController extends GetxController {
       Future.delayed(const Duration(seconds: 1)).then((value) {
         if (Get.find<AuthServices>().getUserToken() != "") {
           if (Get.find<AuthServices>().user.value.isKyc == false) {
-            Get.toNamed(VerificationScreen.route);
+            Get.offNamed(VerificationScreen.route);
           } else {
             if (Get.find<AuthServices>().user.value.status == 'pending') {
               Get.offNamed(VerificationPendingPage.route);

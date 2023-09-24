@@ -209,7 +209,7 @@ class OtpPage extends GetView<OtpController> {
                               .saveUser(response.user!.toJson());
                           if (response.user?.isKyc == true) {
                             if (response.user?.status == 'pending') {
-                              Get.toNamed(VerificationScreen.route);
+                              Get.offAllNamed(VerificationScreen.route);
                             } else {
                               Get.offAllNamed(HomePage.route, arguments: [
                                 response,

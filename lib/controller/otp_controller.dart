@@ -38,32 +38,23 @@ class OtpController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    DocumentReader.prepareDatabase("Full").then((s) {
-      // do something
-    }).catchError((Object error) =>
-        logPrint("error rer ${(error as PlatformException).message ?? ""}"));
-    DocumentReader.runAutoUpdate("Full").then((s) {
-      // do something
-    }).catchError(
-            (Object error) => print((error as PlatformException).message));
 
     logPrint("Initializing...");
     ByteData byteData = await rootBundle.load("assets/regula.license");
 
     DocumentReader.initializeReader({
-      "license": base64.encode(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
+      "license": base64.encode(byteData.buffer
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
       "delayedNNLoad": true
+    }).then((s) {
+      log(s);
+      //isInitialise.value = true;
+    }).catchError((Object error) async {
+      logPrint((error as PlatformException).message ?? "");
+      logPrint("error rer ${(error as PlatformException).message ?? ""}");
     });
-    logPrint("Initialized");
-    //     .then((s) {
-    //   log(s);
-    //   //isInitialise.value = true;
-    // }).catchError((Object error) async {
-    //   //logPrint((error as PlatformException).message ?? "");
-    //   logPrint("error rer ${(error.toString()) ?? ""}");
-    // });
-    super.onInit();
     startTimer();
+    super.onInit();
   }
 
   @override

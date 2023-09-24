@@ -34,27 +34,27 @@ class AuthService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         AuthResponseModel model = AuthResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         AuthResponseModel model = AuthResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
-      // debugPrint('dio error: ${e.message}');
+      // debugPrint('dio error: ${"Oops! Something went wrong."}');
       // AuthResponseModel model = AuthResponseModel(
-      //   message: e.message,
+      //   message: "Oops! Something went wrong.",
       //   code: 400,
       // );
       // return model;
     } on SocketException catch (e) {
       AuthResponseModel model = AuthResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -85,27 +85,27 @@ class AuthService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         AuthResponseModel model = AuthResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         AuthResponseModel model = AuthResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
-      // debugPrint('dio error: ${e.message}');
+      // debugPrint('dio error: ${"Oops! Something went wrong."}');
       // AuthResponseModel model = AuthResponseModel(
-      //   message: e.message,
+      //   message: "Oops! Something went wrong.",
       //   code: 400,
       // );
       // return model;
     } on SocketException catch (e) {
       AuthResponseModel model = AuthResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -142,20 +142,20 @@ class AuthService {
         return model;
       } else {
         UserModel model = UserModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
-      // debugPrint('dio error: ${e.message}');
+      // debugPrint('dio error: ${"Oops! Something went wrong."}');
       // UserModel model = UserModel(
-      //   message: e.message,
+      //   message: "Oops! Something went wrong.",
       //   code: 400,
       // );
       // return model;
     } on SocketException catch (e) {
       UserModel model = UserModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -187,20 +187,20 @@ class AuthService {
         return model;
       } else {
         AuthResponseModel model = AuthResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
-      // debugPrint('dio error: ${e.message}');
+      // debugPrint('dio error: ${"Oops! Something went wrong."}');
       // AuthResponseModel model = AuthResponseModel(
-      //   message: e.message,
+      //   message: "Oops! Something went wrong.",
       //   code: 400,
       // );
       // return model;
     } on SocketException catch (e) {
       AuthResponseModel model = AuthResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -228,27 +228,27 @@ class AuthService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         AuthResponseModel model = AuthResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         AuthResponseModel model = AuthResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
-      // debugPrint('dio error: ${e.message}');
+      // debugPrint('dio error: ${"Oops! Something went wrong."}');
       // AuthResponseModel model = AuthResponseModel(
-      //   message: e.message,
+      //   message: "Oops! Something went wrong.",
       //   code: 400,
       // );
       // return model;
     } on SocketException catch (e) {
       AuthResponseModel model = AuthResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -282,20 +282,20 @@ class AuthService {
         return model;
       } else {
         AuthResponseModel model = AuthResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
-      // debugPrint('dio error: ${e.message}');
+      // debugPrint('dio error: ${"Oops! Something went wrong."}');
       // AuthResponseModel model = AuthResponseModel(
-      //   message: e.message,
+      //   message: "Oops! Something went wrong.",
       //   code: 400,
       // );
       // return model;
     } on SocketException catch (e) {
       AuthResponseModel model = AuthResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -324,21 +324,21 @@ class AuthService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GetUserProfileDetails model = GetUserProfileDetails(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         GetUserProfileDetails model = GetUserProfileDetails(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GetUserProfileDetails model = GetUserProfileDetails(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;

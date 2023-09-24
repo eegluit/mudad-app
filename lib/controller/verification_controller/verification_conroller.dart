@@ -251,6 +251,21 @@ Rx<Uint8List> imageUint8ListData = Uint8List(0).obs;
         (Object error) => print((error as PlatformException).message));
   }
 
+ @override
+  void onClose() {
+    // TODO: implement onClose
+    DocumentReader.removeDatabase().then((str) {
+      print('Removed');
+    }).catchError(
+        (Object error) => print((error as PlatformException).message));
+
+    DocumentReader.cancelDBUpdate().then((str) {
+      print('Cancelled');
+    }).catchError(
+        (Object error) => print((error as PlatformException).message));
+    super.onClose();
+  }
+  
   @override
   void onInit() {
     runAutoUpdate();
@@ -285,8 +300,8 @@ if(results != null){
   String? surname = await results.textFieldValueByType(EVisualFieldType.FT_SURNAME);
 // Get address
   String? address = await results.textFieldValueByType(EVisualFieldType.FT_ADDRESS);
-log("surname $surname");
-log("address $address");
+log("DocumentReaderResults surname $surname");
+log("DocumentReaderResults address $address");
 }
 
 results.graphicFieldImageByType(EGraphicFieldType.GF_DOCUMENT_IMAGE).then((value) {

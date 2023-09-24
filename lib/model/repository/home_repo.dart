@@ -102,20 +102,20 @@ class HomeRepo {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GetOfferResponseModel model = GetOfferResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 408,
         );
         return model;
       } else {
         GetOfferResponseModel model = GetOfferResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GetOfferResponseModel model = GetOfferResponseModel(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -145,20 +145,20 @@ class HomeRepo {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GetVendorsResponseModel model = GetVendorsResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 408,
         );
         return model;
       } else {
         GetVendorsResponseModel model = GetVendorsResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GetVendorsResponseModel model = GetVendorsResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -232,21 +232,21 @@ class HomeRepo {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           errorMessage: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -275,21 +275,21 @@ class HomeRepo {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GetUserProfileDetails model = GetUserProfileDetails(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         GetUserProfileDetails model = GetUserProfileDetails(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GetUserProfileDetails model = GetUserProfileDetails(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -322,20 +322,20 @@ class HomeRepo {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GetUserLoansResponseModel model = GetUserLoansResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 408,
         );
         return model;
       } else {
         GetUserLoansResponseModel model = GetUserLoansResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GetUserLoansResponseModel model = GetUserLoansResponseModel(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;

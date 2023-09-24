@@ -17,7 +17,7 @@ class Constant {
   static const String resetPassword = 'auth/reset-password';
   static const String dashboardProfileData = 'auth/user-details';
 
-  static const String creditAddProfile = 'credit_score/add-profile';
+  static const String creditAddProfile = 'CreditScore/user/';
   static const String creditUploadStatement = 'credit_score/upload-statement';
   static const String addQuiz = 'quiz/add-quiz';
   static const String getCreditScore = 'credit_score/get-credit-score';
@@ -45,4 +45,6 @@ class Constant {
   static const String generateReceipt = 'Lms/MerchantBillGeneration';
 
   static const String getAllLoans = 'GetLoan/user/';
+
+  static const String paymentToMerchant = 'PaymentToMerchant';
 }

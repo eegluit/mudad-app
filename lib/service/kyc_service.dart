@@ -40,21 +40,21 @@ class KycService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         KycIdTypeResponseModel model = KycIdTypeResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         KycIdTypeResponseModel model = KycIdTypeResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       KycIdTypeResponseModel model = KycIdTypeResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -62,7 +62,7 @@ class KycService {
   }
 
   Future<KycUploadDocResponseModel> submitKycDoc(
-      Map<String,dynamic> kycIdFile,File imageFile, String token) async {
+      Map<String, dynamic> kycIdFile, File imageFile, String token) async {
     logPrint(" ${jsonEncode(kycIdFile)}");
 
     try {
@@ -77,10 +77,9 @@ class KycService {
         ),
       );
       KycUploadDocResponseModel model =
-      KycUploadDocResponseModel.fromJson(response.data);
+          KycUploadDocResponseModel.fromJson(response.data);
       model.code = 200;
       return model;
-
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
         KycUploadDocResponseModel model =
@@ -90,21 +89,21 @@ class KycService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         KycUploadDocResponseModel model = KycUploadDocResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         KycUploadDocResponseModel model = KycUploadDocResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       KycUploadDocResponseModel model = KycUploadDocResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -143,21 +142,21 @@ class KycService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         KycUploadSelfieResponseModel model = KycUploadSelfieResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         KycUploadSelfieResponseModel model = KycUploadSelfieResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       KycUploadSelfieResponseModel model = KycUploadSelfieResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -199,7 +198,7 @@ class KycService {
           e.type == DioErrorType.sendTimeout) {
         UploadProfileSelfieResponseModel model =
             UploadProfileSelfieResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           errorMessage: "Request timeout",
           code: 408,
         );
@@ -207,14 +206,14 @@ class KycService {
       } else {
         UploadProfileSelfieResponseModel model =
             UploadProfileSelfieResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       UploadProfileSelfieResponseModel model = UploadProfileSelfieResponseModel(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
@@ -247,29 +246,29 @@ class KycService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           message: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
-          message: e.message,
+          message: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GetKycDetailsResponseModel model = GetKycDetailsResponseModel(
-        message: e.message,
+        message: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
     }
   }
 
-    Future<GetProfileSelfieResponseModel> getProfilePicture(
-      String token,String userID) async {
+  Future<GetProfileSelfieResponseModel> getProfilePicture(
+      String token, String userID) async {
     try {
       var response = await Dio().get(
         '${Constant.baseURLUpdated}${Constant.profilePicture}/${userID}',
@@ -289,25 +288,22 @@ class KycService {
       } else if (e.type == DioErrorType.connectTimeout ||
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
-        GetProfileSelfieResponseModel model =
-            GetProfileSelfieResponseModel(
-          //message: e.message,
+        GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
+          //message: "Oops! Something went wrong.",
           errorMessage: "Request timeout",
           code: 408,
         );
         return model;
       } else {
-        GetProfileSelfieResponseModel model =
-            GetProfileSelfieResponseModel(
-          errorMessage: e.message,
+        GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
-      GetProfileSelfieResponseModel model =
-          GetProfileSelfieResponseModel(
-        errorMessage: e.message,
+      GetProfileSelfieResponseModel model = GetProfileSelfieResponseModel(
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;
