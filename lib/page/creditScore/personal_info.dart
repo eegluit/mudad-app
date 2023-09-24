@@ -9,6 +9,7 @@ import '../../widget/text_field_view/common_textfield.dart';
 import '../../widget/text_form_field_widget.dart';
 import '../../widget/toast_view/showtoast.dart';
 import 'bank_statement.dart';
+import 'package:mudad/model/services/auth_service.dart';
 
 class PersonalInfoPage extends GetView<PersonalController> {
   static const route = '/personlInfoPage';
@@ -383,6 +384,9 @@ class PersonalInfoPage extends GetView<PersonalController> {
                               ),
                               onPressed: () {
                                 // Get.offNamed(BankStatementPage.route);
+                                var userID =
+                                    Get.find<AuthServices>().getUserID();
+
                                 if (validate(
                                         controller.fNameController.value.text,
                                         controller.lNameController.value.text,
@@ -426,7 +430,7 @@ class PersonalInfoPage extends GetView<PersonalController> {
                                               monthlyIncome: int.parse(
                                                   controller.incomeController
                                                       .value.text)),
-                                          "ncHmszl6DXIVmsFdmQ4ZvfVeLCrWfi-IBX4w_RXnB2uKAzFuC74Xqg==")
+                                          userID)
                                       .then((response) {
                                     controller.isLoading(false);
                                     if (response.code != 200) {

@@ -13,10 +13,13 @@ import '../../model/provider/home_provider.dart';
 import '../../model/network_calls/dio_client/get_it_instance.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:root/root.dart';
 
 class SplashController extends GetxController {
   final BuildContext? context;
-
+  String _result = " ";
+  bool _status = false;
+  bool _statusAvailability = false;
   SplashController([this.context]);
   HomeProvider homeProvider = getIt();
   Rx<GetProfileModel> profileData = GetProfileModel().obs;
@@ -26,13 +29,25 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    checkRoot();
+    checkRootAvailability();
     getDashboardProfileData();
     authenticate();
   }
 
+  Future<void> checkRoot() async {
+    var result = await Root.isRooted();
+    _status = result ?? false;
+  }
+
+  //Check Root availability
+  Future<void> checkRootAvailability() async {
+    var result = await Root.isRootAvailable();
+    _statusAvailability = result ?? false;
+  }
+
   Future renderScreenAfterLaunch() async {
-    isRooted = await isDeviceRooted();
-    if (isRooted) {
+    if (_status) {
       Get.offNamed(RootedDevicePage.route);
     } else {
       Future.delayed(const Duration(seconds: 1)).then((value) {

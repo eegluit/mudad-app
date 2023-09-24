@@ -356,12 +356,7 @@ class SelectIdWidget extends GetView<VerificationController> {
                       }
                     });
                   },
-                  child: controller.isInitialise.value
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                          color: ColorResource.mainColor,
-                        ))
-                      : Card(
+                  child: Card(
                           margin: const EdgeInsets.only(
                               bottom: DimensionResource.marginSizeExtraLarge),
                           elevation: 5,

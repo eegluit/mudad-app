@@ -28,9 +28,38 @@ initServices() async {
   return;
 }
 
-class MyApp extends StatelessWidget {
+Future<void> clearClipboard() async {
+  await Clipboard.setData(ClipboardData(text: ''));
+}
+
+class MyApp extends StatefulWidget {
   MyApp({super.key});
+  
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final textTheme = Get.textTheme;
+
+  @override
+  void initState() {
+    super.initState();
+    clearClipboard();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+      clearClipboard();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -41,14 +70,6 @@ class MyApp extends StatelessWidget {
           color: ColorResource.mainColor,
         ),
         textTheme: GoogleFonts.latoTextTheme(textTheme),
-        // appBarTheme: Get.theme.appBarTheme.copyWith(
-        //   elevation: 0.0,
-        //   // systemOverlayStyle: const SystemUiOverlayStyle(
-        //   //   //statusBarColor: Colors.white,
-        //   //   statusBarIconBrightness: Brightness.dark,
-        //   //   statusBarBrightness: Brightness.dark,
-        //   // ),
-        // ),
       ),
       initialRoute: AppRoutes.initial,
       getPages: AppRoutes.routes,
