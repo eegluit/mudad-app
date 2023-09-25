@@ -47,4 +47,7 @@ class Constant {
   static const String getAllLoans = 'GetLoan/user/';
 
   static const String paymentToMerchant = 'PaymentToMerchant';
+
+  static const String addCard = 'lms/userCard/';
+  static const String verifyCardOtp = 'lms/sendOtp/';
 }
