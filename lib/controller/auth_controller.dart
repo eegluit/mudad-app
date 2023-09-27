@@ -24,14 +24,6 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    DocumentReader.prepareDatabase("Full").then((s) {
-      // do something
-    }).catchError((Object error) =>
-        logPrint("error rer ${(error as PlatformException).message ?? ""}"));
-    DocumentReader.runAutoUpdate("Full").then((s) {
-      // do something
-    }).catchError(
-            (Object error) => print((error as PlatformException).message));
     // TODO: implement onInit
     super.onInit();
   }

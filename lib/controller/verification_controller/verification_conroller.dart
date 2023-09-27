@@ -280,15 +280,15 @@ Rx<Uint8List> imageUint8ListData = Uint8List(0).obs;
 
   void handleCompletion(DocumentReaderCompletion completion) {
     //handleResults(completion.results!);
-    log("status ${completion.action}");
+    log("DocumentReaderResults status ${completion.action}");
     if (completion.action == DocReaderAction.COMPLETE) {
       handleResults(completion.results!);
     } else if (completion.action == DocReaderAction.CANCEL) {
-      toastShow(massage: "Cancelled");
+      toastShow(massage: "DocumentReaderResults Cancelled");
     } else if (completion.action == DocReaderAction.TIMEOUT) {
-      toastShow(massage: "Timeout !!! Please try again");
+      toastShow(massage: "DocumentReaderResults Timeout !!! Please try again");
     } else if (completion.action == DocReaderAction.ERROR) {
-      toastShow(massage: " ${completion.error?.message ?? ""}");
+      toastShow(massage: "DocumentReaderResults ${completion.error?.message ?? ""}");
     }
   }
 

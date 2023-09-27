@@ -38,9 +38,9 @@ class ReceiptService {
     } on DioError catch (e) {
       print("ABCD Error ${e}");
       if (e.type == DioErrorType.response) {
-        GenerateReceiptResponseModel model =
-            GenerateReceiptResponseModel(
-          errorMessage: "The code you entered is incorrect. Kindly process again.",
+        GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
+          errorMessage:
+              "The code you entered is incorrect. Kindly process again.",
           code: 400,
         );
         return model;
@@ -48,21 +48,75 @@ class ReceiptService {
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
-          //message: e.message,
+          //message: "Oops! Something went wrong.",
           errorMessage: "Request timeout",
           code: 408,
         );
         return model;
       } else {
         GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
-          errorMessage: e.message,
+          errorMessage: "Oops! Something went wrong.",
           code: 400,
         );
         return model;
       }
     } on SocketException catch (e) {
       GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
-        errorMessage: e.message,
+        errorMessage: "Oops! Something went wrong.",
+        code: 400,
+      );
+      return model;
+    }
+  }
+
+  Future<GenerateReceiptResponseModel> payToMerchant(
+      String userId, String merchantId) async {
+    try {
+      var response = await Dio().post(
+        '${Constant.baseURLLMS}${Constant.paymentToMerchant}',
+        data: {},
+        queryParameters: {'userId': userId, 'merchantId': merchantId},
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {
+            'x-functions-key':
+                'QFipKbWv0UxAphy05khVd_q9_xwQdmCFTlO95aDaWy1fAzFuO5VKpA=='
+          },
+        ),
+      );
+      print("ABC 02 ${response}");
+      GenerateReceiptResponseModel model =
+          GenerateReceiptResponseModel.fromJson(response.data);
+      model.code = 200;
+      return model;
+    } on DioError catch (e) {
+      print("ABCD Error ${e}");
+      if (e.type == DioErrorType.response) {
+        GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
+          errorMessage:
+              "The code you entered is incorrect. Kindly process again.",
+          code: 400,
+        );
+        return model;
+      } else if (e.type == DioErrorType.connectTimeout ||
+          e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.sendTimeout) {
+        GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
+          //message: "Oops! Something went wrong.",
+          errorMessage: "Request timeout",
+          code: 408,
+        );
+        return model;
+      } else {
+        GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
+          errorMessage: "Oops! Something went wrong.",
+          code: 400,
+        );
+        return model;
+      }
+    } on SocketException catch (e) {
+      GenerateReceiptResponseModel model = GenerateReceiptResponseModel(
+        errorMessage: "Oops! Something went wrong.",
         code: 400,
       );
       return model;

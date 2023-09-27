@@ -8,12 +8,16 @@ import '../page/home/verification_view/verification_view.dart';
 import '../../model/models/profile_model/get_user_profile.dart';
 import 'package:flutter/material.dart';
 
-import 'home_controller.dart';
 import '../../model/provider/home_provider.dart';
 import '../../model/network_calls/dio_client/get_it_instance.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:root/root.dart';
+import 'package:flutter_document_reader_api/document_reader.dart';
+import 'package:flutter/services.dart';
+import '../widget/log_print/log_print_condition.dart';
+import 'dart:convert';
+import 'dart:math';
 
 class SplashController extends GetxController {
   final BuildContext? context;
@@ -33,6 +37,32 @@ class SplashController extends GetxController {
     checkRootAvailability();
     getDashboardProfileData();
     authenticate();
+    initDocumentSDK();
+  }
+
+  Future<void> initDocumentSDK() async {
+    DocumentReader.prepareDatabase("Full").then((s) {
+      // do something
+    }).catchError((Object error) =>
+        logPrint("error rer ${(error as PlatformException).message ?? ""}"));
+    DocumentReader.runAutoUpdate("Full").then((s) {
+      // do something
+    }).catchError(
+        (Object error) => print((error as PlatformException).message));
+
+      ByteData byteData = await rootBundle.load("assets/regula.license");
+
+    DocumentReader.initializeReader({
+      "license": base64.encode(byteData.buffer
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
+      "delayedNNLoad": true
+    }).then((s) {
+      log(s);
+      //isInitialise.value = true;
+    }).catchError((Object error) async {
+      logPrint((error as PlatformException).message ?? "");
+      logPrint("error rer ${(error as PlatformException).message ?? ""}");
+    });
   }
 
   Future<void> checkRoot() async {
