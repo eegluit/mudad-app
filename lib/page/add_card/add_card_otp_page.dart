@@ -130,7 +130,7 @@ class AddCardOtpPage extends GetView<AddCardOtpController> {
                     controller.isLoading.value = true;
                     controller.cardService
                         .verifyOtpForUser(
-                            controller.otpController.text, controller.userID)
+                            controller.otpController.text, controller.userID, controller.paymentId.value)
                         .then((value) {
                       controller.isLoading.value = false;
                       print("ABCD ${value.errorMessage}");

@@ -1,18 +1,20 @@
-class AddCardResponseModel {
-  String? result;
+class GenerateLoanResponseModel {
+  List<String>? result;
   String? successMessage;
   String? errorMessage;
   int? code;
 
-  AddCardResponseModel({
+  GenerateLoanResponseModel({
     this.result,
     this.successMessage,
     this.errorMessage,
     this.code,
   });
 
-  AddCardResponseModel.fromJson(Map<String, dynamic> json) {
-    result = json["result"];
+  GenerateLoanResponseModel.fromJson(Map<String, dynamic> json) {
+    if (json['result'] != null) {
+      result = List<String>.from(json['result']);
+    }
     successMessage = json["successMessage"];
     errorMessage = json["errorMessage"];
     code = json["code"];

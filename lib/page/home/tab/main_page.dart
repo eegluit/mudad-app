@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mudad/page/add_card/add_a_card.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/qr_code_scanner.dart';
-import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
+import 'package:mudad/page/last_transaction_view/loan_repayment_view.dart';
 import 'package:mudad/page/top_offers_view/top_offers_view.dart';
 import 'package:mudad/page/transaction_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
@@ -31,65 +31,73 @@ class MainPage extends GetView<HomeController> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         elevation: 0,
-        title: Obx(
-         () {
-            return Row(
-              children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      border: Border.all(color: ColorResource.mainColor)),
-                  child: controller.profileBaseImage.value != ""
-                      ? Obx(() {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.memory(
-                              base64.decode(controller.profileBaseImage.value),
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        })
-                      : ClipRRect(
+        title: Obx(() {
+          return Row(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    border: Border.all(color: ColorResource.mainColor)),
+                child: controller.profileBaseImage.value != ""
+                    ? Obx(() {
+                        return ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: cachedNetworkImage(
-                              controller.profileData.value.profile ??
-                                  ImageResource.instance.defaultUser)),
-                ),
-                const SizedBox(
-                  width: DimensionResource.marginSizeSmall,
-                ),
-                Obx(
-                   () {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          Get.find<AuthServices>().user.value.name.toString().capitalize ?? "",
-                          style: StyleResource.instance
-                              .styleMedium(DimensionResource.fontSizeExtraLarge,
-                                  ColorResource.mainColor)
-                              .copyWith(letterSpacing: .6),
-                        ),
-                        const SizedBox(
-                          height: DimensionResource.marginSizeExtraSmall,
-                        ),
-                        Text(
-                          Get.find<AuthServices>().user.value.email.toString().capitalize ?? "",
-                          style: StyleResource.instance
-                              .styleMedium(DimensionResource.fontSizeDefault,
-                                  ColorResource.black.withOpacity(0.5))
-                              .copyWith(letterSpacing: .6),
-                        ),
-                      ],
-                    );
-                  }
-                )
-              ],
-            );
-          }
-        ),
+                          child: Image.memory(
+                            base64.decode(controller.profileBaseImage.value),
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      })
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: cachedNetworkImage(
+                            controller.profileData.value.profile ??
+                                ImageResource.instance.defaultUser)),
+              ),
+              const SizedBox(
+                width: DimensionResource.marginSizeSmall,
+              ),
+              Obx(() {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Get.find<AuthServices>()
+                              .user
+                              .value
+                              .name
+                              .toString()
+                              .capitalize ??
+                          "",
+                      style: StyleResource.instance
+                          .styleMedium(DimensionResource.fontSizeExtraLarge,
+                              ColorResource.mainColor)
+                          .copyWith(letterSpacing: .6),
+                    ),
+                    const SizedBox(
+                      height: DimensionResource.marginSizeExtraSmall,
+                    ),
+                    Text(
+                      Get.find<AuthServices>()
+                              .user
+                              .value
+                              .email
+                              .toString()
+                              .capitalize ??
+                          "",
+                      style: StyleResource.instance
+                          .styleMedium(DimensionResource.fontSizeDefault,
+                              ColorResource.black.withOpacity(0.5))
+                          .copyWith(letterSpacing: .6),
+                    ),
+                  ],
+                );
+              })
+            ],
+          );
+        }),
         actions: [
           IconButton(
             onPressed: () {
@@ -148,31 +156,34 @@ class MainPage extends GetView<HomeController> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Obx(
-                   () {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            controller.isDashBoardLoading.value?"Loading...":  controller.dashBoardData.value.availableLimit == null?"N/A":'RO${controller.dashBoardData.value.availableLimit}',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.w500,
-                            ),
+                  Obx(() {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          controller.isDashBoardLoading.value
+                              ? "Loading..."
+                              : controller.dashBoardData.value.availableLimit ==
+                                      null
+                                  ? "N/A"
+                                  : 'RO${controller.dashBoardData.value.availableLimit}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.w500,
                           ),
-                          InkWell(
-                            onTap: () {
-                              Get.toNamed(CreditScorePage.route);
-                            },
-                            child: SvgPicture.asset(
-                              'images/credit_score.svg',
-                            ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(CreditScorePage.route);
+                          },
+                          child: SvgPicture.asset(
+                            'images/credit_score.svg',
                           ),
-                        ],
-                      );
-                    }
-                  ),
+                        ),
+                      ],
+                    );
+                  }),
                 ],
               ),
             ),
@@ -795,14 +806,14 @@ class ServicesShimmer extends StatelessWidget {
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,
         enabled: true,
-        child:  Container(
+        child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.white,
           ),
           width: 70,
           height: 70,
-        ) ,
+        ),
       ),
     );
   }

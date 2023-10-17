@@ -11,6 +11,7 @@ import 'package:mudad/page/home/qr_code_scanner_view/payment_success_page.dart';
 import 'package:mudad/page/home/qr_code_scanner_view/qr_code_scanner.dart';
 import 'package:mudad/page/home/rooted_device_view.dart';
 import 'package:mudad/page/last_transaction_view/last_transaction_view.dart';
+import 'package:mudad/page/last_transaction_view/loan_repayment_view.dart';
 import 'package:mudad/page/top_offers_view/refer_a_friend_view.dart';
 import '../page/verify_identity/verification_pending_page.dart';
 import '../binding/auth_binding.dart';
@@ -219,6 +220,10 @@ class AppRoutes {
     GetPage(
         name: AddCardOtpPage.route,
         page: () => const AddCardOtpPage(),
-        binding: HomeBinding())
+        binding: HomeBinding()),
+    GetPage(
+        name: LoanRepaymentScreen.route,
+        page: () => const LoanRepaymentScreen(),
+        binding: LastTransactionBinding())
   ];
 }

@@ -204,7 +204,6 @@ class AddCardScreen extends GetView<AddCardController> {
                                       controller.userID)
                                   .then((value) {
                                 controller.isLoading.value = false;
-                                print("ABCD ${value.errorMessage}");
                                 Get.toNamed(AddCardOtpPage.route);
                               });
                             }

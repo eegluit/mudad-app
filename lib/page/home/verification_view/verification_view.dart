@@ -46,7 +46,6 @@ class VerificationScreen extends StatelessWidget {
 
   Widget _buildLoginView(
       BuildContext context, VerificationController controller) {
-    print(controller.currentStep.value);
     return Column(children: [
       Expanded(
           flex: 3,
@@ -79,7 +78,7 @@ class VerificationScreen extends StatelessWidget {
             );
           })),
       Expanded(
-          flex: 5,
+          flex: 7,
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: DimensionResource.marginSizeLarge),
@@ -91,14 +90,15 @@ class VerificationScreen extends StatelessWidget {
           flex: 2,
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: DimensionResource.marginSizeLarge),
+                horizontal: DimensionResource.marginSizeLarge,
+                vertical: DimensionResource.marginSizeExtraLarge),
             child: Obx(() {
               return Column(
                 children: [
                   Visibility(
                       visible: controller.currentStep.value == 1 ||
                           (controller.currentStep.value == 2 &&
-                              controller.documentMap.isNotEmpty) ||
+                              controller.isDocumentScanned.value) ||
                           controller.currentStep.value == 3 ||
                           controller.currentStep.value == 4,
                       child: CommonButton(
@@ -117,20 +117,23 @@ class VerificationScreen extends StatelessWidget {
                           onPressed: controller.currentStep.value == 1
                               ? controller.onVerifyIdentity
                               : controller.currentStep.value == 2
-                                  ? () => selfieController.kycService
-                                          .submitKycDoc(
-                                              controller.documentMap,
-                                              controller.selectedIdPic.value,
-                                              token)
-                                          .then((response) {
-                                        if (response.code != 200) {
-                                          toastShow(
-                                              error: true,
-                                              massage: response.message);
-                                        } else {
-                                          controller.onSelectId();
-                                        }
-                                      })
+                                  ? () => {
+                                        controller.onSelectId(),
+                                        // selfieController.kycService
+                                        //     .submitKycDoc(
+                                        //         controller.documentMap,
+                                        //         controller.selectedIdPic.value,
+                                        //         token)
+                                        //     .then((response) {
+                                        //   if (response.code != 200) {
+                                        //     toastShow(
+                                        //         error: true,
+                                        //         massage: response.message);
+                                        //   } else {
+                                        //     controller.onSelectId();
+                                        //   }
+                                        // })
+                                      }
                                   : controller.currentStep.value == 3
                                       ? () {
                                           if (controller
@@ -292,10 +295,11 @@ class SelectIdWidget extends GetView<VerificationController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Column(children: [
+      return SingleChildScrollView(
+          child: Column(children: [
         const Center(
           child: Text(
-            'Please provide one of the following documents: passport, national ID, or drivering license for verification.',
+            'Please provide one of the following documents: Passport, National ID, or Driving license for verification.',
             style: TextStyle(
               color: ColorResource.mainColor,
               fontSize: 18,
@@ -316,15 +320,31 @@ class SelectIdWidget extends GetView<VerificationController> {
                 .copyWith(height: 1.7, letterSpacing: .5),
           ),
         ),
-        const SizedBox(
-          height: DimensionResource.marginSizeExtraLarge + 20,
-        ),
+        Center(
+            child: controller.isDocumentScanned.value
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                          width: MediaQuery.of(context).size.width * .20,
+                          image: controller.portraitImage.image),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0)),
+                      Image(
+                          width: MediaQuery.of(context).size.width * .45,
+                          image: controller.docImage.image)
+                    ],
+                  )
+                : const Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: DimensionResource.marginSizeExtraSmall,
+                        vertical: DimensionResource.marginSizeExtraSmall))),
         Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: DimensionResource.marginSizeLarge,
-                  vertical: DimensionResource.marginSizeLarge),
+                  horizontal: DimensionResource.marginSizeSmall,
+                  vertical: DimensionResource.marginSizeSmall),
               child: Text(
                 controller.verifyPageDataList[controller.currentStep.value - 1]
                     .subTitle,
@@ -343,6 +363,7 @@ class SelectIdWidget extends GetView<VerificationController> {
                 var data = typeList.elementAt(index);
                 return GestureDetector(
                   onTap: () {
+                    controller.onDocumentScan();
                     controller.selectedId.value = index;
                     selfieController.kycService
                         .submitKycIdType(data.name!, token)
@@ -351,62 +372,57 @@ class SelectIdWidget extends GetView<VerificationController> {
                         toastShow(error: true, massage: response.message);
                       } else {
                         /// todo : upload id doc
-
-                        controller.onDocumentScan();
                       }
                     });
                   },
                   child: Card(
-                          margin: const EdgeInsets.only(
-                              bottom: DimensionResource.marginSizeExtraLarge),
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: DimensionResource.marginSizeLarge,
-                                vertical: DimensionResource.marginSizeDefault),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 33,
-                                  width: 33,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      border: Border.all(
-                                          color: ColorResource.mainColor,
-                                          width: 2.5),
-                                      color:
-                                          controller.selectedId.value == index
-                                              ? ColorResource.mainColor
-                                              : ColorResource.white),
-                                  child: Center(
-                                      child: controller.selectedId.value ==
-                                              index
-                                          ? Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Image.asset(ImageResource
-                                                  .instance.checkIcon),
-                                            )
-                                          : Container()),
-                                ),
-                                const SizedBox(
-                                  width: DimensionResource.marginSizeDefault,
-                                ),
-                                Text(
-                                  data.name ?? "",
-                                  style: StyleResource.instance
-                                      .styleMedium(
-                                          DimensionResource.fontSizeExtraLarge,
-                                          ColorResource.mainColor)
-                                      .copyWith(
-                                        letterSpacing: .6,
-                                      ),
-                                )
-                              ],
+                      margin: const EdgeInsets.only(
+                          bottom: DimensionResource.marginSizeExtraLarge),
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: DimensionResource.marginSizeLarge,
+                            vertical: DimensionResource.marginSizeDefault),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 33,
+                              width: 33,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                      color: ColorResource.mainColor,
+                                      width: 2.5),
+                                  color: controller.selectedId.value == index
+                                      ? ColorResource.mainColor
+                                      : ColorResource.white),
+                              child: Center(
+                                  child: controller.selectedId.value == index
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Image.asset(
+                                              ImageResource.instance.checkIcon),
+                                        )
+                                      : Container()),
                             ),
-                          )),
+                            const SizedBox(
+                              width: DimensionResource.marginSizeDefault,
+                            ),
+                            Text(
+                              controller.isDocumentScanned.value ? "Rescan Document" : data.name ?? "",
+                              style: StyleResource.instance
+                                  .styleMedium(
+                                      DimensionResource.fontSizeExtraLarge,
+                                      ColorResource.mainColor)
+                                  .copyWith(
+                                    letterSpacing: .6,
+                                  ),
+                            )
+                          ],
+                        ),
+                      )),
                 );
               }),
             ),
@@ -425,7 +441,7 @@ class SelectIdWidget extends GetView<VerificationController> {
         //     )
         //   )
         // )
-      ]);
+      ]));
     });
   }
 }

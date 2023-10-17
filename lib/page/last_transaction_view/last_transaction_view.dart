@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mudad/page/add_card/add_a_card.dart';
-import 'package:mudad/page/home/qr_code_scanner_view/otp_validation_page.dart';
 import 'package:mudad/utils/utils/resource/color_resource.dart';
 import 'package:mudad/utils/utils/resource/image_resource.dart';
 import 'package:mudad/utils/utils/resource/style_resource.dart';
 import 'package:mudad/widget/button_view/common_button.dart';
+import './loan_repayment_view.dart';
+import 'package:mudad/widget/toast_view/showtoast.dart';
 
 import '../../controller/last_transaction_controller/last_transaction_controller.dart';
 import '../../utils/utils/resource/dimensions_resource.dart';
@@ -239,14 +238,27 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           height: DimensionResource.marginSizeDefault,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: DimensionResource.marginSizeDefault),
-          child: Text(
-            "Repayment Plan",
-            style: StyleResource.instance.styleMedium(
-                DimensionResource.fontSizeLarge, ColorResource.secondColor),
-          ),
-        ),
+            padding: const EdgeInsets.symmetric(
+                horizontal: DimensionResource.marginSizeDefault),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Repayment Plan",
+                  style: StyleResource.instance.styleMedium(
+                      DimensionResource.fontSizeLarge,
+                      ColorResource.secondColor),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Get.toNamed(LoanRepaymentScreen.route,
+                        arguments: ["${controller.receipt?.total}"]);
+                  },
+                  icon: const Icon(Icons.question_mark_rounded),
+                  color: Colors.black,
+                )
+              ],
+            )),
         const SizedBox(
           height: DimensionResource.marginSizeDefault,
         ),
@@ -254,7 +266,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeDefault),
           child: Text(
-            "Split Payment",
+            "One Time Payment",
             style: StyleResource.instance.styleMedium(
                 DimensionResource.fontSizeLarge, ColorResource.secondColor),
           ),
@@ -265,7 +277,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: List.generate(controller.paymentPlan.length, (index) {
+            children: List.generate(1, (index) {
               PaymentPlan data = controller.paymentPlan.elementAt(index);
               return GestureDetector(
                 onTap: () {
@@ -332,7 +344,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           padding: const EdgeInsets.symmetric(
               horizontal: DimensionResource.marginSizeLarge),
           child: Text(
-            "Select Installment",
+            "Split Payment",
             style: StyleResource.instance.styleMedium(
                 DimensionResource.fontSizeLarge, ColorResource.secondColor),
           ),
@@ -343,11 +355,11 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: List.generate(controller.splitPayment.length, (index) {
-              PaymentPlan data = controller.splitPayment.elementAt(index);
+            children: List.generate(2, (index) {
+              PaymentPlan data = controller.paymentPlan.elementAt(1 + index);
               return GestureDetector(
                 onTap: () {
-                  controller.selectedMethod.value = index;
+                  controller.selectedPlan.value = 1 + index;
                 },
                 child: Container(
                   margin: const EdgeInsets.only(
@@ -361,7 +373,85 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
                             borderRadius: BorderRadius.circular(20),
                             color: ColorResource.borderColor),
                         child: Visibility(
-                            visible: controller.selectedMethod.value == index,
+                            visible: controller.selectedPlan.value == 1 + index,
+                            child: const Icon(
+                              Icons.circle,
+                              color: ColorResource.secondColor,
+                              size: 15,
+                            )),
+                      ),
+                      const SizedBox(
+                        width: DimensionResource.marginSizeDefault,
+                      ),
+                      Expanded(
+                        child: Text(
+                          data.title ?? "",
+                          style: StyleResource.instance.styleMedium(
+                              DimensionResource.fontSizeDefault,
+                              ColorResource.textColor_8),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            data.price ?? "",
+                            style: StyleResource.instance.styleMedium(
+                                DimensionResource.fontSizeDefault,
+                                ColorResource.black),
+                          ),
+                          Text(
+                            data.percentage ?? "",
+                            style: StyleResource.instance.styleRegular(
+                                DimensionResource.fontSizeSmall,
+                                ColorResource.textColor_8),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
+        const SizedBox(
+          height: DimensionResource.marginSizeDefault,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: DimensionResource.marginSizeLarge),
+          child: Text(
+            "Installment Payment",
+            style: StyleResource.instance.styleMedium(
+                DimensionResource.fontSizeLarge, ColorResource.secondColor),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: DimensionResource.marginSizeLarge),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: List.generate(3, (index) {
+              PaymentPlan data = controller.paymentPlan.elementAt(3 + index);
+              return GestureDetector(
+                onTap: () {
+                  controller.selectedPlan.value = 3 + index;
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      top: DimensionResource.marginSizeLarge),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: ColorResource.borderColor),
+                        child: Visibility(
+                            visible: controller.selectedPlan.value == 3 + index,
                             child: const Icon(
                               Icons.circle,
                               color: ColorResource.secondColor,
@@ -520,7 +610,33 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
               text: "Pay Now",
               loading: false,
               onPressed: () {
-                Get.toNamed(AddCardScreen.route);
+                controller.service
+                    .payToMerchant(
+                        controller.userID,
+                        controller.receipt?.merchantUserId ?? "",
+                        controller.receipt)
+                    .then((value) {
+                  if (value.code == 200) {
+                    controller.service
+                        .generateLoan(
+                            value.result ?? "",
+                            controller.selectedPlan.value + 1,
+                            "INSTALLMENT",
+                            controller.userID)
+                        .then((value2) {
+                      if (value2.code == 200) {
+                        toastShow(
+                            error: false,
+                            massage: "Loan generated successfully");
+                      } else {
+                    toastShow(error: true, massage: value2.errorMessage);
+                      }
+                    });
+                  } else {
+                    toastShow(error: true, massage: value.errorMessage);
+                  }
+                });
+                // Get.toNamed(AddCardScreen.route);
                 // Get.toNamed(OtpValidationPage.route);
               },
               color: ColorResource.mainColor),

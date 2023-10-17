@@ -7,38 +7,65 @@ import '../utils/utils/resource/color_resource.dart';
 import '../utils/utils/resource/dimensions_resource.dart';
 import '../utils/utils/resource/image_resource.dart';
 import '../utils/utils/resource/style_resource.dart';
+import '../controller/transaction_list_controller.dart';
+import 'package:intl/intl.dart';
 
-class Transactionpage extends StatelessWidget {
+
+class Transactionpage extends GetView<TransactionListController> {
   static const route = '/TransactionPage';
   const Transactionpage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(
-        title: "All Transactions",
-        child: Container(
-          height: Get.height,
-          margin: const EdgeInsets.only(top: DimensionResource.marginSizeLarge),
-          child: ListView.builder(
-              itemCount: 12,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                      left: DimensionResource.marginSizeLarge,
-                      right: DimensionResource.marginSizeLarge,
-                      top: index == 0 ? DimensionResource.marginSizeLarge : 0,
-                      bottom:
-                          index == 11 ? DimensionResource.marginSizeLarge : 0),
-                  child: _buildTransactionRowUi(
-                      backGroundColor: index.isOdd
-                          ? ColorResource.transactionColor
-                          : ColorResource.white,
-                      transactionDateAndTime: "March 12, 06:30 pm",
-                      amount: "+RO 100",
-                      transactionTitle: "Recived from Customer "),
-                );
-              }),
-        ));
+    return Obx(() {
+      if (controller.isLoading.value) {
+        // Show a loader widget here when isLoading is true
+        return Container(
+          color: ColorResource.white.withOpacity(1),
+          child: const Center(
+            child: CircularProgressIndicator(
+              color: ColorResource.mainColor,
+            ),
+          ),
+        );
+      } else {
+        return BaseView(
+            title: "All Transactions",
+            child: Container(
+              height: Get.height,
+              margin:
+                  const EdgeInsets.only(top: DimensionResource.marginSizeLarge),
+              child: ListView.builder(
+                  itemCount: controller.txnList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          left: DimensionResource.marginSizeLarge,
+                          right: DimensionResource.marginSizeLarge,
+                          top: index == 0
+                              ? DimensionResource.marginSizeLarge
+                              : 0,
+                          bottom: index == 11
+                              ? DimensionResource.marginSizeLarge
+                              : 0),
+                      child: _buildTransactionRowUi(
+                          backGroundColor: index.isOdd
+                              ? ColorResource.transactionColor
+                              : ColorResource.white,
+                          transactionDateAndTime: generateDate(controller.txnList[index].transactionDate ?? "-"),
+                          amount: "+RO ${controller.txnList[index].paidAmount}",
+                          transactionTitle:
+                              controller.txnList[index].paidTo ?? '--'),
+                    );
+                  }),
+            ));
+      }
+    });
+  }
+
+  String generateDate(String date) {
+    var dateTime = DateTime.parse(date);
+    return DateFormat('dd MMM yyyy').format(dateTime);
   }
 
   Widget _buildTransactionRowUi(
