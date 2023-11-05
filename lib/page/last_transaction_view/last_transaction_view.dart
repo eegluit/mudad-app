@@ -594,7 +594,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
                     ColorResource.black.withOpacity(0.7)),
               ),
               Text(
-                "RO10,000",
+                'RO ${controller.receipt?.total ?? "-"}',
                 style: StyleResource.instance.styleSemiBold(
                     DimensionResource.fontSizeLarge - 1,
                     ColorResource.secondColor),
@@ -629,7 +629,7 @@ class LastTransactionScreen extends GetView<LastTransactionController> {
                             error: false,
                             massage: "Loan generated successfully");
                       } else {
-                    toastShow(error: true, massage: value2.errorMessage);
+                        toastShow(error: true, massage: value2.errorMessage);
                       }
                     });
                   } else {
