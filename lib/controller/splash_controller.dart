@@ -32,37 +32,19 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
+    initDocumentSDK();
     checkRoot();
     checkRootAvailability();
     getDashboardProfileData();
     authenticate();
-    initDocumentSDK();
+    super.onInit();
   }
 
   Future<void> initDocumentSDK() async {
     DocumentReader.prepareDatabase("Full").then((s) {
       // do something
-    }).catchError((Object error) =>
-        logPrint("error rer ${(error as PlatformException).message ?? ""}"));
-    DocumentReader.runAutoUpdate("Full").then((s) {
-      // do something
-    }).catchError(
-        (Object error) => print((error as PlatformException).message));
-
-      ByteData byteData = await rootBundle.load("assets/regula.license");
-
-    DocumentReader.initializeReader({
-      "license": base64.encode(byteData.buffer
-          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
-      "delayedNNLoad": true
-    }).then((s) {
-      log(s);
-      //isInitialise.value = true;
-    }).catchError((Object error) async {
-      logPrint((error as PlatformException).message ?? "");
-      logPrint("error rer ${(error as PlatformException).message ?? ""}");
-    });
+    }).catchError((Object error) => logPrint(
+        "REGULA error rer ${(error as PlatformException).message ?? ""}"));
   }
 
   Future<void> checkRoot() async {

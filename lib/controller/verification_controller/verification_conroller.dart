@@ -148,24 +148,25 @@ class VerificationController extends GetxController {
 // log("error rer ${(error as PlatformException).message ?? ""}");
 // });
 
-  DocumentReader.prepareDatabase("Full").then((s) {
+    DocumentReader.prepareDatabase("Full").then((s) {
       // do something
-    }).catchError((Object error) =>
-        logPrint("error rer ${(error as PlatformException).message ?? ""}"));
-      ByteData byteData = await rootBundle.load("assets/regula.license");
+    }).catchError((Object error) => print(
+        "************************ERROR REGULA ${(error as PlatformException).message ?? ""}"));
+    ByteData byteData = await rootBundle.load("assets/regula.license");
     DocumentReader.initializeReader({
       "license": base64.encode(byteData.buffer
           .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
       "delayedNNLoad": true
     }).then((s) {
       log(s);
+      print('************************RESPONSE REGULA1');
+
       //isInitialise.value = true;
     }).catchError((Object error) async {
       logPrint((error as PlatformException).message ?? "");
-      logPrint("error rer ${(error as PlatformException).message ?? ""}");
+      logPrint(
+          "************************ERROR REGULA3 ${(error as PlatformException).message ?? ""}");
     });
-
-
 
     // print(await DocumentReader.prepareDatabase("Full"));
     isInitialise.value = false;
@@ -174,7 +175,6 @@ class VerificationController extends GetxController {
     //       .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
     //   "delayedNNLoad": true
     // }));
-
 
     await DocumentReader.setConfig({
       "functionality": {
@@ -185,7 +185,13 @@ class VerificationController extends GetxController {
         "showResultStatusMessages": true,
         "showStatusMessages": true
       },
-      "processParams": {"scenario": "DocType"}
+      "processParams": {
+        "scenario": selectedScenario.value,
+        "doublePageSpread": false,
+        "timeout": 30.0,
+        "timeoutFromFirstDetect": 30.0,
+        "timeoutFromFirstDocType": 30.0
+      }
     });
 
     Regula.FaceSDK.init().then((json) {

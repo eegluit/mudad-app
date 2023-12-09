@@ -29,7 +29,7 @@ initServices() async {
 }
 
 Future<void> clearClipboard() async {
-  await Clipboard.setData(ClipboardData(text: ''));
+  await Clipboard.setData(const ClipboardData(text: ''));
 }
 
 class MyApp extends StatefulWidget {
