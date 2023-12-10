@@ -54,4 +54,5 @@ class Constant {
   static const String verifyCardOtp = 'lms/sendOtp/';
 
   static const String getTransaction = 'GetTransaction/user/';
+  static const String getDashboardData = 'Dashboard/user/';
 }

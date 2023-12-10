@@ -12,4 +12,8 @@ class StringResource {
   String get remember => "remember";
   String get token => "token";
   String get userID => "userID";
+  String get isKyc => "isKyc";
+  String get availableCredit => "availableCredit";
+  String get isCreditScoreCalc => "isCreditScoreCalc";
+  String get creditScore => "creditScore";
 }

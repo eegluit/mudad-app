@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:mudad/model/services/auth_service.dart';
 import 'package:mudad/page/home/rooted_device_view.dart';
 import 'package:mudad/page/verify_identity/verification_pending_page.dart';
+import 'package:mudad/service/auth_service.dart';
 import '../page/auth_page/sign_in_page.dart';
 import '../page/home/home_page.dart';
 import '../page/home/verification_view/verification_view.dart';
@@ -17,14 +18,16 @@ import 'package:flutter_document_reader_api/document_reader.dart';
 import 'package:flutter/services.dart';
 import '../widget/log_print/log_print_condition.dart';
 import 'dart:convert';
-import 'dart:math';
+import '../service/splash_service.dart';
 
 class SplashController extends GetxController {
   final BuildContext? context;
   String _result = " ";
+  var token = Get.find<AuthServices>().getUserID();
   bool _status = false;
   bool _statusAvailability = false;
   SplashController([this.context]);
+  var splashService = SplashService();
   HomeProvider homeProvider = getIt();
   Rx<GetProfileModel> profileData = GetProfileModel().obs;
   //HomeController controller = Get.put(HomeController());
@@ -32,12 +35,21 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
+    initDashboardData();
     initDocumentSDK();
     checkRoot();
     checkRootAvailability();
     getDashboardProfileData();
     authenticate();
     super.onInit();
+  }
+
+  void initDashboardData() {
+    if (token != "") {
+      splashService.getDashboardData(token).then((value) async {
+        await Get.find<AuthServices>().saveDashBoardData(value.result!);
+      });
+    }
   }
 
   Future<void> initDocumentSDK() async {
@@ -67,7 +79,9 @@ class SplashController extends GetxController {
           if (Get.find<AuthServices>().user.value.isKyc == false) {
             Get.offNamed(VerificationScreen.route);
           } else {
-            if (Get.find<AuthServices>().user.value.status == 'pending') {
+            if (Get.find<AuthServices>().getisKYC() == "true") {
+              Get.offNamed(HomePage.route);
+            } else if (Get.find<AuthServices>().user.value.status == 'pending') {
               Get.offNamed(VerificationPendingPage.route);
             } else {
               Get.offNamed(HomePage.route);

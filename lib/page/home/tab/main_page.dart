@@ -117,11 +117,11 @@ class MainPage extends GetView<HomeController> {
               height: 10,
             ),
             Container(
-              height: Get.height * 0.12,
+              height: Get.height * 0.18,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: ColorResource.mainColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20)),
                 boxShadow: [
@@ -141,11 +141,12 @@ class MainPage extends GetView<HomeController> {
                 horizontal: DimensionResource.marginSizeLarge,
               ),
               padding: const EdgeInsets.symmetric(
-                horizontal: DimensionResource.marginSizeLarge,
-                vertical: DimensionResource.marginSizeLarge,
+                horizontal: DimensionResource.marginSizeSmall,
+                vertical: DimensionResource.marginSizeSmall,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'Available Credit',
@@ -161,26 +162,34 @@ class MainPage extends GetView<HomeController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          controller.isDashBoardLoading.value
-                              ? "Loading..."
-                              : controller.dashBoardData.value.availableLimit ==
-                                      null
-                                  ? "N/A"
-                                  : 'RO${controller.dashBoardData.value.availableLimit}',
-                          style: TextStyle(
+                          'RO $controller.availableCredit',
+                          style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
+                        Container(child: controller.isCreditScore == "true" ?
+                        Text(
+                          '$controller.creditScore',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 42,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ) :
                         InkWell(
                           onTap: () {
                             Get.toNamed(CreditScorePage.route);
                           },
-                          child: SvgPicture.asset(
-                            'images/credit_score.svg',
+                          child: Container(
+                            width: 100, // Set your desired width here
+                            height: 100, // Set your desired height here
+                            child: SvgPicture.asset(
+                              'images/credit_score.svg',
+                            ),
                           ),
-                        ),
+                        )),
                       ],
                     );
                   }),

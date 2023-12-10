@@ -15,6 +15,7 @@ import '../models/user_model.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import '../service/credit_service.dart';
+import '../service/splash_service.dart';
 import 'package:mudad/model/services/auth_service.dart';
 
 class HomeController extends GetxController {
@@ -58,8 +59,13 @@ class HomeController extends GetxController {
   var isLoading = false.obs;
   RxBool isDashBoardLoading = false.obs;
   var creditService = CreditService();
+  var splashService = SplashService();
   var token = Get.find<AuthServices>().getUserToken();
   var userID = Get.find<AuthServices>().getUserID();
+
+  var availableCredit = Get.find<AuthServices>().getAvailableCredit();
+  var creditScore = Get.find<AuthServices>().getCreditScore();
+  var isCreditScore = Get.find<AuthServices>().getisCreditScore();
 
   String get getCreditToken => storage.read('creditToken') ?? '';
   void setCreditToken(String value) => storage.write('creditToken', value);
@@ -149,6 +155,16 @@ class HomeController extends GetxController {
     });
   }
 
+  void getDashboardData() {
+    void initDashboardData() {
+      if (token != "") {
+        splashService.getDashboardData(token).then((value) async {
+          await Get.find<AuthServices>().saveDashBoardData(value.result!);
+        });
+      }
+    }
+  }
+
   Future getProfile() async {
     isProfileLoading(true);
     await homeProvider.getProfile(onError: (status, message) {
@@ -175,6 +191,10 @@ class HomeController extends GetxController {
     getOffers();
     getLoans();
     getProfileImage();
+    getDashBoardData();
+    print("MNOP $availableCredit");
+    print("MNOP $isCreditScore");
+    print("MNOP $creditScore");
     super.onInit();
   }
 }
